@@ -27,6 +27,7 @@ import org.apache.commons.io.IOUtils;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.tasks.FormLoaderTask;
+import org.odk.collect.android.utilities.ExternalStorageFormFileStore;
 import org.odk.collect.android.utilities.FileUtils;
 
 import java.io.File;
@@ -99,19 +100,17 @@ public class FormLoadingUtils {
     }
 
     private static void copyForm(String formFilename, String formAssetPath) throws IOException {
-        String pathname = Collect.FORMS_PATH + formFilename;
-
         AssetManager assetManager = InstrumentationRegistry.getInstrumentation().getContext().getAssets();
         InputStream inputStream = assetManager.open(formAssetPath + formFilename);
 
-        File outFile = new File(pathname);
+        File outFile = new ExternalStorageFormFileStore().newForm(formFilename.replace(".xml", ""));
         OutputStream outputStream = new FileOutputStream(outFile);
 
         IOUtils.copy(inputStream, outputStream);
     }
 
     private static void copyFormMediaFiles(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
-        String mediaPathName = Collect.FORMS_PATH + formFilename.replace(".xml", "") + FileUtils.MEDIA_SUFFIX + "/";
+        String mediaPathName = Collect.FORMS_PATH + File.separator + formFilename.replace(".xml", "") + FileUtils.MEDIA_SUFFIX + "/";
         FileUtils.checkMediaPath(new File(mediaPathName));
 
         AssetManager assetManager = InstrumentationRegistry.getInstrumentation().getContext().getAssets();
