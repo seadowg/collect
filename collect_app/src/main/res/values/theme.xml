@@ -60,7 +60,21 @@
 
     <style name="BaseLightAppTheme.Collect" parent="BaseLightAppTheme" />
 
-    <style name="BaseLightAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseLightAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+
+        <item name="colorPrimary">#E9E9E9</item>
+        <item name="colorPrimaryVariant">#6E6E6E</item>
+        <item name="colorPrimaryDark">#6E6E6E</item>
+        <item name="colorOnPrimary">#DE000000</item>
+
+        <item name="colorSecondary">#008FFF</item>
+        <item name="colorSecondaryVariant">#0081F9</item>
+        <item name="colorOnSecondary">#DE000000</item>
+
+        <item name="colorSurface">#FAFAFA</item>
+
+        <item name="textAppearanceBody2">@style/Collect.TextAppearance.Body2</item>
+
         <item name="primaryTextColor">@color/lightPrimaryTextColor</item>
         <item name="secondaryTextColor">@color/lightSecondaryTextColor</item>
         <item name="android:scrollbarThumbHorizontal">@drawable/thumb</item>
