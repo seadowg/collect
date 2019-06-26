@@ -1,6 +1,5 @@
 package org.odk.collect.android.utilities;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,11 +86,6 @@ public class ExternalStorageFileStoreTest {
         store.createDirs();
     }
 
-    @NotNull
-    private String odkPath() {
-        return getExternalStorageDirectory() + File.separator + "odk";
-    }
-
     @Test
     public void newForm_returnsAnXMLFile_withTheFormName_andInTheFormDirectory() {
         ExternalStorageFileStore store = new ExternalStorageFileStore();
@@ -100,8 +94,27 @@ public class ExternalStorageFileStoreTest {
         assertThat(file, notNullValue());
         assertThat(file.getAbsolutePath(), equalTo(
                 getExternalStorageDirectory() + File.separator +
-                "odk" + File.separator +
-                "forms" + File.separator +
-                "bestForm.xml"));
+                        "odk" + File.separator +
+                        "forms" + File.separator +
+                        "bestForm.xml"));
+    }
+
+    @Test
+    public void newMedia_returnsANewFile_inTheFormsMediaDirectory() {
+        ExternalStorageFileStore store = new ExternalStorageFileStore();
+
+        File file = store.newMedia("myform", "media.mp3");
+        assertThat(file, notNullValue());
+        assertThat(file.getAbsolutePath(), equalTo(
+                getExternalStorageDirectory() + File.separator +
+                        "odk" + File.separator +
+                        "forms" + File.separator +
+                        "myform-media" + File.separator +
+                        "media.mp3"
+        ));
+    }
+
+    private String odkPath() {
+        return getExternalStorageDirectory() + File.separator + "odk";
     }
 }

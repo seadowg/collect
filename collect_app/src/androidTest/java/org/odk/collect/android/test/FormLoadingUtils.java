@@ -118,7 +118,7 @@ public class FormLoadingUtils {
 
         for (String mediaFilename : mediaFilenames) {
             InputStream mediaInputStream = assetManager.open(formAssetPath + mediaFilename);
-            File mediaOutFile = new File(mediaPathName + mediaFilename);
+            File mediaOutFile = new ExternalStorageFileStore().newMedia(formFilename.replace(".xml", ""), mediaFilename);
             OutputStream mediaOutputStream = new FileOutputStream(mediaOutFile);
 
             IOUtils.copy(mediaInputStream, mediaOutputStream);
