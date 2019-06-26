@@ -27,7 +27,7 @@ import org.apache.commons.io.IOUtils;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.tasks.FormLoaderTask;
-import org.odk.collect.android.utilities.ExternalStorageFormFileStore;
+import org.odk.collect.android.utilities.ExternalStorageFileStore;
 import org.odk.collect.android.utilities.FileUtils;
 
 import java.io.File;
@@ -103,7 +103,7 @@ public class FormLoadingUtils {
         AssetManager assetManager = InstrumentationRegistry.getInstrumentation().getContext().getAssets();
         InputStream inputStream = assetManager.open(formAssetPath + formFilename);
 
-        File outFile = new ExternalStorageFormFileStore().newForm(formFilename.replace(".xml", ""));
+        File outFile = new ExternalStorageFileStore().newForm(formFilename.replace(".xml", ""));
         OutputStream outputStream = new FileOutputStream(outFile);
 
         IOUtils.copy(inputStream, outputStream);
