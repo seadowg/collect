@@ -55,10 +55,9 @@ public class ExternalStorageFileStoreTest {
     }
 
     @Test
-    public void createDirs_whenDirectoriesAlreadyExist_doesNothing() {
-        for (String dirPath : dirs) {
-            new File(dirPath).mkdir();
-        }
+    public void createDirs_whenSomeDirectoriesAlreadyExist_createsTheNonExistantDirectories() {
+        new File(dirs[0]).mkdir();
+        new File(dirs[1]).mkdir();
 
         ExternalStorageFileStore store = new ExternalStorageFileStore();
         store.createDirs();

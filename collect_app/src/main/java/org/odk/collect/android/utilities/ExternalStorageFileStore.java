@@ -14,9 +14,7 @@ public class ExternalStorageFileStore {
         for (String dirPath : dirs()) {
             File path = new File(dirPath);
 
-            if (path.exists() && path.isDirectory()) {
-                return;
-            } else {
+            if (!path.exists() || !path.isDirectory()) {
                 if (!path.mkdir()) {
                     throw new RuntimeException();
                 }
