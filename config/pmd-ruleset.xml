@@ -107,6 +107,7 @@
         <exclude name="EmptyIfStmt" />
         <exclude name="EmptyWhileStmt" />
         <exclude name="JUnitSpelling" />
+        <exclude name="LoggerIsNotStaticFinal" />
         <exclude name="MissingBreakInSwitch" />
         <exclude name="MissingSerialVersionUID" />
         <exclude name="NullAssignment" />

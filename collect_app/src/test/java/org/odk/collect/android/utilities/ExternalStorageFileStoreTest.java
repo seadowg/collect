@@ -5,6 +5,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.odk.collect.android.R;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
@@ -19,9 +22,12 @@ import static android.os.Environment.MEDIA_MOUNTED;
 import static android.os.Environment.MEDIA_UNMOUNTED;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 public class ExternalStorageFileStoreTest {
@@ -29,9 +35,15 @@ public class ExternalStorageFileStoreTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
+
     private String[] dirs;
     private ExternalStorageFileStore store;
     private FakeExternalStorage externalStorage;
+
+    @Mock
+    private Logger logger;
 
     @Before
     public void setup() throws Exception {
@@ -45,7 +57,11 @@ public class ExternalStorageFileStoreTest {
                 odkPath() + File.separator + "layers"
         };
 
-        store = new ExternalStorageFileStore(RuntimeEnvironment.application.getResources(), externalStorage);
+        store = new ExternalStorageFileStore(
+                RuntimeEnvironment.application.getResources(),
+                externalStorage,
+                logger
+        );
     }
 
     @Test
@@ -74,14 +90,22 @@ public class ExternalStorageFileStoreTest {
     }
 
     @Test
-    public void initialize_whenFilesExistWithSamePath_throwsRuntimeExceptionWithMessage() throws Exception {
+    public void initialize_whenFilesExistWithSamePath_throwsRuntimeExceptionWithMessage_andLogs() throws Exception {
         assertTrue(new File(odkPath()).createNewFile());
 
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage(RuntimeEnvironment.application.getString(
-                R.string.not_a_directory,
-                externalStorage.getDirectory() + File.separator + "odk"));
-        store.initialize();
+        try {
+            store.initialize();
+            fail("Did not throw exception!");
+        } catch (RuntimeException e) {
+            assertThat(e, instanceOf(RuntimeException.class));
+
+            String message = RuntimeEnvironment.application.getString(
+                    R.string.not_a_directory,
+                    externalStorage.getDirectory() + File.separator + "odk");
+            assertThat(e.getMessage(), equalTo(message));
+
+            verify(logger).warning(message);
+        }
     }
 
     @Test
@@ -101,13 +125,19 @@ public class ExternalStorageFileStoreTest {
     public void initialize_whenCreatingDirectoriesFails_throwsRuntimeExceptionWithMessage() {
         assertTrue(externalStorage.getDirectory().delete());
 
-        expectedException.expect(RuntimeException.class);
-        String expectedMessage = RuntimeEnvironment.application.getString(
-                R.string.cannot_create_directory,
-                externalStorage.getDirectory() + File.separator + "odk");
-        expectedException.expectMessage(expectedMessage);
+        try {
+            store.initialize();
+            fail("Did not throw exception!");
+        } catch (RuntimeException e) {
+            assertThat(e, instanceOf(RuntimeException.class));
 
-        store.initialize();
+            String message = RuntimeEnvironment.application.getString(
+                    R.string.cannot_create_directory,
+                    externalStorage.getDirectory() + File.separator + "odk");
+            assertThat(e.getMessage(), equalTo(message));
+
+            verify(logger).warning(message);
+        }
     }
 
     @Test

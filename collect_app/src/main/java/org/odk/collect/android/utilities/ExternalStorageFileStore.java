@@ -11,10 +11,12 @@ public class ExternalStorageFileStore {
 
     private final Resources resources;
     private final ExternalStorage externalStorage;
+    private final Logger logger;
 
-    public ExternalStorageFileStore(Resources context, ExternalStorage externalStorage) {
+    public ExternalStorageFileStore(Resources context, ExternalStorage externalStorage, Logger logger) {
         this.resources = context;
         this.externalStorage = externalStorage;
+        this.logger = logger;
     }
 
     public Instance initialize() {
@@ -25,7 +27,7 @@ public class ExternalStorageFileStore {
         }
 
         for (String dirPath : dirs(externalStorage)) {
-            createDir(resources, dirPath);
+            createDir(dirPath, resources, logger);
         }
 
         return new Instance();
@@ -43,7 +45,7 @@ public class ExternalStorageFileStore {
 
         public File newMedia(String formName, String mediaFileName) {
             String mediaPath = formsPath(externalStorage) + File.separator + formName + "-media";
-            createDir(resources, mediaPath);
+            createDir(mediaPath, resources, logger);
 
             return new File(
                     mediaPath + File.separator + mediaFileName
@@ -51,17 +53,21 @@ public class ExternalStorageFileStore {
         }
     }
 
-    private static void createDir(Resources resources, String dirPath) {
+    private static void createDir(String dirPath, Resources resources, Logger logger) {
         File path = new File(dirPath);
 
         if (path.exists()) {
             if (!path.isDirectory()) {
-                throw new RuntimeException(resources.getString(R.string.not_a_directory, path));
+                String error = resources.getString(R.string.not_a_directory, path);
+                logger.warning(error);
+                throw new RuntimeException(error);
             }
         } else {
             boolean directoryCreated = path.mkdir();
             if (!directoryCreated) {
-                throw new RuntimeException(resources.getString(R.string.cannot_create_directory, path));
+                String error = resources.getString(R.string.cannot_create_directory, path);
+                logger.warning(error);
+                throw new RuntimeException(error);
             }
         }
     }
