@@ -51,7 +51,7 @@ public class FormLoadingUtils {
      * folder to the SD Card where it will be loaded by {@link FormLoaderTask}.
      */
     public static void copyFormToSdCard(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
-        ExternalStorageFileStore externalStorageFileStore = ExternalStorageFileStore.initialize();
+        ExternalStorageFileStore.Instance externalStorageFileStore = new ExternalStorageFileStore().initialize();
 
         if (!formAssetPath.isEmpty() && !formAssetPath.endsWith(File.separator)) {
             formAssetPath = formAssetPath + File.separator;
@@ -98,7 +98,7 @@ public class FormLoadingUtils {
         };
     }
 
-    private static void copyForm(ExternalStorageFileStore externalStorageFileStore, String formAssetPath, String formFilename) throws IOException {
+    private static void copyForm(ExternalStorageFileStore.Instance externalStorageFileStore, String formAssetPath, String formFilename) throws IOException {
         AssetManager assetManager = InstrumentationRegistry.getInstrumentation().getContext().getAssets();
         InputStream inputStream = assetManager.open(formAssetPath + formFilename);
 
@@ -108,7 +108,7 @@ public class FormLoadingUtils {
         IOUtils.copy(inputStream, outputStream);
     }
 
-    private static void copyFormMediaFiles(ExternalStorageFileStore externalStorageFileStore, String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
+    private static void copyFormMediaFiles(ExternalStorageFileStore.Instance externalStorageFileStore, String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
         AssetManager assetManager = InstrumentationRegistry.getInstrumentation().getContext().getAssets();
 
         for (String mediaFilename : mediaFilenames) {

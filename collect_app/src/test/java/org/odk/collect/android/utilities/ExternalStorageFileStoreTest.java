@@ -46,7 +46,7 @@ public class ExternalStorageFileStoreTest {
 
     @Test
     public void initialize_createsDirectories() {
-        ExternalStorageFileStore.initialize();
+        new ExternalStorageFileStore().initialize();
 
         Arrays.stream(dirs).forEach(dirPath -> {
             File dir = new File(dirPath);
@@ -60,7 +60,7 @@ public class ExternalStorageFileStoreTest {
         assertTrue(new File(dirs[0]).mkdir());
         assertTrue(new File(dirs[1]).mkdir());
 
-        ExternalStorageFileStore.initialize();
+        new ExternalStorageFileStore().initialize();
 
         Arrays.stream(dirs).forEach(dirPath -> {
             File dir = new File(dirPath);
@@ -73,19 +73,19 @@ public class ExternalStorageFileStoreTest {
     public void initialize_whenFilesExistWithSamePath_throwsRuntimeException() throws Exception {
         assertTrue(new File(odkPath()).createNewFile());
 
-        ExternalStorageFileStore.initialize();
+        new ExternalStorageFileStore().initialize();
     }
 
     @Test(expected = RuntimeException.class)
     public void initialize_whenExternalStorageNotMounted_throwsRuntimeException() {
         ShadowEnvironment.setExternalStorageState(MEDIA_UNMOUNTED);
 
-        ExternalStorageFileStore.initialize();
+        new ExternalStorageFileStore().initialize();
     }
 
     @Test
     public void newForm_returnsAnXMLFile_withTheFormName_andInTheFormDirectory() {
-        ExternalStorageFileStore store = ExternalStorageFileStore.initialize();
+        ExternalStorageFileStore.Instance store = new ExternalStorageFileStore().initialize();
 
         File file = store.newForm("bestForm");
         assertThat(file, notNullValue());
@@ -98,7 +98,7 @@ public class ExternalStorageFileStoreTest {
 
     @Test
     public void newMedia_whenThereIsNoMediaDirectory_createsIt() {
-        ExternalStorageFileStore store = ExternalStorageFileStore.initialize();
+        ExternalStorageFileStore.Instance store = new ExternalStorageFileStore().initialize();
         store.newMedia("myform", "media.mp3");
 
         File mediaDirectory = new File(getExternalStorageDirectory() + File.separator +
@@ -115,7 +115,7 @@ public class ExternalStorageFileStoreTest {
                 "forms" + File.separator +
                 "myform-media").mkdirs());
 
-        ExternalStorageFileStore store = ExternalStorageFileStore.initialize();
+        ExternalStorageFileStore.Instance store = new ExternalStorageFileStore().initialize();
         store.newMedia("myform", "media.mp3");
 
         File mediaDirectory = new File(getExternalStorageDirectory() + File.separator +
@@ -127,7 +127,7 @@ public class ExternalStorageFileStoreTest {
 
     @Test(expected = RuntimeException.class)
     public void newMedia_whenTheFileExistsWithSamePath_throwsRuntimeException() throws IOException {
-        ExternalStorageFileStore store = ExternalStorageFileStore.initialize();
+        ExternalStorageFileStore.Instance store = new ExternalStorageFileStore().initialize();
 
         assertTrue(new File(getExternalStorageDirectory() + File.separator +
                 "odk" + File.separator +
@@ -139,7 +139,7 @@ public class ExternalStorageFileStoreTest {
 
     @Test
     public void newMedia_returnsANewFile_inTheFormsMediaDirectory() {
-        ExternalStorageFileStore store = ExternalStorageFileStore.initialize();
+        ExternalStorageFileStore.Instance store = new ExternalStorageFileStore().initialize();
 
         File file = store.newMedia("myform", "media.mp3");
         assertThat(file, notNullValue());

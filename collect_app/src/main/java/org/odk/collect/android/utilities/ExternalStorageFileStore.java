@@ -6,10 +6,7 @@ import java.io.File;
 
 public class ExternalStorageFileStore {
 
-    private ExternalStorageFileStore() {
-    }
-
-    public static ExternalStorageFileStore initialize() {
+    public Instance initialize() {
         if (!isStorageMounted()) {
             throw new RuntimeException();
         }
@@ -18,22 +15,27 @@ public class ExternalStorageFileStore {
             createDir(dirPath);
         }
 
-        return new ExternalStorageFileStore();
+        return new Instance();
     }
 
-    public File newForm(String formName) {
-        return new File(
-                formsPath() + File.separator + formName + ".xml"
-        );
-    }
+    public  class Instance {
+        private Instance() {
+        }
 
-    public File newMedia(String formName, String mediaFileName) {
-        String mediaPath = formsPath() + File.separator + formName + "-media";
-        createDir(mediaPath);
+        public File newForm(String formName) {
+            return new File(
+                    formsPath() + File.separator + formName + ".xml"
+            );
+        }
 
-        return new File(
-                mediaPath + File.separator + mediaFileName
-        );
+        public File newMedia(String formName, String mediaFileName) {
+            String mediaPath = formsPath() + File.separator + formName + "-media";
+            createDir(mediaPath);
+
+            return new File(
+                    mediaPath + File.separator + mediaFileName
+            );
+        }
     }
 
     private static void createDir(String dirPath) {
