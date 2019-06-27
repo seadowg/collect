@@ -24,6 +24,7 @@ import org.odk.collect.android.tasks.sms.SmsService;
 import org.odk.collect.android.tasks.sms.contracts.SmsSubmissionManagerContract;
 import org.odk.collect.android.utilities.AuthDialogUtility;
 import org.odk.collect.android.utilities.DownloadFormListUtils;
+import org.odk.collect.android.utilities.ExternalStorageFileStore;
 import org.odk.collect.android.utilities.FormDownloader;
 
 import javax.inject.Singleton;
@@ -112,4 +113,6 @@ public interface AppDependencyComponent {
     RxEventBus rxEventBus();
 
     OpenRosaHttpInterface openRosaHttpInterface();
+
+    ExternalStorageFileStore externalStorageFileStore();
 }

@@ -17,7 +17,11 @@ import org.odk.collect.android.http.OkHttpConnection;
 import org.odk.collect.android.http.OpenRosaHttpInterface;
 import org.odk.collect.android.tasks.sms.SmsSubmissionManager;
 import org.odk.collect.android.tasks.sms.contracts.SmsSubmissionManagerContract;
+import org.odk.collect.android.utilities.EnvironmentExternalStorage;
+import org.odk.collect.android.utilities.ExternalStorageFileStore;
+import org.odk.collect.android.utilities.Logger;
 import org.odk.collect.android.utilities.PermissionUtils;
+import org.odk.collect.android.utilities.TimberLogger;
 import org.odk.collect.android.utilities.WebCredentialsUtils;
 
 import javax.inject.Singleton;
@@ -92,5 +96,18 @@ public class AppDependencyModule {
     @Provides
     public PermissionUtils providesPermissionUtils() {
         return new PermissionUtils();
+    }
+
+    @Provides
+    public Logger providesLogger() {
+        return new TimberLogger();
+    }
+
+    @Provides
+    public ExternalStorageFileStore providesExternalStorageFileStore(Application application, Logger logger) {
+        return new ExternalStorageFileStore(
+                application.getResources(),
+                new EnvironmentExternalStorage(),
+                logger);
     }
 }

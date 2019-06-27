@@ -16,7 +16,6 @@
 
 package org.odk.collect.android.test;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 
@@ -27,10 +26,9 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import org.apache.commons.io.IOUtils;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.injection.config.AppDependencyComponent;
 import org.odk.collect.android.tasks.FormLoaderTask;
-import org.odk.collect.android.utilities.EnvironmentExternalStorage;
 import org.odk.collect.android.utilities.ExternalStorageFileStore;
-import org.odk.collect.android.utilities.TimberLogger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,12 +52,9 @@ public class FormLoadingUtils {
      * folder to the SD Card where it will be loaded by {@link FormLoaderTask}.
      */
     public static void copyFormToSdCard(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
-        Context context = ApplicationProvider.getApplicationContext();
-        ExternalStorageFileStore.Instance externalStorageFileStore = new ExternalStorageFileStore(
-                context.getResources(),
-                new EnvironmentExternalStorage(),
-                new TimberLogger()
-        ).initialize();
+        Collect application = ApplicationProvider.getApplicationContext();
+        AppDependencyComponent component = application.getComponent();
+        ExternalStorageFileStore.Instance externalStorageFileStore = component.externalStorageFileStore().initialize();
 
         if (!formAssetPath.isEmpty() && !formAssetPath.endsWith(File.separator)) {
             formAssetPath = formAssetPath + File.separator;
