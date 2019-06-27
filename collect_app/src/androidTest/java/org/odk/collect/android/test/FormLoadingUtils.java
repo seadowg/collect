@@ -16,6 +16,7 @@
 
 package org.odk.collect.android.test;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 
@@ -51,7 +52,8 @@ public class FormLoadingUtils {
      * folder to the SD Card where it will be loaded by {@link FormLoaderTask}.
      */
     public static void copyFormToSdCard(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
-        ExternalStorageFileStore.Instance externalStorageFileStore = new ExternalStorageFileStore().initialize();
+        Context context = ApplicationProvider.getApplicationContext();
+        ExternalStorageFileStore.Instance externalStorageFileStore = new ExternalStorageFileStore(context).initialize();
 
         if (!formAssetPath.isEmpty() && !formAssetPath.endsWith(File.separator)) {
             formAssetPath = formAssetPath + File.separator;

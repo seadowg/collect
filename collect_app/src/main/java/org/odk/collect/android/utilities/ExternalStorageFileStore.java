@@ -1,18 +1,29 @@
 package org.odk.collect.android.utilities;
 
+import android.content.Context;
 import android.os.Environment;
+
+import org.odk.collect.android.R;
 
 import java.io.File;
 
 public class ExternalStorageFileStore {
 
+    private final Context context;
+
+    public ExternalStorageFileStore(Context context) {
+        this.context = context;
+    }
+
     public Instance initialize() {
-        if (!isStorageMounted()) {
-            throw new RuntimeException();
+        String storageState = Environment.getExternalStorageState();
+        if (!storageState.equals(Environment.MEDIA_MOUNTED)) {
+            String message = context.getString(R.string.sdcard_unmounted, storageState);
+            throw new RuntimeException(message);
         }
 
         for (String dirPath : dirs()) {
-            createDir(dirPath);
+            createDir(context, dirPath);
         }
 
         return new Instance();
@@ -30,7 +41,7 @@ public class ExternalStorageFileStore {
 
         public File newMedia(String formName, String mediaFileName) {
             String mediaPath = formsPath() + File.separator + formName + "-media";
-            createDir(mediaPath);
+            createDir(context, mediaPath);
 
             return new File(
                     mediaPath + File.separator + mediaFileName
@@ -38,18 +49,14 @@ public class ExternalStorageFileStore {
         }
     }
 
-    private static void createDir(String dirPath) {
+    private static void createDir(Context context, String dirPath) {
         File path = new File(dirPath);
 
         if (!path.exists() || !path.isDirectory()) {
             if (!path.mkdir()) {
-                throw new RuntimeException();
+                throw new RuntimeException(context.getString(R.string.not_a_directory, path));
             }
         }
-    }
-
-    private static boolean isStorageMounted() {
-        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
     private static String formsPath() {
