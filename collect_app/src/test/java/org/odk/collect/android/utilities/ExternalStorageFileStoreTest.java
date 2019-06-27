@@ -1,6 +1,5 @@
 package org.odk.collect.android.utilities;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,15 +8,15 @@ import org.junit.runner.RunWith;
 import org.odk.collect.android.R;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.shadows.ShadowEnvironment;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import static android.os.Environment.MEDIA_MOUNTED;
 import static android.os.Environment.MEDIA_UNMOUNTED;
-import static android.os.Environment.getExternalStorageDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -32,9 +31,11 @@ public class ExternalStorageFileStoreTest {
 
     private String[] dirs;
     private ExternalStorageFileStore store;
+    private FakeExternalStorage externalStorage;
 
     @Before
-    public void setup() {
+    public void setup() throws Exception {
+        externalStorage = new FakeExternalStorage();
         dirs = new String[]{
                 odkPath(),
                 odkPath() + File.separator + "forms",
@@ -44,14 +45,7 @@ public class ExternalStorageFileStoreTest {
                 odkPath() + File.separator + "layers"
         };
 
-        ShadowEnvironment.setExternalStorageState(MEDIA_MOUNTED);
-
-        store = new ExternalStorageFileStore(RuntimeEnvironment.application);
-    }
-
-    @After
-    public void teardown() {
-        ShadowEnvironment.reset();
+        store = new ExternalStorageFileStore(RuntimeEnvironment.application.getResources(), externalStorage);
     }
 
     @Test
@@ -86,18 +80,31 @@ public class ExternalStorageFileStoreTest {
         expectedException.expect(RuntimeException.class);
         expectedException.expectMessage(RuntimeEnvironment.application.getString(
                 R.string.not_a_directory,
-                getExternalStorageDirectory() + File.separator + "odk"));
+                externalStorage.getDirectory() + File.separator + "odk"));
         store.initialize();
     }
 
     @Test
     public void initialize_whenExternalStorageNotMounted_throwsRuntimeExceptionWithMessage() {
-        ShadowEnvironment.setExternalStorageState(MEDIA_UNMOUNTED);
+        externalStorage.setState(MEDIA_UNMOUNTED);
 
         expectedException.expect(RuntimeException.class);
         String expectedMessage = RuntimeEnvironment.application.getString(
                 R.string.sdcard_unmounted,
                 MEDIA_UNMOUNTED);
+        expectedException.expectMessage(expectedMessage);
+
+        store.initialize();
+    }
+
+    @Test
+    public void initialize_whenCreatingDirectoriesFails_throwsRuntimeExceptionWithMessage() {
+        assertTrue(externalStorage.getDirectory().delete());
+
+        expectedException.expect(RuntimeException.class);
+        String expectedMessage = RuntimeEnvironment.application.getString(
+                R.string.cannot_create_directory,
+                externalStorage.getDirectory() + File.separator + "odk");
         expectedException.expectMessage(expectedMessage);
 
         store.initialize();
@@ -110,7 +117,7 @@ public class ExternalStorageFileStoreTest {
         File file = instance.newForm("bestForm");
         assertThat(file, notNullValue());
         assertThat(file.getAbsolutePath(), equalTo(
-                getExternalStorageDirectory() + File.separator +
+                externalStorage.getDirectory() + File.separator +
                         "odk" + File.separator +
                         "forms" + File.separator +
                         "bestForm.xml"));
@@ -121,7 +128,7 @@ public class ExternalStorageFileStoreTest {
         ExternalStorageFileStore.Instance instance = store.initialize();
         instance.newMedia("myform", "media.mp3");
 
-        File mediaDirectory = new File(getExternalStorageDirectory() + File.separator +
+        File mediaDirectory = new File(externalStorage.getDirectory() + File.separator +
                 "odk" + File.separator +
                 "forms" + File.separator +
                 "myform-media");
@@ -130,7 +137,7 @@ public class ExternalStorageFileStoreTest {
 
     @Test
     public void newMedia_whenTheMediaDirectoryExists_doesNothing() {
-        assertTrue(new File(getExternalStorageDirectory() + File.separator +
+        assertTrue(new File(externalStorage.getDirectory() + File.separator +
                 "odk" + File.separator +
                 "forms" + File.separator +
                 "myform-media").mkdirs());
@@ -138,7 +145,7 @@ public class ExternalStorageFileStoreTest {
         ExternalStorageFileStore.Instance instance = store.initialize();
         instance.newMedia("myform", "media.mp3");
 
-        File mediaDirectory = new File(getExternalStorageDirectory() + File.separator +
+        File mediaDirectory = new File(externalStorage.getDirectory() + File.separator +
                 "odk" + File.separator +
                 "forms" + File.separator +
                 "myform-media");
@@ -149,7 +156,7 @@ public class ExternalStorageFileStoreTest {
     public void newMedia_whenTheFileExistsWithSamePathAsMediaDirectory_throwsRuntimeException() throws IOException {
         final ExternalStorageFileStore.Instance instance = store.initialize();
 
-        String mediaPath = getExternalStorageDirectory() + File.separator +
+        String mediaPath = externalStorage.getDirectory() + File.separator +
                 "odk" + File.separator +
                 "forms" + File.separator +
                 "myform-media";
@@ -169,7 +176,7 @@ public class ExternalStorageFileStoreTest {
         File file = instance.newMedia("myform", "media.mp3");
         assertThat(file, notNullValue());
         assertThat(file.getAbsolutePath(), equalTo(
-                getExternalStorageDirectory() + File.separator +
+                externalStorage.getDirectory() + File.separator +
                         "odk" + File.separator +
                         "forms" + File.separator +
                         "myform-media" + File.separator +
@@ -178,6 +185,32 @@ public class ExternalStorageFileStoreTest {
     }
 
     private String odkPath() {
-        return getExternalStorageDirectory() + File.separator + "odk";
+        return externalStorage.getDirectory() + File.separator + "odk";
+    }
+
+    private class FakeExternalStorage implements ExternalStorage {
+
+        private final Path directory;
+        private String state;
+
+        FakeExternalStorage() throws IOException {
+            this.directory = Files.createTempDirectory("temp");
+            this.state = MEDIA_MOUNTED;
+        }
+
+        @Override
+        public String getState() {
+            return state;
+        }
+
+        @Override
+        public File getDirectory() {
+            return new File(directory.toString());
+        }
+
+        public void setState(String state) {
+
+            this.state = state;
+        }
     }
 }

@@ -28,6 +28,7 @@ import org.apache.commons.io.IOUtils;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.tasks.FormLoaderTask;
+import org.odk.collect.android.utilities.EnvironmentExternalStorage;
 import org.odk.collect.android.utilities.ExternalStorageFileStore;
 
 import java.io.File;
@@ -53,7 +54,7 @@ public class FormLoadingUtils {
      */
     public static void copyFormToSdCard(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
         Context context = ApplicationProvider.getApplicationContext();
-        ExternalStorageFileStore.Instance externalStorageFileStore = new ExternalStorageFileStore(context).initialize();
+        ExternalStorageFileStore.Instance externalStorageFileStore = new ExternalStorageFileStore(context.getResources(), new EnvironmentExternalStorage()).initialize();
 
         if (!formAssetPath.isEmpty() && !formAssetPath.endsWith(File.separator)) {
             formAssetPath = formAssetPath + File.separator;
