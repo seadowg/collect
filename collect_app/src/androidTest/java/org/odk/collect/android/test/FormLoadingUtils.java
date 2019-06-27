@@ -51,8 +51,7 @@ public class FormLoadingUtils {
      * folder to the SD Card where it will be loaded by {@link FormLoaderTask}.
      */
     public static void copyFormToSdCard(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
-        ExternalStorageFileStore externalStorageFileStore = new ExternalStorageFileStore();
-        externalStorageFileStore.initialize();
+        ExternalStorageFileStore externalStorageFileStore = ExternalStorageFileStore.initialize();
 
         if (!formAssetPath.isEmpty() && !formAssetPath.endsWith(File.separator)) {
             formAssetPath = formAssetPath + File.separator;
@@ -61,7 +60,7 @@ public class FormLoadingUtils {
         copyForm(externalStorageFileStore, formAssetPath, formFilename);
 
         if (mediaFilenames != null) {
-            copyFormMediaFiles(formFilename, formAssetPath, mediaFilenames);
+            copyFormMediaFiles(externalStorageFileStore, formFilename, formAssetPath, mediaFilenames);
         }
     }
 
@@ -109,12 +108,12 @@ public class FormLoadingUtils {
         IOUtils.copy(inputStream, outputStream);
     }
 
-    private static void copyFormMediaFiles(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
+    private static void copyFormMediaFiles(ExternalStorageFileStore externalStorageFileStore, String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
         AssetManager assetManager = InstrumentationRegistry.getInstrumentation().getContext().getAssets();
 
         for (String mediaFilename : mediaFilenames) {
             InputStream mediaInputStream = assetManager.open(formAssetPath + mediaFilename);
-            File mediaOutFile = new ExternalStorageFileStore().newMedia(formFilename.replace(".xml", ""), mediaFilename);
+            File mediaOutFile = externalStorageFileStore.newMedia(formFilename.replace(".xml", ""), mediaFilename);
             OutputStream mediaOutputStream = new FileOutputStream(mediaOutFile);
 
             IOUtils.copy(mediaInputStream, mediaOutputStream);

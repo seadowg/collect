@@ -6,7 +6,10 @@ import java.io.File;
 
 public class ExternalStorageFileStore {
 
-    public void initialize() {
+    private ExternalStorageFileStore() {
+    }
+
+    public static ExternalStorageFileStore initialize() {
         if (!isStorageMounted()) {
             throw new RuntimeException();
         }
@@ -14,6 +17,8 @@ public class ExternalStorageFileStore {
         for (String dirPath : dirs()) {
             createDir(dirPath);
         }
+
+        return new ExternalStorageFileStore();
     }
 
     public File newForm(String formName) {
@@ -31,7 +36,7 @@ public class ExternalStorageFileStore {
         );
     }
 
-    private void createDir(String dirPath) {
+    private static void createDir(String dirPath) {
         File path = new File(dirPath);
 
         if (!path.exists() || !path.isDirectory()) {
@@ -41,20 +46,20 @@ public class ExternalStorageFileStore {
         }
     }
 
-    private boolean isStorageMounted() {
+    private static boolean isStorageMounted() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
-    private String formsPath() {
+    private static String formsPath() {
         return odkPath() + File.separator + "forms";
     }
 
-    private String odkPath() {
+    private static String odkPath() {
         return Environment.getExternalStorageDirectory()
                 + File.separator + "odk";
     }
 
-    private String[] dirs() {
+    private static String[] dirs() {
         return new String[]{
                 odkPath(),
                 odkPath() + File.separator + "forms",
