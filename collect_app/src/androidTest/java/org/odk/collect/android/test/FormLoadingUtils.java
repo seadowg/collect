@@ -28,7 +28,6 @@ import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.tasks.FormLoaderTask;
 import org.odk.collect.android.utilities.ExternalStorageFileStore;
-import org.odk.collect.android.utilities.FileUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,7 +52,7 @@ public class FormLoadingUtils {
      */
     public static void copyFormToSdCard(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
         ExternalStorageFileStore externalStorageFileStore = new ExternalStorageFileStore();
-        externalStorageFileStore.createDirs();
+        externalStorageFileStore.initialize();
 
         if (!formAssetPath.isEmpty() && !formAssetPath.endsWith(File.separator)) {
             formAssetPath = formAssetPath + File.separator;
@@ -111,9 +110,6 @@ public class FormLoadingUtils {
     }
 
     private static void copyFormMediaFiles(String formFilename, String formAssetPath, List<String> mediaFilenames) throws IOException {
-        String mediaPathName = Collect.FORMS_PATH + File.separator + formFilename.replace(".xml", "") + FileUtils.MEDIA_SUFFIX + "/";
-        FileUtils.checkMediaPath(new File(mediaPathName));
-
         AssetManager assetManager = InstrumentationRegistry.getInstrumentation().getContext().getAssets();
 
         for (String mediaFilename : mediaFilenames) {

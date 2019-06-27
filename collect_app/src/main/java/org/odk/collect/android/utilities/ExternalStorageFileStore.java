@@ -6,19 +6,13 @@ import java.io.File;
 
 public class ExternalStorageFileStore {
 
-    public void createDirs() {
+    public void initialize() {
         if (!isStorageMounted()) {
             throw new RuntimeException();
         }
 
         for (String dirPath : dirs()) {
-            File path = new File(dirPath);
-
-            if (!path.exists() || !path.isDirectory()) {
-                if (!path.mkdir()) {
-                    throw new RuntimeException();
-                }
-            }
+            createDir(dirPath);
         }
     }
 
@@ -29,9 +23,22 @@ public class ExternalStorageFileStore {
     }
 
     public File newMedia(String formName, String mediaFileName) {
+        String mediaPath = formsPath() + File.separator + formName + "-media";
+        createDir(mediaPath);
+
         return new File(
-                formsPath() + File.separator + formName + "-media" + File.separator + mediaFileName
+                mediaPath + File.separator + mediaFileName
         );
+    }
+
+    private void createDir(String dirPath) {
+        File path = new File(dirPath);
+
+        if (!path.exists() || !path.isDirectory()) {
+            if (!path.mkdir()) {
+                throw new RuntimeException();
+            }
+        }
     }
 
     private boolean isStorageMounted() {
