@@ -37,3 +37,7 @@ javarosa/
 
 # Config for the official ODK Collect build
 collect_app/src/odkCollectRelease/
+
+
+# Ignore sketch files
+*.sketch
