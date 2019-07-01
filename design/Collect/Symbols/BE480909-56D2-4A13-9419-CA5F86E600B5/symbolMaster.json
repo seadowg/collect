@@ -1,0 +1,196 @@
+{
+  "_class": "symbolMaster",
+  "allowsOverrides": true,
+  "backgroundColor": {
+    "_class": "color",
+    "alpha": 1,
+    "blue": 1,
+    "do_objectID": "0DF5790D-D766-45AF-A05E-F24779EBE1B9",
+    "green": 1,
+    "red": 1
+  },
+  "booleanOperation": 0,
+  "changeIdentifier": 17851,
+  "clippingMaskMode": 0,
+  "do_objectID": "BE480909-56D2-4A13-9419-CA5F86E600B5",
+  "exportOptions": {
+    "_class": "exportOptions",
+    "do_objectID": "4A45D421-D34F-45AB-9DEA-D7B82D0B8DC4",
+    "exportFormats": [
+    ],
+    "includedLayerIds": [
+    ],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "do_objectID": "2ECC85F8-2AF9-4BA4-962C-04FBBE892619",
+    "height": 188,
+    "width": 168,
+    "x": 20718,
+    "y": 884
+  },
+  "grid": {
+    "_class": "simpleGrid",
+    "gridSize": 4,
+    "isEnabled": true,
+    "thickGridTimes": 40
+  },
+  "groupLayout": {
+    "_class": "MSImmutableFreeformGroupLayout"
+  },
+  "hasBackgroundColor": false,
+  "hasClickThrough": true,
+  "hasClippingMask": false,
+  "horizontalRulerData": {
+    "_class": "rulerData",
+    "base": 0,
+    "do_objectID": "380306EC-FF17-4C62-92EC-962590920692",
+    "guides": [
+    ]
+  },
+  "includeBackgroundColorInExport": true,
+  "includeBackgroundColorInInstance": false,
+  "includeInCloudUpload": true,
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isFlowHome": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 1,
+  "layers": [
+    {
+      "class": "shapeGroup",
+      "id": "CDDCD5B0-2CDD-40AA-99AD-AA5E0A4715F4"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "64F28DA3-4297-4683-A860-330011ED63B8"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "0AFCBDEB-6BD8-44C5-B9CA-F415CD29730B"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "AEA21A8A-D924-4513-A1E5-90B91F28E3C5"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "712935C7-3CD9-4D1A-9EDC-FC57F45ACE6B"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "F5828BEA-61BC-437C-9565-79C0F96F376D"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "E34D916A-332B-4469-B3BD-1A74EE79EB2F"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "8357EC9A-EA95-4F6D-BA63-B6A4A2757414"
+    }
+  ],
+  "layout": {
+    "_class": "layoutGrid",
+    "columnWidth": 48,
+    "drawHorizontal": true,
+    "drawHorizontalLines": false,
+    "drawVertical": false,
+    "gutterHeight": 4,
+    "gutterWidth": 2904,
+    "guttersOutside": false,
+    "horizontalOffset": -123,
+    "isEnabled": false,
+    "numberOfColumns": 2,
+    "rowHeightMultiplication": 1,
+    "totalWidth": 3000
+  },
+  "name": "Cards / List 2-up / Outlined / Data / Selected",
+  "nameIsFixed": true,
+  "overrideProperties": [
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "8357EC9A-EA95-4F6D-BA63-B6A4A2757414_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": false,
+      "overrideName": "E34D916A-332B-4469-B3BD-1A74EE79EB2F_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": false,
+      "overrideName": "E34D916A-332B-4469-B3BD-1A74EE79EB2F/4612DCBF-3C33-46E6-9A22-FACCCF8F9AEC_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "F5828BEA-61BC-437C-9565-79C0F96F376D_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "712935C7-3CD9-4D1A-9EDC-FC57F45ACE6B_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "AEA21A8A-D924-4513-A1E5-90B91F28E3C5_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "0AFCBDEB-6BD8-44C5-B9CA-F415CD29730B_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "64F28DA3-4297-4683-A860-330011ED63B8_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "CDDCD5B0-2CDD-40AA-99AD-AA5E0A4715F4_layerStyle"
+    }
+  ],
+  "resizesContent": true,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": true,
+  "style": {
+    "_class": "style",
+    "do_objectID": "53EF205B-5976-4B1F-A79D-D51D6411478C",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1
+  },
+  "symbolID": "E7663CA3-3CC9-4927-A257-E4D2DC3A4CE2",
+  "userInfo": {
+    "com.google.ux.material.spec_tools": {
+      "cornerSizesDp": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "theme": "{\"lastUpdatedUtc\":\"2019-06-26 09:08:11\",\"palettes\":{\"PRIMARY\":{\"colors\":[{\"red\":0.9760612644723717,\"green\":0.9760613696585846,\"blue\":0.9760612946915,\"alpha\":1},{\"red\":0.95,\"green\":0.95,\"blue\":0.95,\"alpha\":1},{\"red\":0.915032058893085,\"green\":0.9150321594101729,\"blue\":0.9150320879316258,\"alpha\":1},{\"red\":0.8534855581632654,\"green\":0.8534856531254019,\"blue\":0.8534855856806823,\"alpha\":1},{\"red\":0.7133567865451886,\"green\":0.713356867474213,\"blue\":0.7133568100581188,\"alpha\":1},{\"red\":0.5888355000274293,\"green\":0.5888355685349764,\"blue\":0.588835520000885,\"alpha\":1},{\"red\":0.4305539648134535,\"green\":0.43055401683490946,\"blue\":0.43055398001561596,\"alpha\":1},{\"red\":0.3537120018935437,\"green\":0.35371204587472355,\"blue\":0.3537120147650345,\"alpha\":1},{\"red\":0.23381744452504444,\"green\":0.23381747606262987,\"blue\":0.23381745379966917,\"alpha\":1},{\"red\":0.10708604325607621,\"green\":0.10708606156385472,\"blue\":0.1070860486987972,\"alpha\":1}],\"mainColorIndex\":2},\"SECONDARY\":{\"colors\":[{\"red\":0.8863279965763851,\"green\":0.9466252039712598,\"blue\":1,\"alpha\":1},{\"red\":0.7262262061531107,\"green\":0.8637819614339615,\"blue\":1,\"alpha\":1},{\"red\":0.5446318917789476,\"green\":0.7811093377781854,\"blue\":1,\"alpha\":1},{\"red\":0.3447633213463431,\"green\":0.6942843352873875,\"blue\":1,\"alpha\":1},{\"red\":0.172696753764079,\"green\":0.627021634824782,\"blue\":1,\"alpha\":1},{\"red\":0,\"green\":0.5624523488063177,\"blue\":1,\"alpha\":1},{\"red\":0,\"green\":0.5058823529411764,\"blue\":0.9764705882352941,\"alpha\":1},{\"red\":0.06207767195181386,\"green\":0.43311649256573936,\"blue\":0.897459360140083,\"alpha\":1},{\"red\":0.08546980957036224,\"green\":0.3633539950708487,\"blue\":0.8247607785979278,\"alpha\":1},{\"red\":0.10389336316067807,\"green\":0.23567304450055493,\"blue\":0.7022564845758742,\"alpha\":1}],\"mainColorIndex\":5},\"SURFACE\":{\"colors\":[{\"red\":1,\"green\":1,\"blue\":1,\"alpha\":1},{\"red\":0.9807089859888657,\"green\":0.9807090923474681,\"blue\":0.9807090166169335,\"alpha\":1},{\"red\":0.9614896126428832,\"green\":0.9614897160775632,\"blue\":0.9614896423314422,\"alpha\":1},{\"red\":0.9423426493624547,\"green\":0.942342746714893,\"blue\":0.9423426768771614,\"alpha\":1},{\"red\":0.8692227753206838,\"green\":0.8692228576649179,\"blue\":0.8692227977439545,\"alpha\":1},{\"red\":0.762033684573245,\"green\":0.7620337541261238,\"blue\":0.7620337031299386,\"alpha\":1},{\"red\":0.5902992747236278,\"green\":0.5902993277528529,\"blue\":0.5902992886361145,\"alpha\":1},{\"red\":0.504871739011006,\"green\":0.5048717839890382,\"blue\":0.504871750679026,\"alpha\":1},{\"red\":0.37657369588808237,\"green\":0.3765737282854163,\"blue\":0.37657370399423673,\"alpha\":1},{\"red\":0.2366709262652505,\"green\":0.23667094522274518,\"blue\":0.2366709305962576,\"alpha\":1}],\"mainColorIndex\":1}},\"cornerType\":\"ROUNDED\",\"cornerSizesDp\":[1,1,1,1],\"textStyles\":{\"HEADLINE_1\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Light\",\"traits\":0,\"weight\":3},\"metrics\":{\"fontSize\":96}},\"HEADLINE_2\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Light\",\"traits\":0,\"weight\":3},\"metrics\":{\"fontSize\":60}},\"HEADLINE_3\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":48}},\"HEADLINE_4\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":34}},\"HEADLINE_5\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":24}},\"HEADLINE_6\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},\"metrics\":{\"fontSize\":20}},\"SUBTITLE_1\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":16}},\"SUBTITLE_2\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},\"metrics\":{\"fontSize\":14}},\"BODY_1\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":16}},\"BODY_2\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":14}},\"CAPTION\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":12}},\"BUTTON\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},\"metrics\":{\"fontSize\":14}},\"OVERLINE\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},\"metrics\":{\"fontSize\":12}}},\"selectedFontFamilies\":[{\"name\":\"Roboto\",\"fonts\":[{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Light\",\"traits\":0,\"weight\":3},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6}]}]}",
+      "themeMetadataVersion": 4,
+      "type": "cards"
+    }
+  },
+  "verticalRulerData": {
+    "_class": "rulerData",
+    "base": 0,
+    "do_objectID": "9146C168-CF08-47EC-A3E6-753034D75312",
+    "guides": [
+    ]
+  }
+}

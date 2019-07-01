@@ -1,0 +1,166 @@
+{
+  "_class": "symbolMaster",
+  "allowsOverrides": true,
+  "backgroundColor": {
+    "_class": "color",
+    "alpha": 1,
+    "blue": 1,
+    "do_objectID": "E418E2CF-C532-4DB9-874F-DE01EA118530",
+    "green": 1,
+    "red": 1
+  },
+  "booleanOperation": 0,
+  "changeIdentifier": 13120,
+  "clippingMaskMode": 0,
+  "do_objectID": "2CF44878-EDDB-49EF-8288-4CC0E97C9148",
+  "exportOptions": {
+    "_class": "exportOptions",
+    "do_objectID": "0247D4AD-807D-447A-87C6-7358CC9E3B10",
+    "exportFormats": [
+    ],
+    "includedLayerIds": [
+    ],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "do_objectID": "D4E8A537-5CFA-46EC-8848-060A8E57B876",
+    "height": 36,
+    "width": 122,
+    "x": 12276,
+    "y": 228
+  },
+  "grid": {
+    "_class": "simpleGrid",
+    "do_objectID": "6E4A6DF9-BAB0-4EAA-841E-D5C6C041C1CA",
+    "gridSize": 4,
+    "isEnabled": true,
+    "thickGridTimes": 40
+  },
+  "groupLayout": {
+    "_class": "MSImmutableFreeformGroupLayout"
+  },
+  "hasBackgroundColor": false,
+  "hasClickThrough": true,
+  "hasClippingMask": false,
+  "horizontalRulerData": {
+    "_class": "rulerData",
+    "base": 0,
+    "do_objectID": "FE4CB1BD-E2C9-424E-BA55-85DB971C1600",
+    "guides": [
+    ]
+  },
+  "includeBackgroundColorInExport": true,
+  "includeBackgroundColorInInstance": false,
+  "includeInCloudUpload": true,
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isFlowHome": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "layers": [
+    {
+      "class": "shapeGroup",
+      "id": "A227C0A2-1B87-4A26-9886-1DCE4306C2B0"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "450E92FB-FFBE-4FAD-BA99-43FCAD7FADEC"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "CF5B1422-D9BA-4C5E-B255-270D96C2F8DF"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "4FE3704E-E366-41BF-A79F-9B07760F8CE9"
+    },
+    {
+      "class": "symbolInstance",
+      "id": "5A05F427-D360-4325-B5E3-D85C6FB99720"
+    }
+  ],
+  "layout": {
+    "_class": "layoutGrid",
+    "columnWidth": 48,
+    "do_objectID": "32481935-6E05-4B2B-8B88-8DC0FFD5CFF1",
+    "drawHorizontal": true,
+    "drawHorizontalLines": false,
+    "drawVertical": false,
+    "gutterHeight": 4,
+    "gutterWidth": 2904,
+    "guttersOutside": false,
+    "horizontalOffset": -123,
+    "isEnabled": false,
+    "numberOfColumns": 2,
+    "rowHeightMultiplication": 1,
+    "totalWidth": 3000
+  },
+  "name": "Buttons / Outlined / with Icon / Hover",
+  "nameIsFixed": true,
+  "overrideProperties": [
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "5A05F427-D360-4325-B5E3-D85C6FB99720_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": false,
+      "overrideName": "4FE3704E-E366-41BF-A79F-9B07760F8CE9_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": false,
+      "overrideName": "4FE3704E-E366-41BF-A79F-9B07760F8CE9/0B6B7D65-22EE-4C6D-ABE8-2E90621D8F63_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "CF5B1422-D9BA-4C5E-B255-270D96C2F8DF_symbolID"
+    },
+    {
+      "_class": "MSImmutableOverrideProperty",
+      "canOverride": true,
+      "overrideName": "450E92FB-FFBE-4FAD-BA99-43FCAD7FADEC_symbolID"
+    }
+  ],
+  "resizesContent": true,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": true,
+  "style": {
+    "_class": "style",
+    "do_objectID": "642A9F3A-2D3E-4D10-AB96-3D9F8DB3B23D",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1
+  },
+  "symbolID": "12A3CD50-D42F-47D0-9E22-1E3FF60A8CF5",
+  "userInfo": {
+    "com.google.ux.material.spec_tools": {
+      "cornerSizesDp": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "theme": "{\"lastUpdatedUtc\":\"2018-05-04 01:16:47\",\"palettes\":{\"PRIMARY\":{\"colors\":[{\"red\":0.9859544899311193,\"green\":0.8334587739550666,\"blue\":1,\"alpha\":1},{\"red\":0.8550637193874936,\"green\":0.6970833609188841,\"blue\":1,\"alpha\":1},{\"red\":0.7275901674939746,\"green\":0.5377639249330965,\"blue\":1,\"alpha\":1},{\"red\":0.5984524380337857,\"green\":0.36655544209114066,\"blue\":1,\"alpha\":1},{\"red\":0.4948002517617938,\"green\":0.22477226807134087,\"blue\":0.984354660403901,\"alpha\":1},{\"red\":0.3843137254901961,\"green\":0,\"blue\":0.9333333333333333,\"alpha\":1},{\"red\":0.3308024214348524,\"green\":0,\"blue\":0.9105106204096087,\"alpha\":1},{\"red\":0.24754325304969493,\"green\":0,\"blue\":0.8752039913556138,\"alpha\":1},{\"red\":0.14615711512742816,\"green\":0,\"blue\":0.8443894793846592,\"alpha\":1},{\"red\":0,\"green\":0,\"blue\":0.7877612052402024,\"alpha\":1}],\"mainColorIndex\":5},\"SECONDARY\":{\"colors\":[{\"red\":0.6583781146729493,\"green\":1,\"blue\":0.983588671118281,\"alpha\":1},{\"red\":0.44417055155425167,\"green\":0.9388847896629231,\"blue\":0.8787059513367422,\"alpha\":1},{\"red\":0.011764705882352941,\"green\":0.8549019607843137,\"blue\":0.7764705882352941,\"alpha\":1},{\"red\":0,\"green\":0.7673140233952528,\"blue\":0.6715579489090746,\"alpha\":1},{\"red\":0,\"green\":0.7012430879003961,\"blue\":0.5943198374406065,\"alpha\":1},{\"red\":0,\"green\":0.6359330611518997,\"blue\":0.5174103950751646,\"alpha\":1},{\"red\":0,\"green\":0.5837568542946732,\"blue\":0.4652022347718405,\"alpha\":1},{\"red\":0,\"green\":0.5193925808856403,\"blue\":0.40041483463808336,\"alpha\":1},{\"red\":0,\"green\":0.4551098537065386,\"blue\":0.34192849361470323,\"alpha\":1},{\"red\":0,\"green\":0.34148963327133386,\"blue\":0.22502936134403267,\"alpha\":1}],\"mainColorIndex\":2},\"SURFACE\":{\"colors\":[{\"red\":1,\"green\":1,\"blue\":1,\"alpha\":1},{\"red\":0.980317845668259,\"green\":0.9803179520311797,\"blue\":0.9803178763021348,\"alpha\":1},{\"red\":0.9527609478696032,\"green\":0.9527610514014778,\"blue\":0.9527609776881015,\"alpha\":1},{\"red\":0.8976399309393717,\"green\":0.8976400288084131,\"blue\":0.8976399591269021,\"alpha\":1},{\"red\":0.7597887672831897,\"green\":0.7597888509901531,\"blue\":0.7597887913918612,\"alpha\":1},{\"red\":0.6376193590515881,\"green\":0.6376194302075311,\"blue\":0.6376193795454058,\"alpha\":1},{\"red\":0.47589143353611724,\"green\":0.4758914880770138,\"blue\":0.4758914492445901,\"alpha\":1},{\"red\":0.39691153782853283,\"green\":0.39691158425546436,\"blue\":0.39691155120008015,\"alpha\":1},{\"red\":0.27431297920854375,\"green\":0.27431301304036704,\"blue\":0.2743129889525397,\"alpha\":1},{\"red\":0.14337395590863736,\"green\":0.14337397628849807,\"blue\":0.14337396177829684,\"alpha\":1}],\"mainColorIndex\":0}},\"cornerType\":\"ROUNDED\",\"cornerSizesDp\":[4,4,4,4],\"textStyles\":{\"HEADLINE_1\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Light\",\"traits\":0,\"weight\":3},\"metrics\":{\"fontSize\":96}},\"HEADLINE_2\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Light\",\"traits\":0,\"weight\":3},\"metrics\":{\"fontSize\":60}},\"HEADLINE_3\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":48}},\"HEADLINE_4\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":34}},\"HEADLINE_5\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":24}},\"HEADLINE_6\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},\"metrics\":{\"fontSize\":20}},\"SUBTITLE_1\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":16}},\"SUBTITLE_2\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},\"metrics\":{\"fontSize\":14}},\"BODY_1\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":16}},\"BODY_2\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":14}},\"CAPTION\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},\"metrics\":{\"fontSize\":12}},\"BUTTON\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},\"metrics\":{\"fontSize\":14}},\"OVERLINE\":{\"font\":{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},\"metrics\":{\"fontSize\":12}}},\"selectedFontFamilies\":[{\"name\":\"Roboto\",\"fonts\":[{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Regular\",\"traits\":0,\"weight\":5},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Italic\",\"traits\":1,\"weight\":5},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Light\",\"traits\":0,\"weight\":3},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Light Italic\",\"traits\":1,\"weight\":3},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium\",\"traits\":0,\"weight\":6},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Medium Italic\",\"traits\":1,\"weight\":7},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Bold\",\"traits\":2,\"weight\":9},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Bold Italic\",\"traits\":3,\"weight\":9},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Black\",\"traits\":2,\"weight\":11},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Black Italic\",\"traits\":3,\"weight\":11},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Thin\",\"traits\":65600,\"weight\":3},{\"fontFamilyName\":\"Roboto\",\"fontName\":\"Thin Italic\",\"traits\":65,\"weight\":3}]},{\"name\":\"Adobe Gothic Std\",\"fonts\":[{\"fontFamilyName\":\"Adobe Gothic Std\",\"fontName\":\"B\",\"traits\":2,\"weight\":9}]},{\"name\":\"Al Bayan\",\"fonts\":[{\"fontFamilyName\":\"Al Bayan\",\"fontName\":\"Plain\",\"traits\":0,\"weight\":5},{\"fontFamilyName\":\"Al Bayan\",\"fontName\":\"Bold\",\"traits\":2,\"weight\":9}]}]}",
+      "themeMetadataVersion": 4,
+      "type": "buttons"
+    }
+  },
+  "verticalRulerData": {
+    "_class": "rulerData",
+    "base": 0,
+    "do_objectID": "52AAC592-C43B-41D1-B607-2389E9B39002",
+    "guides": [
+    ]
+  }
+}
