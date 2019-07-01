@@ -38,9 +38,19 @@ public class ExternalStorageFileStore {
         }
 
         public File newForm(String formName) {
-            return new File(
+            File file = new File(
                     formsPath(externalStorage) + File.separator + formName + ".xml"
             );
+
+            int duplicateNumber = 2;
+            while (file.exists()) {
+                file = new File(
+                        formsPath(externalStorage) + File.separator + formName + "_" + duplicateNumber + ".xml"
+                );
+                duplicateNumber++;
+            }
+
+            return file;
         }
 
         public File newMedia(String formName, String mediaFileName) {

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Random;
 
 import static android.os.Environment.MEDIA_MOUNTED;
 import static android.os.Environment.MEDIA_UNMOUNTED;
@@ -151,6 +152,25 @@ public class ExternalStorageFileStoreTest {
                         "odk" + File.separator +
                         "forms" + File.separator +
                         "bestForm.xml"));
+    }
+
+    @Test
+    public void newForm_whenThereIsAlreadyFilesWithTheSameName_returnsAFileAppendedWithANumber() throws Exception {
+        ExternalStorageFileStore.Instance instance = store.initialize();
+
+        // create a random amount of files to drive out iterating on name
+        int random = new Random().nextInt(42) + 1;
+        for (int i = 0; i < random; i++) {
+            instance.newForm("bestForm").createNewFile();
+        }
+
+        File file = instance.newForm("bestForm");
+        assertThat(file, notNullValue());
+        assertThat(file.getAbsolutePath(), equalTo(
+                externalStorage.getDirectory() + File.separator +
+                        "odk" + File.separator +
+                        "forms" + File.separator +
+                        "bestForm" + "_" + (random + 1) + ".xml"));
     }
 
     @Test

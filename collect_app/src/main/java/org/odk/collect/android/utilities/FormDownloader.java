@@ -55,8 +55,12 @@ public class FormDownloader {
 
     private FormsDao formsDao;
 
-    @Inject CollectServerClient collectServerClient;
+    @Inject
+    CollectServerClient collectServerClient;
 
+    @Inject
+    ExternalStorageFileStore externalStorageFormStore;
+    
     public FormDownloader() {
         Collect.getInstance().getComponent().inject(this);
     }
@@ -326,16 +330,8 @@ public class FormDownloader {
         rootName = rootName.trim();
 
         // proposed name of xml file...
-        String path = Collect.FORMS_PATH + File.separator + rootName + ".xml";
-        int i = 2;
-        File f = new File(path);
-        while (f.exists()) {
-            path = Collect.FORMS_PATH + File.separator + rootName + "_" + i + ".xml";
-            f = new File(path);
-            i++;
-        }
-
-        downloadFile(f, url);
+        File file = externalStorageFormStore.initialize().newForm(rootName);
+        downloadFile(file, url);
 
         boolean isNew = true;
 
@@ -343,7 +339,7 @@ public class FormDownloader {
         // make sure it's not the same as a file we already have
         Cursor c = null;
         try {
-            c = formsDao.getFormsCursorForMd5Hash(FileUtils.getMd5Hash(f));
+            c = formsDao.getFormsCursorForMd5Hash(FileUtils.getMd5Hash(file));
             if (c.getCount() > 0) {
                 // Should be at most, 1
                 c.moveToFirst();
@@ -353,11 +349,11 @@ public class FormDownloader {
                 // delete the file we just downloaded, because it's a duplicate
                 Timber.w("A duplicate file has been found, we need to remove the downloaded file "
                         + "and return the other one.");
-                FileUtils.deleteAndReport(f);
+                FileUtils.deleteAndReport(file);
 
                 // set the file returned to the file we already had
                 String existingPath = c.getString(c.getColumnIndex(FormsProviderAPI.FormsColumns.FORM_FILE_PATH));
-                f = new File(existingPath);
+                file = new File(existingPath);
                 Timber.w("Will use %s", existingPath);
             }
         } finally {
@@ -366,7 +362,7 @@ public class FormDownloader {
             }
         }
 
-        return new FileResult(f, isNew);
+        return new FileResult(file, isNew);
     }
 
     /**
