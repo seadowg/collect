@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(RobolectricTestRunner.class)
-public class DownloadFormListTaskTest {
+public class DownloadFormListTaskIntegrationTest {
 
     private MockWebServer server;
 
