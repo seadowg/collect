@@ -85,8 +85,7 @@ public class DownloadFormListUtils {
         }
 
         // NOTE: /formlist must not be translated! It is the well-known path on the server.
-        String formListUrl = application.getString(
-                R.string.default_odk_formlist);
+        String formListUrl = application.getString(R.string.default_odk_formlist);
 
         // When a url is supplied, we will use the default formList url
         String downloadPath = (url != null) ?
