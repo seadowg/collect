@@ -12,6 +12,8 @@ import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.dao.FormsDao;
 import org.odk.collect.android.dao.InstancesDao;
 import org.odk.collect.android.events.RxEventBus;
+import org.odk.collect.android.formentry.media.AudioHelperFactory;
+import org.odk.collect.android.formentry.media.ScreenContextAudioHelperFactory;
 import org.odk.collect.android.http.CollectServerClient;
 import org.odk.collect.android.http.CollectThenSystemContentTypeMapper;
 import org.odk.collect.android.http.okhttp.OkHttpConnection;
@@ -119,5 +121,10 @@ public class AppDependencyModule {
     @Provides
     public ReferenceManager providesReferenceManager() {
         return ReferenceManager.instance();
+    }
+
+    @Provides
+    public AudioHelperFactory providesAudioHelperFactory() {
+        return new ScreenContextAudioHelperFactory();
     }
 }

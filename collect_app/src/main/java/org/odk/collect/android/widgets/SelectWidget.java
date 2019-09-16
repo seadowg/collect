@@ -32,10 +32,8 @@ import org.javarosa.form.api.FormEntryCaption;
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.adapters.AbstractSelectListAdapter;
-import org.odk.collect.android.audio.AudioHelper;
 import org.odk.collect.android.external.ExternalSelectChoice;
 import org.odk.collect.android.formentry.questions.QuestionDetails;
-import org.odk.collect.android.utilities.ScreenContext;
 import org.odk.collect.android.utilities.WidgetAppearanceUtils;
 import org.odk.collect.android.views.MediaLayout;
 import org.odk.collect.android.views.helpers.FormMediaHelpers;
@@ -60,14 +58,7 @@ public abstract class SelectWidget extends ItemsWidget {
     private int playcounter;
 
     public SelectWidget(Context context, QuestionDetails prompt) {
-        this(context, prompt, new AudioHelper(
-                ((ScreenContext) context).getActivity(),
-                ((ScreenContext) context).getViewLifecycle()
-        ));
-    }
-
-    public SelectWidget(Context context, QuestionDetails prompt, AudioHelper audioHelper) {
-        super(context, prompt, audioHelper);
+        super(context, prompt);
         answerLayout = new LinearLayout(context);
         answerLayout.setOrientation(LinearLayout.VERTICAL);
         playList = new ArrayList<>();

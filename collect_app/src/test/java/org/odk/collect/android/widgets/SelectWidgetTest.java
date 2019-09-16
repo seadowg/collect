@@ -19,6 +19,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.odk.collect.android.audio.AudioButton;
 import org.odk.collect.android.audio.AudioHelper;
+import org.odk.collect.android.formentry.media.AudioHelperFactory;
 import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.injection.config.AppDependencyModule;
 import org.odk.collect.android.support.RobolectricHelpers;
@@ -71,7 +72,7 @@ public class SelectWidgetTest {
         setupMockReference("file://blah2.mp3", referenceManager);
 
         TestScreenContextActivity activity = RobolectricHelpers.createThemedActivity(TestScreenContextActivity.class);
-        new TestWidget(activity, new QuestionDetails(formEntryPrompt), audioHelper, selectChoices);
+        new TestWidget(activity, new QuestionDetails(formEntryPrompt), selectChoices);
 
         verify(audioHelper).setAudio(any(AudioButton.class), eq("file://blah1.mp3"), eq("i am index 0"));
         verify(audioHelper).setAudio(any(AudioButton.class), eq("file://blah2.mp3"), eq("i am index 1"));
@@ -84,13 +85,18 @@ public class SelectWidgetTest {
             public ReferenceManager providesReferenceManager() {
                 return referenceManager;
             }
+
+            @Override
+            public AudioHelperFactory providesAudioHelperFactory() {
+                return context -> audioHelper;
+            }
         });
     }
 
     private static class TestWidget extends SelectWidget {
         
-        TestWidget(Context context, QuestionDetails questionDetails, AudioHelper audioHelper, List<SelectChoice> choices) {
-            super(context, questionDetails, audioHelper);
+        TestWidget(Context context, QuestionDetails questionDetails, List<SelectChoice> choices) {
+            super(context, questionDetails);
 
             for (SelectChoice choice : choices) {
                 addMediaFromChoice(
