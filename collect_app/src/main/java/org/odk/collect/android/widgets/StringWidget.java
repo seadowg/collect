@@ -31,8 +31,8 @@ import android.widget.TableLayout;
 
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.StringData;
-import org.javarosa.form.api.FormEntryPrompt;
 import org.odk.collect.android.activities.FormEntryActivity;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.utilities.SoftKeyboardUtils;
 import org.odk.collect.android.utilities.ViewIds;
 
@@ -50,12 +50,12 @@ public class StringWidget extends QuestionWidget {
     boolean readOnly;
     private final EditText answerText;
 
-    protected StringWidget(Context context, FormEntryPrompt prompt, boolean readOnlyOverride) {
-        super(context, prompt);
+    protected StringWidget(Context context, QuestionDetails questionDetails, boolean readOnlyOverride) {
+        super(context, questionDetails);
 
         answerText = new EditText(context);
         answerText.setId(ViewIds.generateViewId());
-        readOnly = prompt.isReadOnly() || readOnlyOverride;
+        readOnly = questionDetails.getPrompt().isReadOnly() || readOnlyOverride;
 
         answerText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, getAnswerFontSize());
 
@@ -72,7 +72,7 @@ public class StringWidget extends QuestionWidget {
          *
          * will set the height of the EditText box to 5 rows high.
          */
-        String height = prompt.getQuestion().getAdditionalAttribute(null, ROWS);
+        String height = questionDetails.getPrompt().getQuestion().getAdditionalAttribute(null, ROWS);
         if (height != null && height.length() != 0) {
             try {
                 int rows = Integer.parseInt(height);

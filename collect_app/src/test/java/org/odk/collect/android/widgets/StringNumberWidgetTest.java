@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import net.bytebuddy.utility.RandomString;
 
 import org.javarosa.core.model.data.StringData;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.widgets.base.GeneralStringWidgetTest;
 
 import java.util.Random;
@@ -20,7 +21,7 @@ public class StringNumberWidgetTest
     public StringNumberWidget createWidget() {
         Random random = new Random();
         boolean useThousandSeparator = random.nextBoolean();
-        return new StringNumberWidget(activity, formEntryPrompt, false, useThousandSeparator);
+        return new StringNumberWidget(activity, new QuestionDetails(formEntryPrompt), false, useThousandSeparator);
     }
 
     @NonNull

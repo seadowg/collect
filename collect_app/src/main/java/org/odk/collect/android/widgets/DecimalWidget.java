@@ -26,7 +26,7 @@ import android.widget.EditText;
 
 import org.javarosa.core.model.data.DecimalData;
 import org.javarosa.core.model.data.IAnswerData;
-import org.javarosa.form.api.FormEntryPrompt;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.listeners.ThousandsSeparatorTextWatcher;
 
 import java.text.NumberFormat;
@@ -42,8 +42,8 @@ public class DecimalWidget extends StringWidget {
 
     boolean useThousandSeparator;
 
-    public DecimalWidget(Context context, FormEntryPrompt prompt, boolean readOnlyOverride, boolean useThousandSeparator) {
-        super(context, prompt, readOnlyOverride);
+    public DecimalWidget(Context context, QuestionDetails questionDetails, boolean readOnlyOverride, boolean useThousandSeparator) {
+        super(context, questionDetails, readOnlyOverride);
 
         // formatting
         EditText answerText = getAnswerTextField();
@@ -88,7 +88,7 @@ public class DecimalWidget extends StringWidget {
         }
 
         // disable if read only
-        if (prompt.isReadOnly()) {
+        if (questionDetails.getPrompt().isReadOnly()) {
             setBackground(null);
             setFocusable(false);
             setClickable(false);

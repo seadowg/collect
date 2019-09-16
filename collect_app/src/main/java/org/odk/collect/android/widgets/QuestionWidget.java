@@ -47,6 +47,7 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.audio.AudioHelper;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.injection.DaggerUtils;
 import org.odk.collect.android.injection.config.AppDependencyComponent;
 import org.odk.collect.android.listeners.WidgetValueChangedListener;
@@ -101,7 +102,7 @@ public abstract class QuestionWidget
 
     private WidgetValueChangedListener valueChangedListener;
 
-    public QuestionWidget(Context context, FormEntryPrompt prompt, AudioHelper audioHelper) {
+    public QuestionWidget(Context context, QuestionDetails questionDetails, AudioHelper audioHelper) {
         super(context);
         this.audioHelper = audioHelper;
 
@@ -141,19 +142,19 @@ public abstract class QuestionWidget
 
         questionFontSize = Collect.getQuestionFontsize();
 
-        formEntryPrompt = prompt;
+        formEntryPrompt = questionDetails.getPrompt();
 
         setGravity(Gravity.TOP);
         setPadding(0, 7, 0, 0);
 
-        questionMediaLayout = createQuestionMediaLayout(prompt);
+        questionMediaLayout = createQuestionMediaLayout(formEntryPrompt);
         helpTextLayout = createHelpTextLayout();
         helpTextLayout.setId(ViewIds.generateViewId());
         guidanceTextLayout = helpTextLayout.findViewById(R.id.guidance_text_layout);
         textLayout = helpTextLayout.findViewById(R.id.text_layout);
         warningText = helpTextLayout.findViewById(R.id.warning_text);
-        helpTextView = setupHelpText(helpTextLayout.findViewById(R.id.help_text_view), prompt);
-        guidanceTextView = setupGuidanceTextAndLayout(helpTextLayout.findViewById(R.id.guidance_text_view), prompt);
+        helpTextView = setupHelpText(helpTextLayout.findViewById(R.id.help_text_view), formEntryPrompt);
+        guidanceTextView = setupGuidanceTextAndLayout(helpTextLayout.findViewById(R.id.guidance_text_view), formEntryPrompt);
 
         addQuestionMediaLayout(getQuestionMediaLayout());
         addHelpTextLayout(getHelpTextLayout());
@@ -163,8 +164,8 @@ public abstract class QuestionWidget
         }
     }
 
-    public QuestionWidget(Context context, FormEntryPrompt prompt) {
-        this(context, prompt, new AudioHelper(
+    public QuestionWidget(Context context, QuestionDetails questionDetails) {
+        this(context, questionDetails, new AudioHelper(
                 ((ScreenContext) context).getActivity(),
                 ((ScreenContext) context).getViewLifecycle()
         ));

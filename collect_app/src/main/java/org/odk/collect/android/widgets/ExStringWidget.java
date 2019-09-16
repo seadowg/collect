@@ -35,13 +35,13 @@ import android.widget.Toast;
 
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.StringData;
-import org.javarosa.form.api.FormEntryPrompt;
 import org.javarosa.xpath.parser.XPathSyntaxException;
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.ExternalParamsException;
 import org.odk.collect.android.external.ExternalAppsUtils;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.utilities.ActivityAvailability;
 import org.odk.collect.android.utilities.DependencyProvider;
 import org.odk.collect.android.utilities.ObjectUtils;
@@ -110,9 +110,9 @@ public class ExStringWidget extends QuestionWidget implements BinaryWidget {
 
     private ActivityAvailability activityAvailability;
 
-    public ExStringWidget(Context context, FormEntryPrompt prompt) {
+    public ExStringWidget(Context context, QuestionDetails questionDetails) {
 
-        super(context, prompt);
+        super(context, questionDetails);
 
         TableLayout.LayoutParams params = new TableLayout.LayoutParams();
         params.setMargins(7, 5, 7, 5);
@@ -133,7 +133,7 @@ public class ExStringWidget extends QuestionWidget implements BinaryWidget {
         answer.setHorizontallyScrolling(false);
         answer.setSingleLine(false);
 
-        String s = prompt.getAnswerText();
+        String s = questionDetails.getPrompt().getAnswerText();
         if (s != null) {
             answer.setText(s);
         }

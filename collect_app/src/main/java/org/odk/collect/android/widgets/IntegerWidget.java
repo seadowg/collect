@@ -26,7 +26,7 @@ import android.widget.EditText;
 
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.IntegerData;
-import org.javarosa.form.api.FormEntryPrompt;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.listeners.ThousandsSeparatorTextWatcher;
 
 import java.util.Locale;
@@ -41,8 +41,8 @@ public class IntegerWidget extends StringWidget {
 
     boolean useThousandSeparator;
 
-    public IntegerWidget(Context context, FormEntryPrompt prompt, boolean readOnlyOverride, boolean useThousandSeparator) {
-        super(context, prompt, readOnlyOverride);
+    public IntegerWidget(Context context, QuestionDetails questionDetails, boolean readOnlyOverride, boolean useThousandSeparator) {
+        super(context, questionDetails, readOnlyOverride);
 
         EditText answerText = getAnswerTextField();
         answerText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, getAnswerFontSize());
@@ -69,7 +69,7 @@ public class IntegerWidget extends StringWidget {
         }
         answerText.setFilters(fa);
 
-        if (prompt.isReadOnly()) {
+        if (questionDetails.getPrompt().isReadOnly()) {
             setBackground(null);
             setFocusable(false);
             setClickable(false);

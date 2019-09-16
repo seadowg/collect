@@ -24,7 +24,7 @@ import android.widget.EditText;
 
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.StringData;
-import org.javarosa.form.api.FormEntryPrompt;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.listeners.ThousandsSeparatorTextWatcher;
 
 /**
@@ -37,8 +37,8 @@ public class StringNumberWidget extends StringWidget {
 
     boolean useThousandSeparator;
 
-    public StringNumberWidget(Context context, FormEntryPrompt prompt, boolean readOnlyOverride, boolean useThousandSeparator) {
-        super(context, prompt, readOnlyOverride);
+    public StringNumberWidget(Context context, QuestionDetails questionDetails, boolean readOnlyOverride, boolean useThousandSeparator) {
+        super(context, questionDetails, readOnlyOverride);
 
         EditText answerTextField = getAnswerTextField();
 
@@ -63,15 +63,15 @@ public class StringNumberWidget extends StringWidget {
             }
         });
 
-        if (prompt.isReadOnly()) {
+        if (questionDetails.getPrompt().isReadOnly()) {
             setBackground(null);
             setFocusable(false);
             setClickable(false);
         }
 
         String s = null;
-        if (prompt.getAnswerValue() != null) {
-            s = (String) prompt.getAnswerValue().getValue();
+        if (questionDetails.getPrompt().getAnswerValue() != null) {
+            s = (String) questionDetails.getPrompt().getAnswerValue().getValue();
         }
 
         if (s != null) {

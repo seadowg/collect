@@ -35,10 +35,10 @@ import androidx.appcompat.widget.AppCompatRadioButton;
 import org.javarosa.core.reference.InvalidReferenceException;
 import org.javarosa.core.reference.ReferenceManager;
 import org.javarosa.form.api.FormEntryCaption;
-import org.javarosa.form.api.FormEntryPrompt;
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.external.ExternalSelectChoice;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.utilities.AudioHandler;
 import org.odk.collect.android.utilities.FileUtils;
 import org.odk.collect.android.utilities.FormEntryPromptUtils;
@@ -74,11 +74,11 @@ public abstract class BaseGridWidget extends ItemsWidget implements MultiChoiceW
     View[] itemViews;
     AudioHandler[] audioHandlers;
 
-    public BaseGridWidget(Context context, FormEntryPrompt prompt, boolean quickAdvance) {
-        super(context, prompt);
+    public BaseGridWidget(Context context, QuestionDetails questionDetails, boolean quickAdvance) {
+        super(context, questionDetails);
 
         this.quickAdvance = quickAdvance;
-        noButtonsMode = WidgetAppearanceUtils.isCompactAppearance(prompt) || WidgetAppearanceUtils.isNoButtonsAppearance(prompt);
+        noButtonsMode = WidgetAppearanceUtils.isCompactAppearance(questionDetails.getPrompt()) || WidgetAppearanceUtils.isNoButtonsAppearance(questionDetails.getPrompt());
         itemViews = new View[items.size()];
         audioHandlers = new AudioHandler[items.size()];
 

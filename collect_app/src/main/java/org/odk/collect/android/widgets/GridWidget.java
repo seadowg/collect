@@ -20,7 +20,7 @@ import android.content.Context;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.SelectOneData;
 import org.javarosa.core.model.data.helper.Selection;
-import org.javarosa.form.api.FormEntryPrompt;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.listeners.AdvanceToNextListener;
 
 @SuppressLint("ViewConstructor")
@@ -28,7 +28,7 @@ public class GridWidget extends BaseGridWidget {
 
     private final AdvanceToNextListener listener;
 
-    public GridWidget(Context context, FormEntryPrompt prompt, final boolean quickAdvance) {
+    public GridWidget(Context context, QuestionDetails prompt, final boolean quickAdvance) {
         super(context, prompt, quickAdvance);
         listener = context instanceof AdvanceToNextListener ? (AdvanceToNextListener) context : null;
     }

@@ -16,6 +16,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.odk.collect.android.audio.AudioButton;
 import org.odk.collect.android.audio.AudioHelper;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.injection.config.AppDependencyModule;
 import org.odk.collect.android.support.RobolectricHelpers;
 import org.odk.collect.android.support.TestScreenContextActivity;
@@ -55,7 +56,7 @@ public class QuestionWidgetTest {
         setupMockReference("file://blah.mp3", referenceManager);
 
         TestScreenContextActivity activity = RobolectricHelpers.createThemedActivity(TestScreenContextActivity.class);
-        new TestWidget(activity, formEntryPrompt, audioHelper);
+        new TestWidget(activity, new QuestionDetails(formEntryPrompt), audioHelper);
 
         verify(audioHelper).setAudio(any(AudioButton.class), eq("file://blah.mp3"), eq("i am index"));
     }
@@ -72,8 +73,8 @@ public class QuestionWidgetTest {
 
     private static class TestWidget extends QuestionWidget {
 
-        TestWidget(Context context, FormEntryPrompt prompt, AudioHelper audioHelper) {
-            super(context, prompt, audioHelper);
+        TestWidget(Context context, QuestionDetails questionDetails, AudioHelper audioHelper) {
+            super(context, questionDetails, audioHelper);
         }
 
         @Override

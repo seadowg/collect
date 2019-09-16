@@ -25,9 +25,9 @@ import android.text.method.DigitsKeyListener;
 
 import org.javarosa.core.model.data.DecimalData;
 import org.javarosa.core.model.data.IAnswerData;
-import org.javarosa.form.api.FormEntryPrompt;
 import org.odk.collect.android.R;
 import org.odk.collect.android.external.ExternalAppsUtils;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.utilities.ToastUtils;
 
 import java.text.NumberFormat;
@@ -47,7 +47,7 @@ import static org.odk.collect.android.utilities.ApplicationConstants.RequestCode
  */
 public class ExDecimalWidget extends ExStringWidget {
 
-    public ExDecimalWidget(Context context, FormEntryPrompt prompt) {
+    public ExDecimalWidget(Context context, QuestionDetails prompt) {
         super(context, prompt);
 
         answer.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);

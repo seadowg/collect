@@ -6,6 +6,7 @@ import org.javarosa.core.model.SelectChoice;
 import org.javarosa.core.model.data.SelectMultiData;
 import org.javarosa.core.model.data.helper.Selection;
 import org.junit.Test;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.widgets.base.GeneralSelectMultiWidgetTest;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class GridMultiWidgetTest extends GeneralSelectMultiWidgetTest<GridMultiW
     @NonNull
     @Override
     public GridMultiWidget createWidget() {
-        return new GridMultiWidget(activity, formEntryPrompt);
+        return new GridMultiWidget(activity, new QuestionDetails(formEntryPrompt));
     }
 
     @Test

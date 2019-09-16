@@ -21,7 +21,7 @@ import org.javarosa.core.model.SelectChoice;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.SelectMultiData;
 import org.javarosa.core.model.data.helper.Selection;
-import org.javarosa.form.api.FormEntryPrompt;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.widgets.warnings.SpacesInUnderlyingValuesWarning;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class GridMultiWidget extends BaseGridWidget {
 
     int lastClickPosition; // need to remember the last click position for audio treatment
 
-    public GridMultiWidget(Context context, FormEntryPrompt prompt) {
+    public GridMultiWidget(Context context, QuestionDetails prompt) {
         super(context, prompt, false);
         SpacesInUnderlyingValuesWarning.forQuestionWidget(this).renderWarningIfNecessary(items);
     }

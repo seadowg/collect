@@ -3,6 +3,7 @@ package org.odk.collect.android.widgets;
 import androidx.annotation.NonNull;
 
 import org.javarosa.core.model.data.IntegerData;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.widgets.base.GeneralStringWidgetTest;
 
 import java.util.Random;
@@ -17,7 +18,7 @@ public class IntegerWidgetTest extends GeneralStringWidgetTest<IntegerWidget, In
     public IntegerWidget createWidget() {
         Random random = new Random();
         boolean useThousandSeparator = random.nextBoolean();
-        return new IntegerWidget(activity, formEntryPrompt, false, useThousandSeparator);
+        return new IntegerWidget(activity, new QuestionDetails(formEntryPrompt), false, useThousandSeparator);
     }
 
     @NonNull
