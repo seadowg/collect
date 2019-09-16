@@ -43,8 +43,6 @@ import org.odk.collect.android.exception.ExternalParamsException;
 import org.odk.collect.android.external.ExternalAppsUtils;
 import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.utilities.ActivityAvailability;
-import org.odk.collect.android.utilities.DependencyProvider;
-import org.odk.collect.android.utilities.ObjectUtils;
 import org.odk.collect.android.utilities.SoftKeyboardUtils;
 import org.odk.collect.android.utilities.ToastUtils;
 import org.odk.collect.android.utilities.ViewIds;
@@ -52,9 +50,12 @@ import org.odk.collect.android.widgets.interfaces.BinaryWidget;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 import static android.content.Intent.ACTION_SENDTO;
+import static org.odk.collect.android.injection.DaggerUtils.getComponent;
 import static org.odk.collect.android.utilities.ApplicationConstants.RequestCodes;
 
 /**
@@ -108,11 +109,12 @@ public class ExStringWidget extends QuestionWidget implements BinaryWidget {
     private final Button launchIntentButton;
     private final Drawable textBackground;
 
-    private ActivityAvailability activityAvailability;
+    @Inject
+    public ActivityAvailability activityAvailability;
 
     public ExStringWidget(Context context, QuestionDetails questionDetails) {
-
         super(context, questionDetails);
+        getComponent(context).inject(this);
 
         TableLayout.LayoutParams params = new TableLayout.LayoutParams();
         params.setMargins(7, 5, 7, 5);
@@ -231,19 +233,6 @@ public class ExStringWidget extends QuestionWidget implements BinaryWidget {
         super.cancelLongPress();
         answer.cancelLongPress();
         launchIntentButton.cancelLongPress();
-    }
-
-    @Override
-    protected void injectDependencies(DependencyProvider dependencyProvider) {
-        DependencyProvider<ActivityAvailability> activityUtilProvider =
-                ObjectUtils.uncheckedCast(dependencyProvider);
-
-        if (activityUtilProvider == null) {
-            Timber.e("DependencyProvider doesn't provide ActivityAvailability.");
-            return;
-        }
-
-        this.activityAvailability = activityUtilProvider.provide();
     }
 
     @Override
