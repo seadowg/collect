@@ -23,6 +23,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import android.view.View;
@@ -31,6 +33,7 @@ import android.widget.AdapterView;
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.dao.FormsDao;
+import org.odk.collect.android.formentry.AKDialogFragment;
 import org.odk.collect.android.listeners.DiskSyncListener;
 import org.odk.collect.android.listeners.PermissionListener;
 import org.odk.collect.android.preferences.GeneralSharedPreferences;
@@ -130,12 +133,18 @@ public class FormChooserListActivity extends FormListActivity implements
                 setResult(RESULT_OK, new Intent().setData(formUri));
             } else {
                 // caller wants to view/edit a form, so launch formentryactivity
-                Intent intent = new Intent(Intent.ACTION_EDIT, formUri);
-                intent.putExtra(ApplicationConstants.BundleKeys.FORM_MODE, ApplicationConstants.FormModes.EDIT_SAVED);
-                startActivity(intent);
+//                Intent intent = new Intent(Intent.ACTION_EDIT, formUri);
+//                intent.putExtra(ApplicationConstants.BundleKeys.FORM_MODE, ApplicationConstants.FormModes.EDIT_SAVED);
+//                startActivity(intent);
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                AKDialogFragment newFragment = new AKDialogFragment();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.add(android.R.id.content, newFragment).addToBackStack(null).commit();
             }
             
-            finish();
+//            finish();
         }
     }
 
