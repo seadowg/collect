@@ -11,21 +11,35 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import org.odk.collect.android.R;
 
 public class IdentifyUserPromptDialogFragment extends DialogFragment {
 
-    public static final String TAG = "IdentifyUserPromptDialogFragment";
+    private static final String TAG = "IdentifyUserPromptDialogFragment";
     private static final String ARG_FORM_NAME = "ArgFormName";
 
     private EditText identityField;
     private IdentityPromptViewModel viewModel;
 
-    public static IdentifyUserPromptDialogFragment create(String formName) {
+    public static void show(AppCompatActivity activity, String formName) {
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+
+        IdentifyUserPromptDialogFragment fragment = create(formName);
+        fragment.show(fragmentManager.beginTransaction(), TAG);
+    }
+
+    public static Boolean isShowing(AppCompatActivity activity) {
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        return fragmentManager.findFragmentByTag(TAG) != null;
+    }
+
+    private static IdentifyUserPromptDialogFragment create(String formName) {
         IdentifyUserPromptDialogFragment dialog = new IdentifyUserPromptDialogFragment();
 
         Bundle bundle = new Bundle();

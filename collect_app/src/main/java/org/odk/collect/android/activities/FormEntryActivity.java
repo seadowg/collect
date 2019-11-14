@@ -61,7 +61,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -99,6 +98,7 @@ import org.odk.collect.android.events.ReadPhoneStatePermissionRxEvent;
 import org.odk.collect.android.events.RxEventBus;
 import org.odk.collect.android.exception.JavaRosaException;
 import org.odk.collect.android.external.ExternalDataManager;
+import org.odk.collect.android.formentry.FormEntrySetupper;
 import org.odk.collect.android.formentry.FormEntryViewModel;
 import org.odk.collect.android.formentry.audit.AuditEvent;
 import org.odk.collect.android.formentry.audit.IdentifyUserPromptDialogFragment;
@@ -161,12 +161,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -408,10 +405,8 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
         identityPromptViewModel = ViewModelProviders.of(this).get(IdentityPromptViewModel.class);
         identityPromptViewModel.requiresIdentity().observe(this, requiresIdentity -> {
-            if (requiresIdentity) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                IdentifyUserPromptDialogFragment dialog = IdentifyUserPromptDialogFragment.create(getFormController().getFormTitle());
-                dialog.show(fragmentManager.beginTransaction(), IdentifyUserPromptDialogFragment.TAG);
+            if (requiresIdentity && !IdentifyUserPromptDialogFragment.isShowing(this)) {
+                IdentifyUserPromptDialogFragment.show(this, getFormController().getFormTitle());
             }
         });
         identityPromptViewModel.isFormEntryCancelled().observe(this, isFormEntryCancelled -> {
@@ -2383,99 +2378,56 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                 });
             } else {
                 formLoaderTask.setFormLoaderListener(null);
-                FormLoaderTask t = formLoaderTask;
                 formLoaderTask = null;
-                t.cancel(true);
-                t.destroy();
 
-                Collect.getInstance().setFormController(formController);
                 supportInvalidateOptionsMenu();
-                formEntryViewModel.formFinishedLoading();
-                Collect.getInstance().setExternalDataManager(task.getExternalDataManager());
 
-                // Set the language if one has already been set in the past
-                String[] languageTest = formController.getLanguages();
-                if (languageTest != null) {
-                    String defaultLanguage = formController.getLanguage();
-                    String newLanguage = FormsDaoHelper.getFormLanguage(formPath);
-
-                    long start = System.currentTimeMillis();
-                    Timber.i("calling formController.setLanguage");
-                    try {
-                        formController.setLanguage(newLanguage);
-                    } catch (Exception e) {
-                        // if somehow we end up with a bad language, set it to the default
-                        Timber.e("Ended up with a bad language. %s", newLanguage);
-                        formController.setLanguage(defaultLanguage);
+                FormEntrySetupper formEntrySetupper = new FormEntrySetupper(this, task, formPath, identityPromptViewModel, formEntryViewModel);
+                formEntrySetupper.setAllowMovingBackwards(allowMovingBackwards);
+                formEntrySetupper.setup(new FormEntrySetupper.Listener() {
+                    @Override
+                    public void onPendingActivityResult(FormController formController, int requestCode, int resultCode, Intent intent) {
+                        // set the current view to whatever group we were at...
+                        refreshCurrentView();
+                        // process the pending activity request...
+                        onActivityResult(task.getRequestCode(), task.getResultCode(), task.getIntent());
                     }
-                    Timber.i("Done in %.3f seconds.", (System.currentTimeMillis() - start) / 1000F);
-                }
 
-                boolean pendingActivityResult = task.hasPendingActivityResult();
-
-                if (pendingActivityResult) {
-                    // set the current view to whatever group we were at...
-                    refreshCurrentView();
-                    // process the pending activity request...
-                    onActivityResult(task.getRequestCode(), task.getResultCode(), task.getIntent());
-                    return;
-                }
-
-                // it can be a normal flow for a pending activity result to restore from a savepoint
-                // (the call flow handled by the above if statement). For all other use cases, the
-                // user should be notified, as it means they wandered off doing other things then
-                // returned to ODK Collect and chose Edit Saved Form, but that the savepoint for
-                // that form is newer than the last saved version of their form data.
-                boolean hasUsedSavepoint = task.hasUsedSavepoint();
-
-                if (hasUsedSavepoint) {
-                    runOnUiThread(() -> ToastUtils.showLongToast(R.string.savepoint_used));
-                }
-
-                if (formController.getInstanceFile() == null) {
-                    createInstanceDirectory(formController);
-                    identityPromptViewModel.setAuditEventLogger(formController.getAuditEventLogger());
-                    identityPromptViewModel.requiresIdentity().observe(this, requiresIdentity -> {
-                        if (!requiresIdentity) {
-                            startFormEntry(formController);
-                        }
-                    });
-                } else {
-                    Intent reqIntent = getIntent();
-                    boolean showFirst = reqIntent.getBooleanExtra("start", false);
-
-                    if (!showFirst) {
-                        if (!allowMovingBackwards) {
-                            FormIndex formIndex = SaveFormIndexTask.loadFormIndexFromFile();
-                            if (formIndex != null) {
-                                formController.jumpToIndex(formIndex);
-                                refreshCurrentView();
-                                return;
-                            }
-                        }
-
-                        // we've just loaded a saved form, so start in the hierarchy view
-                        String formMode = reqIntent.getStringExtra(ApplicationConstants.BundleKeys.FORM_MODE);
-                        if (formMode == null || ApplicationConstants.FormModes.EDIT_SAVED.equalsIgnoreCase(formMode)) {
-                            formController.getAuditEventLogger().logEvent(AuditEvent.AuditEventType.FORM_RESUME, true, System.currentTimeMillis());
-                            formController.getAuditEventLogger().logEvent(AuditEvent.AuditEventType.HIERARCHY, true, System.currentTimeMillis());
-                            startActivityForResult(new Intent(this, FormHierarchyActivity.class), RequestCodes.HIERARCHY_ACTIVITY);
-                            return; // so we don't show the intro screen before jumping to the hierarchy
-                        } else {
-                            if (ApplicationConstants.FormModes.VIEW_SENT.equalsIgnoreCase(formMode)) {
-                                startActivity(new Intent(this, ViewOnlyFormHierarchyActivity.class));
-                            }
-                            finish();
-                        }
-                    } else {
-                        identityPromptViewModel.setAuditEventLogger(formController.getAuditEventLogger());
-                        identityPromptViewModel.requiresIdentity().observe(this, requiresIdentity -> {
-                            if (!requiresIdentity) {
-                                resumeFormEntry(formController);
-                            }
-                        });
+                    @Override
+                    public void onRecoveringSavepoint(FormController formController) {
+                        runOnUiThread(() -> ToastUtils.showLongToast(R.string.savepoint_used));
                     }
-                }
+
+                    @Override
+                    public void onStartFormEntry(FormController formController) {
+                        startFormEntry(formController);
+                    }
+
+                    @Override
+                    public void onResumeFormEntry(FormController formController) {
+                        resumeFormEntry(formController);
+                    }
+
+                    @Override
+                    public void onResumeFormEntryAtHierarchy(FormController formController) {
+                        startActivityForResult(new Intent(FormEntryActivity.this, FormHierarchyActivity.class), ApplicationConstants.RequestCodes.HIERARCHY_ACTIVITY);
+                    }
+
+                    @Override
+                    public void onViewSentForm(FormController formController) {
+                        startActivity(new Intent(FormEntryActivity.this, ViewOnlyFormHierarchyActivity.class));
+                    }
+
+                    @Override
+                    public void onResumeFormEntryAtIndex(FormController formController) {
+                        refreshCurrentView();
+                    }
+
+                    @Override
+                    public void onUnknownFormMode(FormController formController) {
+                        finish();
+                    }
+                });
             }
 
         } else {
@@ -2486,8 +2438,6 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
     }
 
     private void startFormEntry(FormController formController) {
-        formController.getAuditEventLogger().logEvent(AuditEvent.AuditEventType.FORM_START, true, System.currentTimeMillis());
-
         // Register to receive location provider change updates and write them to the audit
         // log. onStart has already run but the formController was null so try again.
         if (formController.currentFormAuditsLocation()
@@ -2505,8 +2455,6 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
     }
 
     private void resumeFormEntry(FormController formController) {
-        formController.getAuditEventLogger().logEvent(AuditEvent.AuditEventType.FORM_RESUME, true, System.currentTimeMillis());
-
         // Register to receive location provider change updates and write them to the audit
         // log. onStart has already run but the formController was null so try again.
         if (formController.currentFormAuditsLocation()
@@ -2521,19 +2469,6 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
         activityDisplayed();
 
         refreshCurrentView();
-    }
-
-    private void createInstanceDirectory(FormController formController) {
-        String time = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss",
-                Locale.ENGLISH).format(Calendar.getInstance().getTime());
-        String file = formPath.substring(formPath.lastIndexOf('/') + 1,
-                formPath.lastIndexOf('.'));
-        String path = Collect.INSTANCES_PATH + File.separator + file + "_"
-                + time;
-        if (FileUtils.createFolder(path)) {
-            File instanceFile = new File(path + File.separator + file + "_" + time + ".xml");
-            formController.setInstanceFile(instanceFile);
-        }
     }
 
     /**
