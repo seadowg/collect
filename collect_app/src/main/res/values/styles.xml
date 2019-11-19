@@ -53,4 +53,8 @@
     <style name="Widget.Collect.Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="titleTextAppearance">@style/TextAppearance.Collect.Headline6</item>
     </style>
+
+    <style name="Widget.Collect.Button.OutlinedButton.Icon" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+        <item name="iconTint">?attr/colorOnSurface</item>
+    </style>
 </resources>
