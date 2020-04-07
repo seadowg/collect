@@ -1,0 +1,9 @@
+pixel-2-27:
+  type: instrumentation
+  app: collect_app/build/outputs/apk/debug/*.apk
+  test: collect_app/build/outputs/apk/androidTest/debug/*.apk
+  device:
+    - model: Pixel2
+      version: 27
+      locale: 'en'
+      orientation: portrait
