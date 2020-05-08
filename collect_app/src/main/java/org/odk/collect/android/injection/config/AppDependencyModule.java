@@ -32,6 +32,7 @@ import org.odk.collect.android.openrosa.okhttp.OkHttpOpenRosaServerClientProvide
 import org.odk.collect.android.preferences.AdminSharedPreferences;
 import org.odk.collect.android.preferences.GeneralSharedPreferences;
 import org.odk.collect.android.preferences.MetaSharedPreferencesProvider;
+import org.odk.collect.android.storage.StorageInitializer;
 import org.odk.collect.android.storage.StoragePathProvider;
 import org.odk.collect.android.storage.StorageStateProvider;
 import org.odk.collect.android.storage.migration.StorageEraser;
@@ -173,6 +174,12 @@ public class AppDependencyModule {
     @Singleton
     public StorageMigrationRepository providesStorageMigrationRepository() {
         return new StorageMigrationRepository();
+    }
+
+    @Provides
+    @Singleton
+    public StorageInitializer providesStorageInitializer() {
+        return new StorageInitializer();
     }
 
     @Provides

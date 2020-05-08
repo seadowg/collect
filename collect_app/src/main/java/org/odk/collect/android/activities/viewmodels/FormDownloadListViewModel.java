@@ -21,11 +21,16 @@ import androidx.lifecycle.ViewModel;
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.logic.FormDetails;
+import org.odk.collect.android.utilities.FileUtils;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+
+import static org.odk.collect.android.analytics.AnalyticsEvents.FIRST_FORM_DOWNLOAD;
+import static org.odk.collect.android.analytics.AnalyticsEvents.SUBSEQUENT_FORM_DOWNLOAD;
 
 public class FormDownloadListViewModel extends ViewModel {
     private HashMap<String, FormDetails> formDetailsByFormId = new HashMap<>();
@@ -211,5 +216,17 @@ public class FormDownloadListViewModel extends ViewModel {
 
     public void setLoadingCanceled(boolean loadingCanceled) {
         this.loadingCanceled = loadingCanceled;
+    }
+
+    public String getDownloadAnalyticsEvent(int downloadedFormCount) {
+        return downloadedFormCount == 0 ? FIRST_FORM_DOWNLOAD : SUBSEQUENT_FORM_DOWNLOAD;
+    }
+
+    public String getDownloadAnalyticsDescription(String serverUrl) {
+        // If a URL was set by intent, use that
+        serverUrl = getUrl() != null ? getUrl() : serverUrl;
+
+        String serverHash = FileUtils.getMd5Hash(new ByteArrayInputStream(serverUrl.getBytes()));
+        return getSelectedFormIds().size() + "/" + getFormList().size() + "-" + serverHash;
     }
 }

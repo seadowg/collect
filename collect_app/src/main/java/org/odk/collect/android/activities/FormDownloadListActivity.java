@@ -36,15 +36,16 @@ import androidx.lifecycle.ViewModelProviders;
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.viewmodels.FormDownloadListViewModel;
 import org.odk.collect.android.adapters.FormDownloadListAdapter;
+import org.odk.collect.android.analytics.Analytics;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.dao.FormsDao;
-import org.odk.collect.android.network.NetworkStateProvider;
-import org.odk.collect.android.openrosa.HttpCredentialsInterface;
 import org.odk.collect.android.injection.DaggerUtils;
 import org.odk.collect.android.listeners.DownloadFormsTaskListener;
 import org.odk.collect.android.listeners.FormListDownloaderListener;
 import org.odk.collect.android.listeners.PermissionListener;
 import org.odk.collect.android.logic.FormDetails;
+import org.odk.collect.android.network.NetworkStateProvider;
+import org.odk.collect.android.openrosa.HttpCredentialsInterface;
 import org.odk.collect.android.storage.StorageInitializer;
 import org.odk.collect.android.tasks.DownloadFormListTask;
 import org.odk.collect.android.tasks.DownloadFormsTask;
@@ -127,6 +128,18 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
     @Inject
     NetworkStateProvider connectivityProvider;
 
+    @Inject
+    Analytics analytics;
+
+    @Inject
+    FormsDao formsDao;
+
+    @Inject
+    PermissionUtils permissionUtils;
+
+    @Inject
+    StorageInitializer storageInitializer;
+
     @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,12 +152,12 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
         viewModel = ViewModelProviders.of(this).get(FormDownloadListViewModel.class);
 
         // This activity is accessed directly externally
-        new PermissionUtils().requestStoragePermissions(this, new PermissionListener() {
+        permissionUtils.requestStoragePermissions(this, new PermissionListener() {
             @Override
             public void granted() {
                 // must be at the beginning of any activity that can be called from an external intent
                 try {
-                    new StorageInitializer().createOdkDirsOnStorage();
+                    storageInitializer.createOdkDirsOnStorage();
                 } catch (RuntimeException e) {
                     DialogUtils.showDialog(DialogUtils.createErrorDialog(FormDownloadListActivity.this, e.getMessage(), EXIT), FormDownloadListActivity.this);
                     return;
@@ -191,11 +204,10 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
 
         downloadButton = findViewById(R.id.add_button);
         downloadButton.setEnabled(listView.getCheckedItemCount() > 0);
-        downloadButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                downloadSelectedFiles();
-            }
+        downloadButton.setOnClickListener(v -> {
+            ArrayList<FormDetails> filesToDownload = getFilesToDownload();
+            logDownloadAnalyticsEvent();
+            startFormsDownload(filesToDownload);
         });
 
         toggleButton = findViewById(R.id.toggle_button);
@@ -404,10 +416,7 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
         });
     }
 
-    /**
-     * starts the task to download the selected forms, also shows progress dialog
-     */
-    private void downloadSelectedFiles() {
+    private ArrayList<FormDetails> getFilesToDownload() {
         ArrayList<FormDetails> filesToDownload = new ArrayList<>();
 
         SparseBooleanArray sba = listView.getCheckedItemPositions();
@@ -418,10 +427,18 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
                 filesToDownload.add(viewModel.getFormDetailsByFormId().get(item.get(FORMDETAIL_KEY)));
             }
         }
-
-        startFormsDownload(filesToDownload);
+        return filesToDownload;
     }
 
+    private void logDownloadAnalyticsEvent() {
+        String analyticsEvent = viewModel.getDownloadAnalyticsEvent(formsDao.getFormsCursor().getCount());
+        String analyticsDesc = viewModel.getDownloadAnalyticsDescription(webCredentialsUtils.getServerUrlFromPreferences());
+        analytics.logEvent(analyticsEvent, analyticsDesc);
+    }
+
+    /**
+     * starts the task to download the selected forms, also shows progress dialog
+     */
     @SuppressWarnings("unchecked")
     private void startFormsDownload(@NonNull ArrayList<FormDetails> filesToDownload) {
         int totalCount = filesToDownload.size();
