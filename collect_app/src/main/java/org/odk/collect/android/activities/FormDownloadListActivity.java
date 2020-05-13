@@ -14,7 +14,6 @@
 
 package org.odk.collect.android.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,7 +30,8 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.viewmodels.FormDownloadListViewModel;
@@ -149,7 +149,8 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
         setContentView(R.layout.form_download_list);
         setTitle(getString(R.string.get_forms));
 
-        viewModel = ViewModelProviders.of(this).get(FormDownloadListViewModel.class);
+        viewModel = new ViewModelProvider(this, new FormDownloadListViewModel.Factory(analytics))
+                .get(FormDownloadListViewModel.class);
 
         // This activity is accessed directly externally
         permissionUtils.requestStoragePermissions(this, new PermissionListener() {
@@ -206,7 +207,8 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
         downloadButton.setEnabled(listView.getCheckedItemCount() > 0);
         downloadButton.setOnClickListener(v -> {
             ArrayList<FormDetails> filesToDownload = getFilesToDownload();
-            logDownloadAnalyticsEvent();
+            viewModel.logDownloadAnalyticsEvent(formsDao.getFormsCursor().getCount(),
+                    webCredentialsUtils.getServerUrlFromPreferences());
             startFormsDownload(filesToDownload);
         });
 
@@ -428,12 +430,6 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
             }
         }
         return filesToDownload;
-    }
-
-    private void logDownloadAnalyticsEvent() {
-        String analyticsEvent = viewModel.getDownloadAnalyticsEvent(formsDao.getFormsCursor().getCount());
-        String analyticsDesc = viewModel.getDownloadAnalyticsDescription(webCredentialsUtils.getServerUrlFromPreferences());
-        analytics.logEvent(analyticsEvent, analyticsDesc);
     }
 
     /**

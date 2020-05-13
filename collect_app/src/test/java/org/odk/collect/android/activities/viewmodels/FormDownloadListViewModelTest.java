@@ -2,6 +2,7 @@ package org.odk.collect.android.activities.viewmodels;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.odk.collect.android.analytics.Analytics;
 import org.odk.collect.android.analytics.AnalyticsEvents;
 import org.odk.collect.android.utilities.FileUtils;
 
@@ -11,13 +12,14 @@ import java.util.HashMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
 
 
 public class FormDownloadListViewModelTest {
     private FormDownloadListViewModel viewModel;
 
     @Before public void setUp() {
-        viewModel = new FormDownloadListViewModel();
+        viewModel = new FormDownloadListViewModel(mock(Analytics.class));
     }
 
     @Test public void getDownloadAnalyticsEvent_returnsFirstDownload_whenNoFormsAreOnDevice() {
