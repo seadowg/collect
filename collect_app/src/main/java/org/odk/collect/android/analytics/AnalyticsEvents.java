@@ -126,7 +126,8 @@ public class AnalyticsEvents {
     public static final String FIRST_FORM_DOWNLOAD = "FirstFormDownload";
 
     /**
-     * Download a subset of available forms. The action should be a hash of the currently configured url.
+     * Download a subset of available forms. The action should be in the format:
+     * {number of downloaded forms}/{total forms}-{form server hash}
      */
     public static final String SUBSEQUENT_FORM_DOWNLOAD = "SubsequentFormDownload";
 }
