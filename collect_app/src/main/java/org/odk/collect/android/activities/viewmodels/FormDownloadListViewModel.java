@@ -233,11 +233,11 @@ public class FormDownloadListViewModel extends ViewModel {
         analytics.logEvent(analyticsEvent, analyticsDesc);
     }
 
-    String getDownloadAnalyticsEvent(int downloadedFormCount) {
+    private String getDownloadAnalyticsEvent(int downloadedFormCount) {
         return downloadedFormCount == 0 ? FIRST_FORM_DOWNLOAD : SUBSEQUENT_FORM_DOWNLOAD;
     }
 
-    String getDownloadAnalyticsDescription(String serverUrl) {
+    private String getDownloadAnalyticsDescription(String serverUrl) {
         // If a URL was set by intent, use that
         serverUrl = getUrl() != null ? getUrl() : serverUrl;
 

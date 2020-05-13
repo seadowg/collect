@@ -4,47 +4,40 @@ import org.junit.Before;
 import org.junit.Test;
 import org.odk.collect.android.analytics.Analytics;
 import org.odk.collect.android.analytics.AnalyticsEvents;
-import org.odk.collect.android.utilities.FileUtils;
 
-import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 
 public class FormDownloadListViewModelTest {
+
+    private final Analytics analytics = mock(Analytics.class);
+
     private FormDownloadListViewModel viewModel;
 
-    @Before public void setUp() {
-        viewModel = new FormDownloadListViewModel(mock(Analytics.class));
+    @Before
+    public void setUp() {
+        viewModel = new FormDownloadListViewModel(analytics);
     }
 
-    @Test public void getDownloadAnalyticsEvent_returnsFirstDownload_whenNoFormsAreOnDevice() {
-        assertThat(viewModel.getDownloadAnalyticsEvent(0), is(AnalyticsEvents.FIRST_FORM_DOWNLOAD));
+    @Test
+    public void logDownloadAnalyticsEvent_whenNoFormsAreOnDevice_logsFirstDownload() {
+        viewModel.logDownloadAnalyticsEvent(0, "https://server.example.com");
+        verify(analytics).logEvent(eq(AnalyticsEvents.FIRST_FORM_DOWNLOAD), anyString());
     }
 
-    @Test public void getDownloadAnalyticsEvent_returnsSubsequentDownload_whenFormsAreOnDevice() {
-        assertThat(viewModel.getDownloadAnalyticsEvent(1), is(AnalyticsEvents.SUBSEQUENT_FORM_DOWNLOAD));
+    @Test
+    public void logDownloadAnalyticsEvent_whenFormsAreOnDevice_logsSubsequentDownload() {
+        viewModel.logDownloadAnalyticsEvent(1, "https://server.example.com");
+        verify(analytics).logEvent(eq(AnalyticsEvents.SUBSEQUENT_FORM_DOWNLOAD), anyString());
     }
 
-    @Test public void getDownloadAnalyticsDescription_hasExpectedFormat() {
-        String result = viewModel.getDownloadAnalyticsDescription("some string");
-        assertThat(result.matches("[0-9]*/[0-9]*-.*"), is(true));
-    }
-
-    @Test public void getDownloadAnalyticsDescription_includesServerUrlHash() {
-        String server = "a server url";
-        String serverUrlHash = FileUtils.getMd5Hash(new ByteArrayInputStream(server.getBytes()));
-
-        assertThat(viewModel.getDownloadAnalyticsDescription(server), containsString(serverUrlHash));
-    }
-
-    @Test public void getDownloadAnalyticsDescription_includesSelectedFormAndTotalFormCounts() {
-        viewModel.addForm(new HashMap<>());
-        viewModel.addForm(new HashMap<>());
+    @Test
+    public void logDownloadAnalyticsEvent_logsSelectedFormAndTotalFormCountsAndServerHashAsAction() {
         viewModel.addForm(new HashMap<>());
         viewModel.addForm(new HashMap<>());
         viewModel.addForm(new HashMap<>());
@@ -52,6 +45,9 @@ public class FormDownloadListViewModelTest {
         viewModel.addSelectedFormId("foo");
         viewModel.addSelectedFormId("bar");
 
-        assertThat(viewModel.getDownloadAnalyticsDescription("some string"), containsString("2/5"));
+        viewModel.logDownloadAnalyticsEvent(0, "https://server.example.com");
+        verify(analytics).logEvent(anyString(), eq(
+                "2/3-e4534130b01d6707a431adbec4e03912" // Ends with hash of server URL
+        ));
     }
 }
