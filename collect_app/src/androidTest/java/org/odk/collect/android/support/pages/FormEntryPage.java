@@ -47,6 +47,15 @@ public class FormEntryPage extends Page<FormEntryPage> {
         return this;
     }
 
+    public FormEntryPage swipeToNextQuestion(String questionText) {
+        tryAgainOnFail(() -> {
+            onView(withId(R.id.questionholder)).perform(swipeLeft());
+            onView(withText(questionText)).check(matches(isDisplayed()));
+        });
+
+        return this;
+    }
+
     public FormEntryPage swipeToNextQuestion(int repetitions) {
         for (int i = 0; i < repetitions; i++) {
             swipeToNextQuestion();
@@ -57,7 +66,7 @@ public class FormEntryPage extends Page<FormEntryPage> {
     public FormEntryPage swipeToNextRepeat(String repeatLabel, int repeatNumber) {
         tryAgainOnFail(() -> {
             onView(withId(R.id.questionholder)).perform(swipeLeft());
-            onView(withText(repeatLabel + " > " + repeatNumber));
+            onView(withText(repeatLabel + " > " + repeatNumber)).check(matches(isDisplayed()));
         });
 
         return this;
