@@ -41,6 +41,7 @@ import org.odk.collect.android.geo.OsmDroidMapFragment;
 import org.odk.collect.android.logic.PropertyManager;
 import org.odk.collect.android.openrosa.OpenRosaHttpInterface;
 import org.odk.collect.android.preferences.AdminPasswordDialogFragment;
+import org.odk.collect.android.preferences.AdminPreferencesFragment;
 import org.odk.collect.android.preferences.AdminSharedPreferences;
 import org.odk.collect.android.preferences.BasePreferenceFragment;
 import org.odk.collect.android.preferences.ExperimentalPreferencesFragment;
@@ -210,6 +211,8 @@ public interface AppDependencyComponent {
     void inject(GeneralPreferencesFragment generalPreferencesFragment);
 
     void inject(DeleteSavedFormActivity deleteSavedFormActivity);
+
+    void inject(AdminPreferencesFragment.MainMenuAccessPreferences mainMenuAccessPreferences);
 
     OpenRosaHttpInterface openRosaHttpInterface();
 
