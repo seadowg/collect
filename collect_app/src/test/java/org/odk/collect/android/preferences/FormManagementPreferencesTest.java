@@ -76,6 +76,7 @@ public class FormManagementPreferencesTest {
         scenario.onFragment(f -> {
             CheckBoxPreference automaticDownload = f.findPreference(KEY_AUTOMATIC_UPDATE);
             assertThat(automaticDownload.isChecked(), is(true));
+            assertThat(prefs.getBoolean(KEY_AUTOMATIC_UPDATE, false), is(false));
         });
     }
 
@@ -88,6 +89,7 @@ public class FormManagementPreferencesTest {
         scenario.onFragment(f -> {
             CheckBoxPreference automaticDownload = f.findPreference(KEY_AUTOMATIC_UPDATE);
             assertThat(automaticDownload.isChecked(), is(false));
+            assertThat(prefs.getBoolean(KEY_AUTOMATIC_UPDATE, false), is(true));
         });
     }
 }
