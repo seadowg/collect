@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.preference.CheckBoxPreference;
+import androidx.preference.ListPreference;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -12,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.os.Looper.getMainLooper;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.odk.collect.android.formmanagement.FormUpdateMode.MANUAL;
@@ -21,6 +23,7 @@ import static org.odk.collect.android.injection.DaggerUtils.getComponent;
 import static org.odk.collect.android.preferences.GeneralKeys.KEY_AUTOMATIC_UPDATE;
 import static org.odk.collect.android.preferences.GeneralKeys.KEY_FORM_UPDATE_MODE;
 import static org.odk.collect.android.preferences.GeneralKeys.KEY_PERIODIC_FORM_UPDATES_CHECK;
+import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
 public class FormManagementPreferencesTest {
@@ -76,7 +79,7 @@ public class FormManagementPreferencesTest {
         scenario.onFragment(f -> {
             CheckBoxPreference automaticDownload = f.findPreference(KEY_AUTOMATIC_UPDATE);
             assertThat(automaticDownload.isChecked(), is(true));
-            assertThat(prefs.getBoolean(KEY_AUTOMATIC_UPDATE, false), is(false));
+            assertThat(prefs.getBoolean(KEY_AUTOMATIC_UPDATE, true), is(false));
         });
     }
 
@@ -90,6 +93,23 @@ public class FormManagementPreferencesTest {
             CheckBoxPreference automaticDownload = f.findPreference(KEY_AUTOMATIC_UPDATE);
             assertThat(automaticDownload.isChecked(), is(false));
             assertThat(prefs.getBoolean(KEY_AUTOMATIC_UPDATE, false), is(true));
+        });
+    }
+
+    @Test
+    public void whenManualUpdatesEnabled_andAutomaticDownloadDisabled_settingToPreviouslyDownloaded_resetsAutomaticDownload() {
+        prefs.edit().putString(KEY_FORM_UPDATE_MODE, MATCH_EXACTLY.getValue(context)).apply();
+        prefs.edit().putBoolean(KEY_AUTOMATIC_UPDATE, false).apply();
+
+        FragmentScenario<FormManagementPreferences> scenario = FragmentScenario.launch(FormManagementPreferences.class);
+        scenario.onFragment(f -> {
+            ListPreference updateMode = f.findPreference(KEY_FORM_UPDATE_MODE);
+            updateMode.setValue(PREVIOUSLY_DOWNLOADED_ONLY.getValue(context));
+            shadowOf(getMainLooper()).idle();
+
+            CheckBoxPreference automaticDownload = f.findPreference(KEY_AUTOMATIC_UPDATE);
+            assertThat(automaticDownload.isChecked(), is(false));
+            assertThat(prefs.getBoolean(KEY_AUTOMATIC_UPDATE, true), is(false));
         });
     }
 }
