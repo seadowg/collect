@@ -31,6 +31,8 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat im
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        onPreparePreferences(getPreferenceManager().getSharedPreferences());
+
         FragmentActivity activity = getActivity();
         if (activity instanceof CollectAbstractActivity) {
             ((CollectAbstractActivity) activity).initToolbar(getPreferenceScreen().getTitle());
@@ -38,6 +40,16 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat im
         removeDisabledPrefs();
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    /**
+     * Called when the Fragment view is created and whenever preferences are changed
+     *
+     * @param sharedPreferences the {@link SharedPreferences} instance this Fragment persists to
+     */
+    @SuppressWarnings("PMD.EmptyMethodInAbstractClassShouldBeAbstract")
+    public void onPreparePreferences(SharedPreferences sharedPreferences) {
+
     }
 
     @Override
@@ -55,6 +67,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat im
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         settingsChangeHandler.onSettingChanged(key);
+        onPreparePreferences(sharedPreferences);
     }
 
     void removeDisabledPrefs() {

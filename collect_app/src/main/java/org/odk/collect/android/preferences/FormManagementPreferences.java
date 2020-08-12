@@ -26,7 +26,6 @@ import androidx.preference.Preference;
 import org.odk.collect.android.R;
 import org.odk.collect.android.analytics.Analytics;
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.backgroundwork.FormUpdateManager;
 import org.odk.collect.android.formmanagement.FormUpdateMode;
 
 import javax.inject.Inject;
@@ -68,27 +67,10 @@ public class FormManagementPreferences extends BasePreferenceFragment {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.form_management_preferences, rootKey);
-        updatePreferences(getPreferenceManager().getSharedPreferences());
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        super.onSharedPreferenceChanged(sharedPreferences, key);
-
-        updatePreferences(sharedPreferences);
-
-        if (key.equals(KEY_AUTOMATIC_DOWNLOAD)) {
-            String formUpdateCheckPeriod = sharedPreferences.getString(KEY_PERIODIC_FORM_UPDATES_CHECK, null);
-            analytics.logEvent(AUTO_FORM_UPDATE_PREF_CHANGE, "Automatic form updates", sharedPreferences.getBoolean(KEY_AUTOMATIC_DOWNLOAD, false) + " " + formUpdateCheckPeriod);
-        }
-
-        if (key.equals(KEY_PERIODIC_FORM_UPDATES_CHECK)) {
-            String formUpdateCheckPeriod = sharedPreferences.getString(KEY_PERIODIC_FORM_UPDATES_CHECK, null);
-            analytics.logEvent(AUTO_FORM_UPDATE_PREF_CHANGE, "Periodic form updates check", formUpdateCheckPeriod);
-        }
-    }
-
-    private void updatePreferences(SharedPreferences sharedPreferences) {
+    public void onPreparePreferences(SharedPreferences sharedPreferences) {
         final ListPreference constrainBehavior = findPreference(KEY_CONSTRAINT_BEHAVIOR);
         constrainBehavior.setEnabled(preferencesProvider.getAdminSharedPreferences().getBoolean(ALLOW_OTHER_WAYS_OF_EDITING_FORM, true));
 
@@ -119,6 +101,21 @@ public class FormManagementPreferences extends BasePreferenceFragment {
                     updateFrequencyPref.setEnabled(true);
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        super.onSharedPreferenceChanged(sharedPreferences, key);
+
+        if (key.equals(KEY_AUTOMATIC_DOWNLOAD)) {
+            String formUpdateCheckPeriod = sharedPreferences.getString(KEY_PERIODIC_FORM_UPDATES_CHECK, null);
+            analytics.logEvent(AUTO_FORM_UPDATE_PREF_CHANGE, "Automatic form updates", sharedPreferences.getBoolean(KEY_AUTOMATIC_DOWNLOAD, false) + " " + formUpdateCheckPeriod);
+        }
+
+        if (key.equals(KEY_PERIODIC_FORM_UPDATES_CHECK)) {
+            String formUpdateCheckPeriod = sharedPreferences.getString(KEY_PERIODIC_FORM_UPDATES_CHECK, null);
+            analytics.logEvent(AUTO_FORM_UPDATE_PREF_CHANGE, "Periodic form updates check", formUpdateCheckPeriod);
         }
     }
 }
