@@ -49,9 +49,6 @@ public class FormManagementPreferences extends BasePreferenceFragment {
     @Inject
     PreferencesProvider preferencesProvider;
 
-    @Inject
-    FormUpdateManager formUpdateManager;
-
     public static FormManagementPreferences newInstance(boolean adminMode) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(INTENT_KEY_ADMIN_MODE, adminMode);
@@ -71,14 +68,14 @@ public class FormManagementPreferences extends BasePreferenceFragment {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.form_management_preferences, rootKey);
-        updatePreferences();
+        updatePreferences(getPreferenceManager().getSharedPreferences());
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         super.onSharedPreferenceChanged(sharedPreferences, key);
 
-        updatePreferences();
+        updatePreferences(sharedPreferences);
 
         if (key.equals(KEY_AUTOMATIC_DOWNLOAD)) {
             String formUpdateCheckPeriod = sharedPreferences.getString(KEY_PERIODIC_FORM_UPDATES_CHECK, null);
@@ -91,12 +88,12 @@ public class FormManagementPreferences extends BasePreferenceFragment {
         }
     }
 
-    private void updatePreferences() {
+    private void updatePreferences(SharedPreferences sharedPreferences) {
         final ListPreference constrainBehavior = findPreference(KEY_CONSTRAINT_BEHAVIOR);
         constrainBehavior.setEnabled(preferencesProvider.getAdminSharedPreferences().getBoolean(ALLOW_OTHER_WAYS_OF_EDITING_FORM, true));
 
-        String protocol = preferencesProvider.getGeneralSharedPreferences().getString(KEY_PROTOCOL, null);
-        String formUpdateMode = preferencesProvider.getGeneralSharedPreferences().getString(KEY_FORM_UPDATE_MODE, null);
+        String protocol = sharedPreferences.getString(KEY_PROTOCOL, null);
+        String formUpdateMode = sharedPreferences.getString(KEY_FORM_UPDATE_MODE, null);
 
         Preference updateFrequencyPref = findPreference(KEY_PERIODIC_FORM_UPDATES_CHECK);
         CheckBoxPreference automaticDownloadPref = findPreference(KEY_AUTOMATIC_DOWNLOAD);
@@ -113,7 +110,7 @@ public class FormManagementPreferences extends BasePreferenceFragment {
                     break;
                 case PREVIOUSLY_DOWNLOADED_ONLY:
                     automaticDownloadPref.setEnabled(true);
-                    automaticDownloadPref.setChecked(preferencesProvider.getGeneralSharedPreferences().getBoolean(KEY_AUTOMATIC_DOWNLOAD, false));
+                    automaticDownloadPref.setChecked(sharedPreferences.getBoolean(KEY_AUTOMATIC_DOWNLOAD, false));
 
                     updateFrequencyPref.setEnabled(true);
                     break;
