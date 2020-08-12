@@ -74,7 +74,7 @@ public final class AdminKeys {
             ag(KEY_CHANGE_FORM_METADATA,       GeneralKeys.KEY_FORM_METADATA),
 
             ag(KEY_PERIODIC_FORM_UPDATES_CHECK, GeneralKeys.KEY_PERIODIC_FORM_UPDATES_CHECK),
-            ag(KEY_AUTOMATIC_UPDATE,           GeneralKeys.KEY_AUTOMATIC_UPDATE),
+            ag(KEY_AUTOMATIC_UPDATE,           GeneralKeys.KEY_AUTOMATIC_DOWNLOAD),
             ag(KEY_HIDE_OLD_FORM_VERSIONS,     GeneralKeys.KEY_HIDE_OLD_FORM_VERSIONS),
             ag(KEY_CHANGE_FONT_SIZE,           GeneralKeys.KEY_FONT_SIZE),
             ag(KEY_APP_LANGUAGE,               GeneralKeys.KEY_APP_LANGUAGE),

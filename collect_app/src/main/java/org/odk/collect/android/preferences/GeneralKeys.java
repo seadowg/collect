@@ -47,7 +47,7 @@ public final class GeneralKeys {
 
     // form_management_preferences.xml
     public static final String KEY_PERIODIC_FORM_UPDATES_CHECK = "periodic_form_updates_check";
-    public static final String KEY_AUTOMATIC_UPDATE         = "automatic_update";
+    public static final String KEY_AUTOMATIC_DOWNLOAD = "automatic_update";
     public static final String KEY_HIDE_OLD_FORM_VERSIONS   = "hide_old_form_versions";
     public static final String KEY_AUTOSEND                 = "autosend";
     public static final String KEY_DELETE_AFTER_SEND        = "delete_send";
@@ -107,7 +107,7 @@ public final class GeneralKeys {
         hashMap.put(KEY_IMAGE_SIZE,                 "original_image_size");
         hashMap.put(KEY_INSTANCE_SYNC,              true);
         hashMap.put(KEY_PERIODIC_FORM_UPDATES_CHECK, "every_fifteen_minutes");
-        hashMap.put(KEY_AUTOMATIC_UPDATE,           false);
+        hashMap.put(KEY_AUTOMATIC_DOWNLOAD,           false);
         hashMap.put(KEY_HIDE_OLD_FORM_VERSIONS,     true);
         hashMap.put(KEY_BACKGROUND_LOCATION,        true);
         hashMap.put(KEY_FORM_UPDATE_MODE,           "manual");

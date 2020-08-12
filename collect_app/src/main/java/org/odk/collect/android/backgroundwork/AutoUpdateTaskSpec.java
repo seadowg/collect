@@ -38,7 +38,7 @@ import java.util.function.Supplier;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static org.odk.collect.android.preferences.GeneralKeys.KEY_AUTOMATIC_UPDATE;
+import static org.odk.collect.android.preferences.GeneralKeys.KEY_AUTOMATIC_DOWNLOAD;
 
 public class AutoUpdateTaskSpec implements TaskSpec {
 
@@ -70,7 +70,7 @@ public class AutoUpdateTaskSpec implements TaskSpec {
             List<ServerFormDetails> newUpdates = serverFormsUpdateChecker.check();
 
             if (!newUpdates.isEmpty()) {
-                if (preferencesProvider.getGeneralSharedPreferences().getBoolean(KEY_AUTOMATIC_UPDATE, false)) {
+                if (preferencesProvider.getGeneralSharedPreferences().getBoolean(KEY_AUTOMATIC_DOWNLOAD, false)) {
                     changeLock.withLock(acquiredLock -> {
                         if (acquiredLock) {
                             final HashMap<ServerFormDetails, String> result = multiFormDownloader.downloadForms(newUpdates, null);

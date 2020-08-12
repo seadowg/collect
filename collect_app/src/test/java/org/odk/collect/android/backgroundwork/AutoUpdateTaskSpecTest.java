@@ -73,7 +73,7 @@ public class AutoUpdateTaskSpecTest {
     @Test
     public void whenAutoDownloadEnabled_andChangeLockLocked_doesNotDownload() {
         when(serverFormsUpdateChecker.check()).thenReturn(asList(new ServerFormDetails("", "", "", "", "", "", "", false, true)));
-        generalPrefs.edit().putBoolean(GeneralKeys.KEY_AUTOMATIC_UPDATE, true).apply();
+        generalPrefs.edit().putBoolean(GeneralKeys.KEY_AUTOMATIC_DOWNLOAD, true).apply();
         changeLock.lock();
 
         AutoUpdateTaskSpec taskSpec = new AutoUpdateTaskSpec();

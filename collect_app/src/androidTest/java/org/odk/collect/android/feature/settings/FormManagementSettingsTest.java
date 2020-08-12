@@ -59,7 +59,8 @@ public class FormManagementSettingsTest {
         String matchExactlyTag = deferredTasks.get(0).getTag();
 
         page.clickAutomaticUpdateFrequency()
-                .clickOption(R.string.every_one_hour);
+                .clickOption(R.string.every_one_hour)
+                .assertText(R.string.every_one_hour);
 
         deferredTasks = testDependencies.scheduler.getDeferredTasks();
         assertThat(deferredTasks.size(), is(1));
