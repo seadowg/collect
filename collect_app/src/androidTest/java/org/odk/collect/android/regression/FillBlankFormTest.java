@@ -110,18 +110,6 @@ public class FillBlankFormTest {
     }
 
     @Test
-    public void searchBar_ShouldSearchForm() {
-
-        //TestCase12
-        new MainMenuPage(rule)
-                .clickFillBlankForm()
-                .clickMenuFilter()
-                .searchInBar("Aaa")
-                .pressBack(new BlankFormSearchPage(rule))
-                .pressBack(new FillBlankFormPage(rule));
-    }
-
-    @Test
     public void navigationButtons_ShouldBeVisibleWhenAreSetInTheMiddleOfForm() {
 
         //TestCase16
