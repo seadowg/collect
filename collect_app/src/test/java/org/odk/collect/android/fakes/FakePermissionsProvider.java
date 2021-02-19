@@ -1,13 +1,14 @@
 package org.odk.collect.android.fakes;
 
 import android.app.Activity;
+
 import androidx.annotation.NonNull;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.odk.collect.android.listeners.PermissionListener;
-import org.odk.collect.shared.permissions.PermissionsChecker;
-import org.odk.collect.android.storage.StorageStateProvider;
 import org.odk.collect.android.permissions.PermissionsProvider;
+import org.odk.collect.android.storage.StorageStateProvider;
+import org.odk.collect.shared.permissions.ContextCompatPermissionsChecker;
 
 /**
  * Mocked implementation of {@link PermissionsProvider}.
@@ -20,7 +21,7 @@ public class FakePermissionsProvider extends PermissionsProvider {
     private boolean isPermissionGranted;
 
     public FakePermissionsProvider() {
-        super(new PermissionsChecker(InstrumentationRegistry.getInstrumentation().getTargetContext()), new StorageStateProvider());
+        super(new ContextCompatPermissionsChecker(InstrumentationRegistry.getInstrumentation().getTargetContext()), new StorageStateProvider());
     }
 
     @Override

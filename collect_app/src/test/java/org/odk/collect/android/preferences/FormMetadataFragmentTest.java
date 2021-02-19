@@ -15,6 +15,7 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.injection.config.AppDependencyModule;
 import org.odk.collect.android.listeners.PermissionListener;
 import org.odk.collect.android.metadata.InstallIDProvider;
+import org.odk.collect.shared.permissions.ContextCompatPermissionsChecker;
 import org.odk.collect.shared.permissions.PermissionsChecker;
 import org.odk.collect.android.storage.StorageStateProvider;
 import org.odk.collect.android.support.RobolectricHelpers;
@@ -109,7 +110,7 @@ public class FormMetadataFragmentTest {
         private boolean granted;
 
         private FakePhoneStatePermissionsProvider() {
-            super(new PermissionsChecker(InstrumentationRegistry.getInstrumentation().getTargetContext()), new StorageStateProvider());
+            super(new ContextCompatPermissionsChecker(InstrumentationRegistry.getInstrumentation().getTargetContext()), new StorageStateProvider());
         }
 
         @Override

@@ -82,6 +82,7 @@ import org.odk.collect.android.openrosa.OpenRosaHttpInterface;
 import org.odk.collect.android.openrosa.OpenRosaResponseParserImpl;
 import org.odk.collect.android.openrosa.okhttp.OkHttpConnection;
 import org.odk.collect.android.openrosa.okhttp.OkHttpOpenRosaServerClientProvider;
+import org.odk.collect.shared.permissions.ContextCompatPermissionsChecker;
 import org.odk.collect.shared.permissions.PermissionsChecker;
 import org.odk.collect.android.permissions.PermissionsProvider;
 import org.odk.collect.android.preferences.AdminKeys;
@@ -516,7 +517,7 @@ public class AppDependencyModule {
     @Provides
     @Singleton
     public PermissionsChecker providesPermissionsChecker(Context context) {
-        return new PermissionsChecker(context);
+        return new ContextCompatPermissionsChecker(context);
     }
 
     @Provides

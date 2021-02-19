@@ -16,7 +16,6 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.odk.collect.android.R;
 import org.odk.collect.android.listeners.PermissionListener;
-import org.odk.collect.shared.permissions.PermissionsChecker;
 import org.odk.collect.android.permissions.PermissionsProvider;
 import org.odk.collect.android.storage.StorageStateProvider;
 import org.odk.collect.android.storage.StorageSubdirectory;
@@ -29,6 +28,8 @@ import org.odk.collect.android.support.pages.MainMenuPage;
 import org.odk.collect.android.support.pages.SaveOrIgnoreDialog;
 import org.odk.collect.audiorecorder.recording.AudioRecorder;
 import org.odk.collect.audiorecorder.testsupport.StubAudioRecorder;
+import org.odk.collect.shared.permissions.ContextCompatPermissionsChecker;
+import org.odk.collect.shared.permissions.PermissionsChecker;
 
 import java.io.File;
 import java.io.IOException;
@@ -196,12 +197,14 @@ public class BackgroundAudioRecordingTest {
         new MainMenuPage(rule).assertOnPage();
     }
 
-    private static class RevokeableRecordAudioPermissionsChecker extends PermissionsChecker {
+    private static class RevokeableRecordAudioPermissionsChecker implements PermissionsChecker {
+
+        private final ContextCompatPermissionsChecker actualChecker;
 
         private boolean revoked;
 
         RevokeableRecordAudioPermissionsChecker(Context context) {
-            super(context);
+            actualChecker = new ContextCompatPermissionsChecker(context);
         }
 
         @Override
@@ -209,7 +212,7 @@ public class BackgroundAudioRecordingTest {
             if (permissions[0].equals(Manifest.permission.RECORD_AUDIO) && revoked) {
                 return false;
             } else {
-                return super.isPermissionGranted(permissions);
+                return actualChecker.isPermissionGranted(permissions);
             }
         }
 
