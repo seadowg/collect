@@ -18,7 +18,7 @@ import org.odk.collect.android.activities.support.AlwaysGrantStoragePermissionsP
 import org.odk.collect.android.analytics.Analytics;
 import org.odk.collect.android.analytics.AnalyticsEvents;
 import org.odk.collect.android.dao.FormsDao;
-import org.odk.collect.android.permissions.PermissionsChecker;
+import org.odk.collect.shared.permissions.PermissionsChecker;
 import org.odk.collect.android.preferences.GeneralSharedPreferences;
 import org.odk.collect.android.storage.StorageInitializer;
 import org.odk.collect.android.storage.StorageStateProvider;

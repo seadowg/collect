@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.odk.collect.android.listeners.PermissionListener;
-import org.odk.collect.android.permissions.PermissionsChecker;
+import org.odk.collect.shared.permissions.PermissionsChecker;
 import org.odk.collect.android.storage.StorageStateProvider;
 import org.odk.collect.android.permissions.PermissionsProvider;
 

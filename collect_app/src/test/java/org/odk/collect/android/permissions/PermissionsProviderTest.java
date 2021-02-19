@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import org.odk.collect.android.listeners.PermissionListener;
 import org.odk.collect.android.storage.StorageStateProvider;
+import org.odk.collect.shared.permissions.PermissionsChecker;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

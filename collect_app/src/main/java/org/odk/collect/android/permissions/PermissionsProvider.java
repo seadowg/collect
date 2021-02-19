@@ -22,6 +22,7 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.listeners.PermissionListener;
 import org.odk.collect.android.storage.StorageStateProvider;
 import org.odk.collect.android.utilities.DialogUtils;
+import org.odk.collect.shared.permissions.PermissionsChecker;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.odk.collect.android.permissions;
+package org.odk.collect.shared.permissions;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import androidx.core.content.ContextCompat;
 
 public class PermissionsChecker {
+
     private final Context context;
 
     public PermissionsChecker(Context context) {
