@@ -273,6 +273,7 @@ dependencies {
     implementation project(':externalapp')
     implementation project(':maps')
     implementation project(':osmdroid')
+    implementation project(':toaster')
 
     if (getSecrets().getProperty('MAPBOX_DOWNLOADS_TOKEN', '') != '') {
         implementation project(':mapbox')
@@ -418,6 +419,7 @@ dependencies {
     androidTestImplementation Dependencies.okhttp3_mockwebserver
     androidTestImplementation Dependencies.androidx_work_testing
     androidTestImplementation Dependencies.uiautomator
+    androidTestImplementation project(':toastertest')
 
     debugImplementation project(':fragmentstest')
     debugImplementation(project(':testshared')) {

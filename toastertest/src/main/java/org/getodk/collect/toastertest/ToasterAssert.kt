@@ -1,14 +1,13 @@
-package org.odk.collect.android.support
+package org.getodk.collect.toastertest
 
 import androidx.test.espresso.Espresso
-import org.odk.collect.androidshared.ui.RecordingToaster
 
 object ToasterAssert {
 
     @JvmStatic
     fun assertToast(toaster: RecordingToaster, message: String) {
         Espresso.onIdle()
-        if (!toaster.popRecordedToasts().stream().anyMatch { s: String -> s == message }) {
+        if (!toaster.popRecordedToasts().any { s: String -> s == message }) {
             throw RuntimeException("No Toast with text \"$message\" shown on screen!")
         }
     }

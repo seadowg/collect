@@ -6,6 +6,7 @@ import android.webkit.MimeTypeMap;
 
 import androidx.work.WorkManager;
 
+import org.getodk.collect.toastertest.RecordingToaster;
 import org.odk.collect.android.gdrive.GoogleAccountPicker;
 import org.odk.collect.android.gdrive.GoogleApiProvider;
 import org.odk.collect.android.gdrive.sheets.DriveApi;
@@ -14,9 +15,8 @@ import org.odk.collect.android.injection.config.AppDependencyModule;
 import org.odk.collect.android.openrosa.OpenRosaHttpInterface;
 import org.odk.collect.android.storage.StoragePathProvider;
 import org.odk.collect.android.views.BarcodeViewDecoder;
-import org.odk.collect.androidshared.ui.RecordingToaster;
-import org.odk.collect.androidshared.ui.Toaster;
 import org.odk.collect.async.Scheduler;
+import org.odk.collect.toaster.Toaster;
 import org.odk.collect.utilities.UserAgentProvider;
 
 public class TestDependencies extends AppDependencyModule {

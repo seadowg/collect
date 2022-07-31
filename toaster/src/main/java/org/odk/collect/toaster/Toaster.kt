@@ -1,4 +1,4 @@
-package org.odk.collect.androidshared.ui
+package org.odk.collect.toaster
 
 import android.app.Application
 import android.widget.Toast
@@ -20,20 +20,5 @@ class ApplicationToaster(private val application: Application) : Toaster {
         }
 
         toast.show()
-    }
-}
-
-class RecordingToaster() : Toaster {
-    private var toasts = mutableListOf<String>()
-
-    override fun toast(message: String, duration: Int, beforeShow: ((Toast) -> Unit)?) {
-        toasts.add(message)
-    }
-
-    fun popRecordedToasts(): List<String> {
-        val copy = toasts.toList()
-        toasts.clear()
-
-        return copy
     }
 }

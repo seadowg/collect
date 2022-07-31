@@ -19,10 +19,10 @@ import org.odk.collect.android.application.initialization.upgrade.UpgradeInitial
 import org.odk.collect.android.logic.PropertyManager
 import org.odk.collect.android.logic.actions.setgeopoint.CollectSetGeopointActionHandler
 import org.odk.collect.androidshared.ui.ToastUtils
-import org.odk.collect.androidshared.ui.Toaster
 import org.odk.collect.osmdroid.OsmDroidInitializer
 import org.odk.collect.projects.ProjectsRepository
 import org.odk.collect.settings.SettingsProvider
+import org.odk.collect.toaster.Toaster
 import org.odk.collect.utilities.UserAgentProvider
 import timber.log.Timber
 import java.util.Locale

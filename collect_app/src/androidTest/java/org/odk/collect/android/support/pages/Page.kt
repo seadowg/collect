@@ -33,6 +33,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
+import org.getodk.collect.toastertest.RecordingToaster
+import org.getodk.collect.toastertest.ToasterAssert.assertToast
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.core.StringContains.containsString
@@ -42,12 +44,10 @@ import org.odk.collect.android.R
 import org.odk.collect.android.application.Collect
 import org.odk.collect.android.storage.StoragePathProvider
 import org.odk.collect.android.support.AdbFormLoadingUtils
-import org.odk.collect.android.support.ToasterAssert
 import org.odk.collect.android.support.WaitFor.wait250ms
 import org.odk.collect.android.support.WaitFor.waitFor
 import org.odk.collect.android.support.actions.RotateAction
 import org.odk.collect.android.support.matchers.CustomMatchers.withIndex
-import org.odk.collect.androidshared.ui.RecordingToaster
 import org.odk.collect.androidshared.ui.ToastUtils
 import org.odk.collect.androidtest.NestedScrollToAction.nestedScrollTo
 import org.odk.collect.strings.localization.getLocalizedString
@@ -145,7 +145,7 @@ abstract class Page<T : Page<T>> {
     }
 
     fun checkIsToastWithMessageDisplayed(message: String): T {
-        ToasterAssert.assertToast(ToastUtils.toaster as RecordingToaster, message)
+        assertToast(ToastUtils.toaster as RecordingToaster, message)
         return this as T
     }
 
