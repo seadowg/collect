@@ -33,8 +33,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
-import org.getodk.collect.toastertest.RecordingToaster
-import org.getodk.collect.toastertest.ToasterAssert.assertToast
+import org.odk.collect.toastertest.RecordingToaster
+import org.odk.collect.toastertest.ToasterAssert.assertToast
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.core.StringContains.containsString

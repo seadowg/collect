@@ -6,7 +6,7 @@ import android.webkit.MimeTypeMap;
 
 import androidx.work.WorkManager;
 
-import org.getodk.collect.toastertest.RecordingToaster;
+import org.odk.collect.toastertest.RecordingToaster;
 import org.odk.collect.android.gdrive.GoogleAccountPicker;
 import org.odk.collect.android.gdrive.GoogleApiProvider;
 import org.odk.collect.android.gdrive.sheets.DriveApi;

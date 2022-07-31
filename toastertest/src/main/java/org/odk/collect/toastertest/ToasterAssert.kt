@@ -1,4 +1,4 @@
-package org.getodk.collect.toastertest
+package org.odk.collect.toastertest
 
 import androidx.test.espresso.Espresso
 
