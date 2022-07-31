@@ -42,11 +42,13 @@ import org.odk.collect.android.R
 import org.odk.collect.android.application.Collect
 import org.odk.collect.android.storage.StoragePathProvider
 import org.odk.collect.android.support.AdbFormLoadingUtils
+import org.odk.collect.android.support.ToasterAssert
 import org.odk.collect.android.support.WaitFor.wait250ms
 import org.odk.collect.android.support.WaitFor.waitFor
 import org.odk.collect.android.support.actions.RotateAction
 import org.odk.collect.android.support.matchers.CustomMatchers.withIndex
-import org.odk.collect.androidshared.ui.ToastUtils.popRecordedToasts
+import org.odk.collect.androidshared.ui.RecordingToaster
+import org.odk.collect.androidshared.ui.ToastUtils
 import org.odk.collect.androidtest.NestedScrollToAction.nestedScrollTo
 import org.odk.collect.strings.localization.getLocalizedString
 import org.odk.collect.testshared.RecyclerViewMatcher
@@ -143,10 +145,7 @@ abstract class Page<T : Page<T>> {
     }
 
     fun checkIsToastWithMessageDisplayed(message: String): T {
-        Espresso.onIdle()
-        if (!popRecordedToasts().stream().anyMatch { s: String -> s == message }) {
-            throw RuntimeException("No Toast with text \"$message\" shown on screen!")
-        }
+        ToasterAssert.assertToast(ToastUtils.toaster as RecordingToaster, message)
         return this as T
     }
 

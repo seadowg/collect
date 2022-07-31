@@ -33,13 +33,13 @@ class FileRequesterImpl(
                 intentLauncher.launchForResult(
                     activity, intentWithoutDefaultCategory, requestCode
                 ) {
-                    showLongToast(activity, getErrorMessage(formEntryPrompt, activity))
+                    showLongToast(getErrorMessage(formEntryPrompt, activity))
                 }
             }
         } catch (e: Exception) {
-            showLongToast(activity, e.message!!)
+            showLongToast(e.message!!)
         } catch (e: Error) {
-            showLongToast(activity, e.message!!)
+            showLongToast(e.message!!)
         }
     }
 

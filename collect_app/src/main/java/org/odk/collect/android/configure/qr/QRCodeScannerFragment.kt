@@ -54,13 +54,13 @@ class QRCodeScannerFragment : BarCodeScannerFragment() {
                 File(storagePathProvider.getProjectRootDirPath() + File.separator + newProjectName).createNewFile()
             }
 
-            showLongToast(requireContext(), getString(R.string.successfully_imported_settings))
+            showLongToast(getString(R.string.successfully_imported_settings))
             ActivityUtils.startActivityAndCloseAllOthers(
                 requireActivity(),
                 MainMenuActivity::class.java
             )
         } else {
-            showLongToast(requireContext(), getString(R.string.invalid_qrcode))
+            showLongToast(getString(R.string.invalid_qrcode))
         }
     }
 

@@ -190,7 +190,6 @@ class ManualProjectCreatorDialog :
                     val intent: Intent = googleAccountsManager.accountChooserIntent
                     intentLauncher.launchForResult(googleAccountResultLauncher, intent) {
                         ToastUtils.showShortToast(
-                            requireContext(),
                             getString(
                                 R.string.activity_not_found,
                                 getString(R.string.choose_account)
@@ -210,7 +209,6 @@ class ManualProjectCreatorDialog :
         projectCreator.createNewProject(settingsJson)
         ActivityUtils.startActivityAndCloseAllOthers(activity, MainMenuActivity::class.java)
         ToastUtils.showLongToast(
-            requireContext(),
             getString(R.string.switched_project, currentProjectProvider.getCurrentProject().name)
         )
     }
@@ -219,7 +217,6 @@ class ManualProjectCreatorDialog :
         currentProjectProvider.setCurrentProject(uuid)
         ActivityUtils.startActivityAndCloseAllOthers(activity, MainMenuActivity::class.java)
         ToastUtils.showLongToast(
-            requireContext(),
             getString(
                 org.odk.collect.projects.R.string.switched_project,
                 currentProjectProvider.getCurrentProject().name

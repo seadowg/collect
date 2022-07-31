@@ -58,7 +58,7 @@ public class QRCodeMenuDelegate implements MenuDelegate {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 photoPickerIntent.setType("image/*");
                 intentLauncher.launchForResult(activity, photoPickerIntent, SELECT_PHOTO, () -> {
-                    ToastUtils.showShortToast(activity, activity.getString(R.string.activity_not_found, activity.getString(R.string.choose_image)));
+                    ToastUtils.showShortToast(activity.getString(R.string.activity_not_found, activity.getString(R.string.choose_image)));
                     Timber.w(activity.getString(R.string.activity_not_found, activity.getString(R.string.choose_image)));
                     return null;
                 });

@@ -45,7 +45,7 @@ class GoogleMapConfigurator implements MapConfigurator {
 
     @Override public void showUnavailableMessage(Context context) {
         if (!isGoogleMapsSdkAvailable(context)) {
-            ToastUtils.showLongToast(context, context.getString(
+            ToastUtils.showLongToast(context.getString(
                 R.string.basemap_source_unavailable, context.getString(sourceLabelId)));
         }
         if (!isGooglePlayServicesAvailable(context)) {

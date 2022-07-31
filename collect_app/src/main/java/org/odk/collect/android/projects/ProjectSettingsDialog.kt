@@ -114,7 +114,6 @@ class ProjectSettingsDialog : DialogFragment() {
 
         ActivityUtils.startActivityAndCloseAllOthers(requireActivity(), MainMenuActivity::class.java)
         ToastUtils.showLongToast(
-            requireContext(),
             getString(R.string.switched_project, project.name)
         )
         dismiss()

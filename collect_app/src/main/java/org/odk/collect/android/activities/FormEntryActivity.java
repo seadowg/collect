@@ -834,7 +834,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
         if (intent == null && requestCode != RequestCodes.DRAW_IMAGE && requestCode != RequestCodes.ANNOTATE_IMAGE
                 && requestCode != RequestCodes.SIGNATURE_CAPTURE && requestCode != RequestCodes.IMAGE_CAPTURE) {
             Timber.d("The intent has a null value for requestCode: %s", requestCode);
-            showLongToast(this, getString(R.string.null_intent_value));
+            showLongToast(getString(R.string.null_intent_value));
             return;
         }
 
@@ -953,7 +953,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                             waitingForDataRegistry.cancelWaitingForData();
                         } catch (Exception e) {
                             Timber.e(e);
-                            ToastUtils.showLongToast(this, currentViewIfODKView.getContext().getString(R.string.error_attaching_binary_file,
+                            ToastUtils.showLongToast(currentViewIfODKView.getContext().getString(R.string.error_attaching_binary_file,
                                     e.getMessage()));
                         }
                         set = true;
@@ -1724,7 +1724,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                     message = getString(R.string.data_saved_error);
                 }
 
-                showLongToast(this, message);
+                showLongToast(message);
                 formSaveViewModel.resumeFormEntry();
                 break;
 
@@ -1732,7 +1732,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                 DialogFragmentUtils.dismissDialog(SaveFormProgressDialogFragment.class, getSupportFragmentManager());
                 DialogFragmentUtils.dismissDialog(ChangesReasonPromptDialogFragment.class, getSupportFragmentManager());
 
-                showLongToast(this, String.format(getString(R.string.encryption_error_message),
+                showLongToast(String.format(getString(R.string.encryption_error_message),
                         result.getMessage()));
                 finishAndReturnInstance();
                 formSaveViewModel.resumeFormEntry();
@@ -2250,7 +2250,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
         onScreenRefresh();
 
         if (warningMsg != null) {
-            showLongToast(this, warningMsg);
+            showLongToast(warningMsg);
             Timber.w(warningMsg);
         }
     }
@@ -2322,14 +2322,14 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
     @Override
     public void onSavePointError(String errorMessage) {
         if (errorMessage != null && errorMessage.trim().length() > 0) {
-            showLongToast(this, getString(R.string.save_point_error, errorMessage));
+            showLongToast(getString(R.string.save_point_error, errorMessage));
         }
     }
 
     @Override
     public void onSaveFormIndexError(String errorMessage) {
         if (errorMessage != null && errorMessage.trim().length() > 0) {
-            showLongToast(this, getString(R.string.save_point_error, errorMessage));
+            showLongToast(getString(R.string.save_point_error, errorMessage));
         }
     }
 

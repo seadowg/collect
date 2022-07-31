@@ -18,6 +18,8 @@ import org.odk.collect.android.application.Collect
 import org.odk.collect.android.application.initialization.upgrade.UpgradeInitializer
 import org.odk.collect.android.logic.PropertyManager
 import org.odk.collect.android.logic.actions.setgeopoint.CollectSetGeopointActionHandler
+import org.odk.collect.androidshared.ui.ToastUtils
+import org.odk.collect.androidshared.ui.Toaster
 import org.odk.collect.osmdroid.OsmDroidInitializer
 import org.odk.collect.projects.ProjectsRepository
 import org.odk.collect.settings.SettingsProvider
@@ -33,7 +35,8 @@ class ApplicationInitializer(
     private val upgradeInitializer: UpgradeInitializer,
     private val analyticsInitializer: AnalyticsInitializer,
     private val projectsRepository: ProjectsRepository,
-    private val settingsProvider: SettingsProvider
+    private val settingsProvider: SettingsProvider,
+    private val toaster: Toaster
 ) {
     fun initialize() {
         runInitializers()
@@ -58,6 +61,8 @@ class ApplicationInitializer(
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         initializeMapFrameworks()
         initializeJavaRosa()
+
+        ToastUtils.toaster = toaster
     }
 
     private fun initializeLocale() {

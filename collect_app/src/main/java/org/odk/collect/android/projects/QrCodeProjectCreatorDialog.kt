@@ -171,7 +171,6 @@ class QrCodeProjectCreatorDialog :
                     photoPickerIntent.type = "image/*"
                     intentLauncher.launchForResult(imageQrCodeImportResultLauncher, photoPickerIntent) {
                         showShortToast(
-                            requireContext(),
                             getString(
                                 R.string.activity_not_found,
                                 getString(R.string.choose_image)
@@ -243,7 +242,7 @@ class QrCodeProjectCreatorDialog :
             val settingsJson = try {
                 CompressionUtils.decompress(barcodeResult.text)
             } catch (e: Exception) {
-                showShortToast(requireContext(), getString(R.string.invalid_qrcode))
+                showShortToast(getString(R.string.invalid_qrcode))
                 ""
             }
             createProjectOrError(settingsJson)
@@ -276,14 +275,13 @@ class QrCodeProjectCreatorDialog :
 
             ActivityUtils.startActivityAndCloseAllOthers(activity, MainMenuActivity::class.java)
             ToastUtils.showLongToast(
-                requireContext(),
                 getString(
                     R.string.switched_project,
                     currentProjectProvider.getCurrentProject().name
                 )
             )
         } else {
-            ToastUtils.showLongToast(requireContext(), getString(R.string.invalid_qrcode))
+            ToastUtils.showLongToast(getString(R.string.invalid_qrcode))
         }
     }
 
@@ -291,7 +289,6 @@ class QrCodeProjectCreatorDialog :
         currentProjectProvider.setCurrentProject(uuid)
         ActivityUtils.startActivityAndCloseAllOthers(activity, MainMenuActivity::class.java)
         ToastUtils.showLongToast(
-            requireContext(),
             getString(
                 R.string.switched_project,
                 currentProjectProvider.getCurrentProject().name

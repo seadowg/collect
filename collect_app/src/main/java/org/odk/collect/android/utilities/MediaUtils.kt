@@ -44,7 +44,7 @@ class MediaUtils(private val intentLauncher: IntentLauncher, private val content
         if (!file.exists()) {
             val errorMsg: String = context.getString(R.string.file_missing, file)
             Timber.d("File %s is missing", file)
-            ToastUtils.showLongToast(context, errorMsg)
+            ToastUtils.showLongToast(errorMsg)
             return
         }
 
@@ -55,7 +55,7 @@ class MediaUtils(private val intentLauncher: IntentLauncher, private val content
         )
 
         if (contentUri == null) {
-            ToastUtils.showLongToast(context, "Can't open file. If you are on a Huawei device, this is expected and will not be fixed.")
+            ToastUtils.showLongToast("Can't open file. If you are on a Huawei device, this is expected and will not be fixed.")
             return
         }
 
@@ -70,7 +70,7 @@ class MediaUtils(private val intentLauncher: IntentLauncher, private val content
                 R.string.activity_not_found,
                 context.getString(R.string.open_file)
             )
-            ToastUtils.showLongToast(context, message)
+            ToastUtils.showLongToast(message)
             Timber.w(message)
         }
     }

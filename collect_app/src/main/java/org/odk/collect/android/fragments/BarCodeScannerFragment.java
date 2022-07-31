@@ -99,7 +99,7 @@ public abstract class BarCodeScannerFragment extends Fragment implements Decorat
             try {
                 handleScanningResult(barcodeResult);
             } catch (IOException | DataFormatException | IllegalArgumentException e) {
-                ToastUtils.showShortToast(requireContext(), getString(R.string.invalid_qrcode));
+                ToastUtils.showShortToast(getString(R.string.invalid_qrcode));
             }
         });
     }

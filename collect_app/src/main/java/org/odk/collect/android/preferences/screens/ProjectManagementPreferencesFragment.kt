@@ -103,7 +103,6 @@ class ProjectManagementPreferencesFragment :
                         MainMenuActivity::class.java
                     )
                     ToastUtils.showLongToast(
-                        requireContext(),
                         getString(
                             R.string.switched_project,
                             newCurrentProject.name
