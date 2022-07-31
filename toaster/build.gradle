@@ -3,6 +3,7 @@ import dependencies.Versions
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish'
 }
 
 apply from: '../config/quality.gradle'
@@ -33,6 +34,33 @@ android {
         jvmTarget = '1.8'
     }
 }
+
 dependencies {
 
+}
+
+group = 'org.getodk'
+version = '0.1.0'
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                artifactId = 'toaster'
+                from components.release
+
+                pom {
+                    name = 'toaster'
+                    description = 'Small framework to help with using Android Toasts'
+                    url = 'https://github.com/getodk/collect/tree/master/toaster'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

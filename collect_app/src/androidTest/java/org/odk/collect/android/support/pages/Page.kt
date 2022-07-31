@@ -33,8 +33,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
-import org.odk.collect.toastertest.RecordingToaster
-import org.odk.collect.toastertest.ToasterAssert.assertToast
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.core.StringContains.containsString
@@ -52,6 +50,8 @@ import org.odk.collect.androidshared.ui.ToastUtils
 import org.odk.collect.androidtest.NestedScrollToAction.nestedScrollTo
 import org.odk.collect.strings.localization.getLocalizedString
 import org.odk.collect.testshared.RecyclerViewMatcher
+import org.odk.collect.toastertest.RecordingToaster
+import org.odk.collect.toastertest.ToasterAssert.assertToast
 import timber.log.Timber
 import java.io.File
 import java.io.IOException

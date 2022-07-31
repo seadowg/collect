@@ -140,8 +140,8 @@ import org.odk.collect.settings.importing.ProjectDetailsCreatorImpl;
 import org.odk.collect.settings.importing.SettingsChangeHandler;
 import org.odk.collect.settings.keys.MetaKeys;
 import org.odk.collect.shared.strings.UUIDGenerator;
-import org.odk.collect.toaster.ApplicationToaster;
-import org.odk.collect.toaster.Toaster;
+import org.getodk.toaster.ApplicationToaster;
+import org.getodk.toaster.Toaster;
 import org.odk.collect.utilities.UserAgentProvider;
 
 import java.io.File;

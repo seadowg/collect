@@ -1,4 +1,4 @@
-package org.odk.collect.toaster
+package org.getodk.toaster
 
 import android.app.Application
 import android.widget.Toast

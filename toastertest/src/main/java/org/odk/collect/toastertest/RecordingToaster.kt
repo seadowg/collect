@@ -1,7 +1,7 @@
 package org.odk.collect.toastertest
 
 import android.widget.Toast
-import org.odk.collect.toaster.Toaster
+import org.getodk.toaster.Toaster
 
 class RecordingToaster : Toaster {
     private var toasts = mutableListOf<String>()

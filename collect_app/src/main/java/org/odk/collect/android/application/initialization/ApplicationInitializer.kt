@@ -7,6 +7,7 @@ import androidx.startup.AppInitializer
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import net.danlew.android.joda.JodaTimeInitializer
+import org.getodk.toaster.Toaster
 import org.javarosa.core.model.CoreModelModule
 import org.javarosa.core.services.PrototypeManager
 import org.javarosa.core.util.JavaRosaCoreModule
@@ -22,7 +23,6 @@ import org.odk.collect.androidshared.ui.ToastUtils
 import org.odk.collect.osmdroid.OsmDroidInitializer
 import org.odk.collect.projects.ProjectsRepository
 import org.odk.collect.settings.SettingsProvider
-import org.odk.collect.toaster.Toaster
 import org.odk.collect.utilities.UserAgentProvider
 import timber.log.Timber
 import java.util.Locale

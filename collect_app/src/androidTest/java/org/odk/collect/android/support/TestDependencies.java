@@ -16,7 +16,7 @@ import org.odk.collect.android.openrosa.OpenRosaHttpInterface;
 import org.odk.collect.android.storage.StoragePathProvider;
 import org.odk.collect.android.views.BarcodeViewDecoder;
 import org.odk.collect.async.Scheduler;
-import org.odk.collect.toaster.Toaster;
+import org.getodk.toaster.Toaster;
 import org.odk.collect.utilities.UserAgentProvider;
 
 public class TestDependencies extends AppDependencyModule {
