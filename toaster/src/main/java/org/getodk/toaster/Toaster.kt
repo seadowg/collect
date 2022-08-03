@@ -11,7 +11,7 @@ interface Toaster {
     )
 }
 
-class ApplicationToaster(private val application: Application) : Toaster {
+open class ApplicationToaster(private val application: Application) : Toaster {
 
     override fun toast(message: String, duration: Int, beforeShow: ((Toast) -> Unit)?) {
         val toast = Toast.makeText(application, message, duration)
@@ -20,5 +20,20 @@ class ApplicationToaster(private val application: Application) : Toaster {
         }
 
         toast.show()
+    }
+}
+
+class RecordingToaster : Toaster {
+    private var toasts = mutableListOf<String>()
+
+    override fun toast(message: String, duration: Int, beforeShow: ((Toast) -> Unit)?) {
+        toasts.add(message)
+    }
+
+    fun popRecordedToasts(): List<String> {
+        val copy = toasts.toList()
+        toasts.clear()
+
+        return copy
     }
 }

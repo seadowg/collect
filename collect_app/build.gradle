@@ -419,7 +419,7 @@ dependencies {
     androidTestImplementation Dependencies.okhttp3_mockwebserver
     androidTestImplementation Dependencies.androidx_work_testing
     androidTestImplementation Dependencies.uiautomator
-    androidTestImplementation project(':toastertest')
+    androidTestImplementation project(':toaster-espresso')
 
     debugImplementation project(':fragmentstest')
     debugImplementation(project(':testshared')) {

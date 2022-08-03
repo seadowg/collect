@@ -32,4 +32,4 @@ if (getSecrets().getProperty('MAPBOX_DOWNLOADS_TOKEN', '') != '') {
     include ':mapbox'
 }
 include ':toaster'
-include ':toastertest'
+include ':toaster-espresso'

@@ -1,6 +1,7 @@
-package org.odk.collect.toastertest
+package org.getodk.toaster.espresso
 
 import androidx.test.espresso.Espresso
+import org.getodk.toaster.RecordingToaster
 
 object ToasterAssert {
 
