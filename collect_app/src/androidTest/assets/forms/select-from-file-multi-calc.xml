@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<h:html xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.w3.org/2002/xforms">
+    <h:head>
+        <h:title>select-from-file-50k</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="select-from-file-50k">
+                    <external />
+                    <col1 />
+                    <col2 />
+                    <col3 />
+                    <col4 />
+                    <col5 />
+                    <col6 />
+                    <col7 />
+                    <col8 />
+                    <col9 />
+                    <col10 />
+                    <summary />
+                    <meta>
+                        <instanceID />
+                    </meta>
+                </data>
+            </instance>
+            <instance id="external" src="jr://file-csv/external.csv" />
+            <bind nodeset="/data/external" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col1"
+                nodeset="/data/col1" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col2"
+                nodeset="/data/col2" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col3"
+                nodeset="/data/col3" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col4"
+                nodeset="/data/col4" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col5"
+                nodeset="/data/col5" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col6"
+                nodeset="/data/col6" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col7"
+                nodeset="/data/col7" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col8"
+                nodeset="/data/col8" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col9"
+                nodeset="/data/col9" type="string" />
+            <bind calculate="instance('external')/root/item[name= /data/external ]/col10"
+                nodeset="/data/col10" type="string" />
+            <bind nodeset="/data/summary" readonly="true()" type="string" />
+            <bind nodeset="/data/meta/instanceID" readonly="true()" type="string"
+                jr:preload="uid" />
+        </model>
+    </h:head>
+    <h:body>
+        <select1 appearance="minimal autocomplete" ref="/data/external">
+            <label>Select a thing</label>
+            <itemset nodeset="instance('external')/root/item">
+                <value ref="name" />
+                <label ref="label" />
+            </itemset>
+        </select1>
+        <input ref="/data/summary">
+            <label>
+                <output value=" /data/col1 " />
+                <output value=" /data/col2 " />
+                <output value=" /data/col3 " />
+                <output value=" /data/col4 " />
+                <output value=" /data/col5 " />
+                <output value=" /data/col6 " />
+                <output value=" /data/col7 " />
+                <output value=" /data/col8 " />
+                <output value=" /data/col9 " />
+                <output value=" /data/col10 " />
+            </label>
+        </input>
+    </h:body>
+</h:html>

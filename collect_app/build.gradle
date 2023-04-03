@@ -309,7 +309,7 @@ dependencies {
     implementation (Dependencies.opencsv) {
         exclude group: 'commons-logging'
     }
-    implementation(Dependencies.javarosa) {
+    implementation(Dependencies.javarosa_local) {
         exclude group: 'commons-io'
         exclude group: 'joda-time'
         exclude group: 'org.slf4j'
