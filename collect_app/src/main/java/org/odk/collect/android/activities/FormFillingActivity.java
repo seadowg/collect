@@ -110,6 +110,7 @@ import org.odk.collect.android.formentry.ODKView;
 import org.odk.collect.android.formentry.QuitFormDialog;
 import org.odk.collect.android.formentry.RecordingHandler;
 import org.odk.collect.android.formentry.RecordingWarningDialogFragment;
+import org.odk.collect.android.formentry.SwipeHandler;
 import org.odk.collect.android.formentry.audit.AuditEvent;
 import org.odk.collect.android.formentry.audit.AuditUtils;
 import org.odk.collect.android.formentry.audit.ChangesReasonPromptDialogFragment;
@@ -125,6 +126,7 @@ import org.odk.collect.android.formentry.saving.FormSaveViewModel;
 import org.odk.collect.android.formentry.saving.SaveAnswerFileErrorDialogFragment;
 import org.odk.collect.android.formentry.saving.SaveAnswerFileProgressDialogFragment;
 import org.odk.collect.android.formentry.saving.SaveFormProgressDialogFragment;
+import org.odk.collect.android.formmanagement.CollectFormEntryControllerFactory;
 import org.odk.collect.android.fragments.MediaLoadingFragment;
 import org.odk.collect.android.fragments.dialogs.CustomDatePickerDialog;
 import org.odk.collect.android.fragments.dialogs.CustomTimePickerDialog;
@@ -137,7 +139,6 @@ import org.odk.collect.android.javarosawrapper.RepeatsInFieldListException;
 import org.odk.collect.android.listeners.AdvanceToNextListener;
 import org.odk.collect.android.listeners.FormLoaderListener;
 import org.odk.collect.android.listeners.SavePointListener;
-import org.odk.collect.android.formentry.SwipeHandler;
 import org.odk.collect.android.listeners.WidgetValueChangedListener;
 import org.odk.collect.android.logic.ImmutableDisplayableQuestion;
 import org.odk.collect.android.mainmenu.MainMenuActivity;
@@ -355,9 +356,6 @@ public class FormFillingActivity extends LocalizedActivity implements AnimationL
 
     @Inject
     public AudioHelperFactory audioHelperFactory;
-
-    @Inject
-    public FormLoaderTask.FormEntryControllerFactory formEntryControllerFactory;
 
     private final LocationProvidersReceiver locationProvidersReceiver = new LocationProvidersReceiver();
 
@@ -629,7 +627,7 @@ public class FormFillingActivity extends LocalizedActivity implements AnimationL
                     formEntryViewModel.refresh();
                 } else {
                     Timber.w("Reloading form and restoring state.");
-                    formLoaderTask = new FormLoaderTask(instancePath, startingXPath, waitingXPath, formEntryControllerFactory);
+                    formLoaderTask = new FormLoaderTask(instancePath, startingXPath, waitingXPath, new CollectFormEntryControllerFactory(settingsProvider.getUnprotectedSettings(), null));
                     showIfNotShowing(FormLoadingDialogFragment.class, getSupportFragmentManager());
                     formLoaderTask.execute(formPath);
                 }
@@ -652,6 +650,7 @@ public class FormFillingActivity extends LocalizedActivity implements AnimationL
             uriMimeType = getContentResolver().getType(uri);
         }
 
+        Form form = null;
         if (uriMimeType != null && uriMimeType.equals(InstancesContract.CONTENT_ITEM_TYPE)) {
             Instance instance = new InstancesRepositoryProvider(Collect.getInstance()).get().get(ContentUriHelper.getIdFromUri(uri));
 
@@ -659,9 +658,10 @@ public class FormFillingActivity extends LocalizedActivity implements AnimationL
 
             List<Form> candidateForms = formsRepository.getAllByFormIdAndVersion(instance.getFormId(), instance.getFormVersion());
 
-            formPath = candidateForms.get(0).getFormFilePath();
+            form = candidateForms.get(0);
+            formPath = form.getFormFilePath();
         } else if (uriMimeType != null && uriMimeType.equals(FormsContract.CONTENT_ITEM_TYPE)) {
-            Form form = formsRepositoryProvider.get().get(ContentUriHelper.getIdFromUri(uri));
+            form = formsRepositoryProvider.get().get(ContentUriHelper.getIdFromUri(uri));
             formPath = form.getFormFilePath();
 
             /**
@@ -673,7 +673,7 @@ public class FormFillingActivity extends LocalizedActivity implements AnimationL
             instancePath = loadSavePoint();
         }
 
-        formLoaderTask = new FormLoaderTask(instancePath, null, null, formEntryControllerFactory);
+        formLoaderTask = new FormLoaderTask(instancePath, null, null, new CollectFormEntryControllerFactory(settingsProvider.getUnprotectedSettings(), form));
         formLoaderTask.setFormLoaderListener(this);
         showIfNotShowing(FormLoadingDialogFragment.class, getSupportFragmentManager());
         formLoaderTask.execute(formPath);
