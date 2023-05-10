@@ -29,6 +29,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal() // Only used for javarosa_local dependency
         maven {
             url "${rootDir}/.local-m2/"
             metadataSources {

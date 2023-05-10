@@ -42,7 +42,7 @@ dependencies {
     implementation(project(":settings"))
     implementation(project(":shared"))
 
-    implementation(Dependencies.javarosa) {
+    implementation(Dependencies.javarosa_local) {
         exclude(group = "joda-time")
         exclude(group = "org.hamcrest", module = "hamcrest-all")
     }

@@ -179,7 +179,7 @@ JavaRosa is the form engine that powers Collect. If you want to debug or change 
 ./gradlew installLocal
 ```
 
-1. Change `implementation(Dependencies.javarosa)` in Collect's `build.gradle` to `implementation(Dependencies.javarosa_local)`
+1. Change `implementation(Dependencies.javarosa)` in `collect_app` and `metadata`'s `build.gradle`s to `implementation(Dependencies.javarosa_local)`
 
 ## Troubleshooting
 
