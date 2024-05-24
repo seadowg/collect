@@ -22,7 +22,6 @@ import org.odk.collect.android.backgroundwork.SyncFormsTaskSpec;
 import org.odk.collect.android.configure.qr.QRCodeScannerFragment;
 import org.odk.collect.android.configure.qr.QRCodeTabsActivity;
 import org.odk.collect.android.configure.qr.ShowQRCodeFragment;
-import org.odk.collect.android.entities.EntitiesRepositoryProvider;
 import org.odk.collect.android.external.AndroidShortcutsActivity;
 import org.odk.collect.android.external.FormUriActivity;
 import org.odk.collect.android.external.FormsProvider;
@@ -63,7 +62,7 @@ import org.odk.collect.android.preferences.screens.ProjectPreferencesFragment;
 import org.odk.collect.android.preferences.screens.ServerPreferencesFragment;
 import org.odk.collect.android.preferences.screens.UserInterfacePreferencesFragment;
 import org.odk.collect.android.projects.ManualProjectCreatorDialog;
-import org.odk.collect.android.projects.ProjectDependencyProviderFactory;
+import org.odk.collect.android.projects.ProjectDependencyModuleFactory;
 import org.odk.collect.android.projects.ProjectResetter;
 import org.odk.collect.android.projects.ProjectSettingsDialog;
 import org.odk.collect.android.projects.ProjectsDataService;
@@ -305,9 +304,9 @@ public interface AppDependencyComponent {
 
     NetworkStateProvider networkStateProvider();
 
-    EntitiesRepositoryProvider entitiesRepositoryProvider();
+    ProjectDependencyProviders.EntitiesRepositoryProvider entitiesRepositoryProvider();
 
     FormsDataService formsDataService();
 
-    ProjectDependencyProviderFactory projectDependencyProviderFactory();
+    ProjectDependencyModuleFactory projectDependencyProviderFactory();
 }

@@ -47,13 +47,13 @@ import org.javarosa.form.api.FormEntryPrompt;
 import org.odk.collect.analytics.Analytics;
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormEntryViewModelFactory;
-import org.odk.collect.android.entities.EntitiesRepositoryProvider;
 import org.odk.collect.android.exception.JavaRosaException;
 import org.odk.collect.android.formentry.FormEntryViewModel;
 import org.odk.collect.android.formentry.FormSessionRepository;
 import org.odk.collect.android.formentry.ODKView;
 import org.odk.collect.android.formentry.repeats.DeleteRepeatDialogFragment;
 import org.odk.collect.android.injection.DaggerUtils;
+import org.odk.collect.android.injection.config.ProjectDependencyProviders;
 import org.odk.collect.android.instancemanagement.autosend.AutoSendSettingsProvider;
 import org.odk.collect.android.javarosawrapper.FormController;
 import org.odk.collect.android.javarosawrapper.JavaRosaFormController;
@@ -169,7 +169,7 @@ public class FormHierarchyActivity extends LocalizedActivity implements DeleteRe
     ProjectsDataService projectsDataService;
 
     @Inject
-    EntitiesRepositoryProvider entitiesRepositoryProvider;
+    ProjectDependencyProviders.EntitiesRepositoryProvider entitiesRepositoryProvider;
 
     @Inject
     PermissionsChecker permissionsChecker;

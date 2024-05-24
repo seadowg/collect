@@ -8,8 +8,8 @@ import org.odk.collect.android.formmanagement.download.FormDownloadException
 import org.odk.collect.android.formmanagement.download.ServerFormDownloader
 import org.odk.collect.android.formmanagement.matchexactly.ServerFormsSynchronizer
 import org.odk.collect.android.notifications.Notifier
-import org.odk.collect.android.projects.ProjectDependencyProvider
-import org.odk.collect.android.projects.ProjectDependencyProviderFactory
+import org.odk.collect.android.projects.ProjectDependencyModule
+import org.odk.collect.android.projects.ProjectDependencyModuleFactory
 import org.odk.collect.androidshared.data.AppState
 import org.odk.collect.forms.Form
 import org.odk.collect.forms.FormSourceException
@@ -21,7 +21,7 @@ import java.util.stream.Collectors
 class FormsDataService(
     private val appState: AppState,
     private val notifier: Notifier,
-    private val projectDependencyProviderFactory: ProjectDependencyProviderFactory,
+    private val projectDependencyModuleFactory: ProjectDependencyModuleFactory,
     private val clock: Supplier<Long>
 ) {
 
@@ -51,7 +51,7 @@ class FormsDataService(
         progressReporter: (Int, Int) -> Unit,
         isCancelled: () -> Boolean
     ): Map<ServerFormDetails, FormDownloadException?> {
-        val projectDependencyProvider = projectDependencyProviderFactory.create(projectId)
+        val projectDependencyProvider = projectDependencyModuleFactory.create(projectId)
         val formDownloader =
             formDownloader(projectDependencyProvider, clock)
 
@@ -69,7 +69,7 @@ class FormsDataService(
      * disabled the user will just be notified that there are updates available.
      */
     fun downloadUpdates(projectId: String) {
-        val projectDependencies = projectDependencyProviderFactory.create(projectId)
+        val projectDependencies = projectDependencyModuleFactory.create(projectId)
         projectDependencies.formsLock.withLock { acquiredLock ->
             if (acquiredLock) {
                 syncWithStorage(projectId)
@@ -111,7 +111,7 @@ class FormsDataService(
      */
     @JvmOverloads
     fun matchFormsWithServer(projectId: String, notify: Boolean = true): Boolean {
-        val projectDependencies = projectDependencyProviderFactory.create(projectId)
+        val projectDependencies = projectDependencyModuleFactory.create(projectId)
         return projectDependencies.formsLock.withLock { acquiredLock ->
             if (acquiredLock) {
                 startSync(projectId)
@@ -152,7 +152,7 @@ class FormsDataService(
     }
 
     fun deleteForm(projectId: String, formId: Long) {
-        val projectDependencies = projectDependencyProviderFactory.create(projectId)
+        val projectDependencies = projectDependencyModuleFactory.create(projectId)
         LocalFormUseCases.deleteForm(
             projectDependencies.formsRepository,
             projectDependencies.instancesRepository,
@@ -162,7 +162,7 @@ class FormsDataService(
     }
 
     fun update(projectId: String) {
-        val projectDependencies = projectDependencyProviderFactory.create(projectId)
+        val projectDependencies = projectDependencyModuleFactory.create(projectId)
         projectDependencies.formsLock.withLock { acquiredLock ->
             if (acquiredLock) {
                 startSync(projectId)
@@ -174,7 +174,7 @@ class FormsDataService(
     }
 
     private fun syncWithStorage(projectId: String) {
-        val projectDependencies = projectDependencyProviderFactory.create(projectId)
+        val projectDependencies = projectDependencyModuleFactory.create(projectId)
         val error = LocalFormUseCases.synchronizeWithDisk(
             projectDependencies.formsRepository,
             projectDependencies.formsDir
@@ -193,7 +193,7 @@ class FormsDataService(
     }
 
     private fun syncWithDb(projectId: String) {
-        val projectDependencies = projectDependencyProviderFactory.create(projectId)
+        val projectDependencies = projectDependencyModuleFactory.create(projectId)
         getFormsFlow(projectId).value = projectDependencies.formsRepository.all
     }
 
@@ -218,25 +218,25 @@ class FormsDataService(
 }
 
 private fun formDownloader(
-    projectDependencyProvider: ProjectDependencyProvider,
+    projectDependencyModule: ProjectDependencyModule,
     clock: Supplier<Long>
 ): ServerFormDownloader {
     return ServerFormDownloader(
-        projectDependencyProvider.formSource,
-        projectDependencyProvider.formsRepository,
-        File(projectDependencyProvider.cacheDir),
-        projectDependencyProvider.formsDir,
+        projectDependencyModule.formSource,
+        projectDependencyModule.formsRepository,
+        File(projectDependencyModule.cacheDir),
+        projectDependencyModule.formsDir,
         FormMetadataParser(),
         clock,
-        projectDependencyProvider.entitiesRepository
+        projectDependencyModule.entitiesRepository
     )
 }
 
 private fun serverFormsDetailsFetcher(
-    projectDependencyProvider: ProjectDependencyProvider
+    projectDependencyModule: ProjectDependencyModule
 ): ServerFormsDetailsFetcher {
     return ServerFormsDetailsFetcher(
-        projectDependencyProvider.formsRepository,
-        projectDependencyProvider.formSource
+        projectDependencyModule.formsRepository,
+        projectDependencyModule.formSource
     )
 }

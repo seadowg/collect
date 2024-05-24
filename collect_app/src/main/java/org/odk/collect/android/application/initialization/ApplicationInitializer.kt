@@ -8,8 +8,9 @@ import org.odk.collect.analytics.Analytics
 import org.odk.collect.android.BuildConfig
 import org.odk.collect.android.application.Collect
 import org.odk.collect.android.application.initialization.upgrade.UpgradeInitializer
-import org.odk.collect.android.entities.EntitiesRepositoryProvider
+import org.odk.collect.android.projects.ProjectDependencyProvider
 import org.odk.collect.android.projects.ProjectsDataService
+import org.odk.collect.entities.EntitiesRepository
 import org.odk.collect.metadata.PropertyManager
 import org.odk.collect.projects.ProjectsRepository
 import org.odk.collect.settings.SettingsProvider
@@ -25,7 +26,7 @@ class ApplicationInitializer(
     private val mapsInitializer: MapsInitializer,
     private val projectsRepository: ProjectsRepository,
     private val settingsProvider: SettingsProvider,
-    private val entitiesRepositoryProvider: EntitiesRepositoryProvider,
+    private val entitiesRepositoryProvider: ProjectDependencyProvider<EntitiesRepository>,
     private val projectsDataService: ProjectsDataService
 ) {
     fun initialize() {

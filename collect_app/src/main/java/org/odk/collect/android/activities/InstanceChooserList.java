@@ -42,10 +42,10 @@ import org.odk.collect.android.analytics.AnalyticsEvents;
 import org.odk.collect.android.analytics.AnalyticsUtils;
 import org.odk.collect.android.dao.CursorLoaderFactory;
 import org.odk.collect.android.database.instances.DatabaseInstanceColumns;
-import org.odk.collect.android.entities.EntitiesRepositoryProvider;
 import org.odk.collect.android.external.FormUriActivity;
 import org.odk.collect.android.external.InstancesContract;
 import org.odk.collect.android.formlists.sorting.FormListSortingOption;
+import org.odk.collect.android.injection.config.ProjectDependencyProviders;
 import org.odk.collect.android.instancemanagement.InstancesDataService;
 import org.odk.collect.android.formmanagement.drafts.BulkFinalizationViewModel;
 import org.odk.collect.android.formmanagement.drafts.DraftsMenuProvider;
@@ -94,7 +94,7 @@ public class InstanceChooserList extends AppListActivity implements AdapterView.
     InstancesRepositoryProvider instancesRepositoryProvider;
 
     @Inject
-    EntitiesRepositoryProvider entitiesRepositoryProvider;
+    ProjectDependencyProviders.EntitiesRepositoryProvider entitiesRepositoryProvider;
 
     @Inject
     SettingsProvider settingsProvider;

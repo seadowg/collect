@@ -20,8 +20,8 @@ import org.mockito.kotlin.whenever
 import org.odk.collect.analytics.Analytics
 import org.odk.collect.android.injection.DaggerUtils
 import org.odk.collect.android.notifications.Notifier
-import org.odk.collect.android.projects.ProjectDependencyProvider
-import org.odk.collect.android.projects.ProjectDependencyProviderFactory
+import org.odk.collect.android.projects.ProjectDependencyModule
+import org.odk.collect.android.projects.ProjectDependencyModuleFactory
 import org.odk.collect.android.storage.StorageSubdirectory
 import org.odk.collect.android.utilities.ChangeLockProvider
 import org.odk.collect.androidshared.data.AppState
@@ -69,7 +69,7 @@ class FormsDataServiceTest {
 
         val formSourceProvider = mock<FormSourceProvider> { on { get(any()) } doReturn formSource }
 
-        val projectDependencyProvider = ProjectDependencyProvider(
+        val projectDependencyModule = ProjectDependencyModule(
             project.uuid,
             settingsProvider,
             formsRepositoryProvider,
@@ -81,13 +81,13 @@ class FormsDataServiceTest {
             mock()
         )
 
-        val projectDependencyProviderFactory = mock<ProjectDependencyProviderFactory>()
-        whenever(projectDependencyProviderFactory.create(project.uuid)).thenReturn(projectDependencyProvider)
+        val projectDependencyModuleFactory = mock<ProjectDependencyModuleFactory>()
+        whenever(projectDependencyModuleFactory.create(project.uuid)).thenReturn(projectDependencyModule)
 
         formsDataService = FormsDataService(
             appState = AppState(),
             notifier = notifier,
-            projectDependencyProviderFactory = projectDependencyProviderFactory
+            projectDependencyModuleFactory = projectDependencyModuleFactory
         ) { 0 }
     }
 

@@ -15,7 +15,7 @@ import org.mockito.kotlin.whenever
 import org.odk.collect.android.notifications.Notifier
 import org.odk.collect.android.openrosa.HttpGetResult
 import org.odk.collect.android.openrosa.OpenRosaHttpInterface
-import org.odk.collect.android.projects.ProjectDependencyProviderFactory
+import org.odk.collect.android.projects.ProjectDependencyModuleFactory
 import org.odk.collect.android.utilities.ChangeLockProvider
 import org.odk.collect.android.utilities.FormsRepositoryProvider
 import org.odk.collect.android.utilities.InstancesRepositoryProvider
@@ -54,7 +54,7 @@ class InstancesDataServiceTest {
             .save(ProjectKeys.KEY_AUTOSEND, AutoSend.WIFI_ONLY.getValue(application))
     }
 
-    private val projectsDependencyProviderFactory = ProjectDependencyProviderFactory(
+    private val projectsDependencyProviderFactory = ProjectDependencyModuleFactory(
         settingsProvider,
         formsRepositoryProvider,
         instancesRepositoryProvider,

@@ -1,6 +1,6 @@
 package org.odk.collect.android.application.initialization
 
-import org.odk.collect.android.projects.ProjectDependencyProviderFactory
+import org.odk.collect.android.projects.ProjectDependencyModuleFactory
 import org.odk.collect.android.storage.StorageSubdirectory
 import org.odk.collect.forms.FormsRepository
 import org.odk.collect.forms.instances.InstancesRepository
@@ -13,7 +13,7 @@ import java.io.File
 
 class SavepointsImporter(
     private val projectsRepository: ProjectsRepository,
-    private val projectDependencyProviderFactory: ProjectDependencyProviderFactory
+    private val projectDependencyModuleFactory: ProjectDependencyModuleFactory
 ) : Upgrade {
     override fun key(): String {
         return MetaKeys.OLD_SAVEPOINTS_IMPORTED
@@ -21,7 +21,7 @@ class SavepointsImporter(
 
     override fun run() {
         projectsRepository.getAll().forEach { project ->
-            val projectDependencyProvider = projectDependencyProviderFactory.create(project.uuid)
+            val projectDependencyProvider = projectDependencyModuleFactory.create(project.uuid)
 
             val cacheDir =
                 File(projectDependencyProvider.storagePathProvider.getOdkDirPath(StorageSubdirectory.CACHE, project.uuid))

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import org.javarosa.core.model.actions.recordaudio.RecordAudioActions
 import org.javarosa.core.model.instance.TreeReference
-import org.odk.collect.android.entities.EntitiesRepositoryProvider
 import org.odk.collect.android.formentry.BackgroundAudioViewModel
 import org.odk.collect.android.formentry.BackgroundAudioViewModel.RecordAudioActionRegistry
 import org.odk.collect.android.formentry.FormEndViewModel
@@ -20,6 +19,7 @@ import org.odk.collect.android.formentry.backgroundlocation.BackgroundLocationVi
 import org.odk.collect.android.formentry.saving.DiskFormSaver
 import org.odk.collect.android.formentry.saving.FormSaveViewModel
 import org.odk.collect.android.instancemanagement.autosend.AutoSendSettingsProvider
+import org.odk.collect.android.projects.ProjectDependencyProvider
 import org.odk.collect.android.projects.ProjectsDataService
 import org.odk.collect.android.utilities.ApplicationConstants
 import org.odk.collect.android.utilities.FormsRepositoryProvider
@@ -28,6 +28,7 @@ import org.odk.collect.android.utilities.MediaUtils
 import org.odk.collect.android.utilities.SavepointsRepositoryProvider
 import org.odk.collect.async.Scheduler
 import org.odk.collect.audiorecorder.recording.AudioRecorder
+import org.odk.collect.entities.EntitiesRepository
 import org.odk.collect.location.LocationClient
 import org.odk.collect.permissions.PermissionsChecker
 import org.odk.collect.permissions.PermissionsProvider
@@ -45,7 +46,7 @@ class FormEntryViewModelFactory(
     private val mediaUtils: MediaUtils,
     private val audioRecorder: AudioRecorder,
     private val projectsDataService: ProjectsDataService,
-    private val entitiesRepositoryProvider: EntitiesRepositoryProvider,
+    private val entitiesRepositoryProvider: ProjectDependencyProvider<EntitiesRepository>,
     private val settingsProvider: SettingsProvider,
     private val permissionsChecker: PermissionsChecker,
     private val fusedLocationClient: LocationClient,
