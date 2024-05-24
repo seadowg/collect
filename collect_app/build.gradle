@@ -3,6 +3,7 @@ apply from: '../config/quality.gradle'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: "com.google.android.gms.oss-licenses-plugin"
+apply plugin: "kotlin-kapt"
 
 import com.android.ddmlib.DdmPreferences
 import dependencies.Dependencies
@@ -323,6 +324,7 @@ dependencies {
     // Dagger:
     implementation Dependencies.dagger
     annotationProcessor Dependencies.dagger_compiler
+    kapt(Dependencies.dagger_compiler)
 
     // Needed for injection into Robolectric tests
     testAnnotationProcessor Dependencies.dagger_compiler
