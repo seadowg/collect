@@ -74,7 +74,6 @@ import org.odk.collect.android.projects.ProjectDeleter;
 import org.odk.collect.android.projects.ProjectDependencyProviderFactory;
 import org.odk.collect.android.projects.ProjectResetter;
 import org.odk.collect.android.projects.ProjectsDataService;
-import org.odk.collect.android.storage.ProjectStoragePathsFactory;
 import org.odk.collect.android.storage.StoragePathProvider;
 import org.odk.collect.android.storage.StorageSubdirectory;
 import org.odk.collect.android.tasks.FormLoaderTask;
@@ -357,11 +356,6 @@ public class AppDependencyModule {
     @Provides
     public AudioRecorder providesAudioRecorder(Application application) {
         return new AudioRecorderFactory(application).create();
-    }
-
-    @Provides
-    public EntitiesRepositoryProvider provideEntitiesRepositoryProvider(ProjectStoragePathsFactory projectStoragePathsFactory) {
-        return new EntitiesRepositoryProvider(projectStoragePathsFactory);
     }
 
     @Provides

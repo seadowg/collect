@@ -7,7 +7,7 @@ import org.odk.collect.entities.EntitiesRepository
 import org.odk.collect.entities.Entity
 import java.io.File
 
-class JsonFileEntitiesRepository(directory: File) : EntitiesRepository {
+open class JsonFileEntitiesRepository(directory: File) : EntitiesRepository {
 
     private val entitiesFile = File(directory, "entities.json")
 
