@@ -2,12 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/form_entry"
-    app:startDestination="@id/entry">
-
-    <fragment
-        android:id="@+id/entry"
-        android:name="org.odk.collect.android.formhierarchy.FormEntryFragment">
-    </fragment>
+    app:startDestination="@id/hierarchy">
 
     <fragment
         android:id="@+id/hierarchy"

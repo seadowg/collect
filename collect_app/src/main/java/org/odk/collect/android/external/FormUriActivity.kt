@@ -17,7 +17,9 @@ import org.odk.collect.analytics.Analytics
 import org.odk.collect.android.R
 import org.odk.collect.android.activities.FormFillingActivity
 import org.odk.collect.android.analytics.AnalyticsEvents
+import org.odk.collect.android.application.FeatureFlags
 import org.odk.collect.android.formentry.FormOpeningMode
+import org.odk.collect.android.formhierarchy.FormEntryFragmentHostActivity
 import org.odk.collect.android.injection.DaggerUtils
 import org.odk.collect.android.instancemanagement.InstanceDeleter
 import org.odk.collect.android.instancemanagement.canBeEdited
@@ -140,13 +142,23 @@ class FormUriActivity : LocalizedActivity() {
 
     private fun startForm(uri: Uri) {
         formFillingAlreadyStarted = true
-        openForm.launch(
-            Intent(this, FormFillingActivity::class.java).apply {
-                action = intent.action
-                data = uri
-                intent.extras?.let { sourceExtras -> putExtras(sourceExtras) }
-            }
-        )
+        if (FeatureFlags.NEW_FORM_ENTRY) {
+            openForm.launch(
+                Intent(this, FormEntryFragmentHostActivity::class.java).apply {
+                    action = intent.action
+                    data = uri
+                    intent.extras?.let { sourceExtras -> putExtras(sourceExtras) }
+                }
+            )
+        } else {
+            openForm.launch(
+                Intent(this, FormFillingActivity::class.java).apply {
+                    action = intent.action
+                    data = uri
+                    intent.extras?.let { sourceExtras -> putExtras(sourceExtras) }
+                }
+            )
+        }
     }
 
     private fun displayErrorDialog(message: String) {

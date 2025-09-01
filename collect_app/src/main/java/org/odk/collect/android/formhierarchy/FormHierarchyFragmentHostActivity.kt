@@ -144,7 +144,7 @@ class FormHierarchyFragmentHostActivity : LocalizedActivity() {
 
             val shouldShowNewEditMessage = intent.getBooleanExtra(SHOW_NEW_EDIT_MESSAGE, false)
             navController.setGraph(
-                R.navigation.form_entry,
+                R.navigation.hierarchy,
                 FormHierarchyFragmentArgs.Builder(shouldShowNewEditMessage)
                     .build()
                     .toBundle()
