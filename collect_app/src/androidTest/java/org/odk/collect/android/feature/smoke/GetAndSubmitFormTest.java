@@ -34,6 +34,7 @@ public class GetAndSubmitFormTest {
 
                 // Fill out form
                 .startBlankForm("One Question")
+                .answerQuestion("what is your age", "35")
                 .swipeToEndScreen()
                 .clickFinalize()
 
