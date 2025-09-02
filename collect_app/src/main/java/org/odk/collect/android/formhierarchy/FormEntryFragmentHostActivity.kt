@@ -12,6 +12,7 @@ import org.odk.collect.android.injection.DaggerUtils
 import org.odk.collect.android.instancemanagement.InstancesDataService
 import org.odk.collect.android.instancemanagement.autosend.AutoSendSettingsProvider
 import org.odk.collect.android.projects.ProjectsDataService
+import org.odk.collect.android.tasks.FormLoaderTask
 import org.odk.collect.android.utilities.ChangeLockProvider
 import org.odk.collect.android.utilities.FormsRepositoryProvider
 import org.odk.collect.android.utilities.InstancesRepositoryProvider
@@ -82,6 +83,9 @@ class FormEntryFragmentHostActivity : LocalizedActivity() {
     @Inject
     lateinit var changeLockProvider: ChangeLockProvider
 
+    @Inject
+    lateinit var formEntryControllerFactory: FormLoaderTask.FormEntryControllerFactory
+
     private lateinit var sessionId: String
     private val viewModelFactory by lazy {
         FormEntryViewModelFactory(
@@ -119,7 +123,15 @@ class FormEntryFragmentHostActivity : LocalizedActivity() {
         }
 
         this.supportFragmentManager.fragmentFactory = FragmentFactoryBuilder()
-            .forClass(FormEntryFragment::class.java) { FormEntryFragment(viewModelFactory) }
+            .forClass(FormEntryFragment::class.java) {
+                FormEntryFragment(
+                    viewModelFactory,
+                    formEntryControllerFactory,
+                    scheduler,
+                    savepointsRepositoryProvider.create(),
+                    intent.data!!
+                )
+            }
             .build()
 
         super.onCreate(savedInstanceState)
