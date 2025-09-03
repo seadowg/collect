@@ -11,6 +11,7 @@ import org.odk.collect.android.formentry.FormSessionRepository
 import org.odk.collect.android.injection.DaggerUtils
 import org.odk.collect.android.instancemanagement.InstancesDataService
 import org.odk.collect.android.instancemanagement.autosend.AutoSendSettingsProvider
+import org.odk.collect.android.listeners.AdvanceToNextListener
 import org.odk.collect.android.projects.ProjectsDataService
 import org.odk.collect.android.tasks.FormLoaderTask
 import org.odk.collect.android.utilities.ChangeLockProvider
@@ -18,8 +19,10 @@ import org.odk.collect.android.utilities.FormsRepositoryProvider
 import org.odk.collect.android.utilities.InstancesRepositoryProvider
 import org.odk.collect.android.utilities.MediaUtils
 import org.odk.collect.android.utilities.SavepointsRepositoryProvider
+import org.odk.collect.androidshared.system.IntentLauncher
 import org.odk.collect.androidshared.ui.FragmentFactoryBuilder
 import org.odk.collect.async.Scheduler
+import org.odk.collect.audioclips.AudioPlayerFactory
 import org.odk.collect.audiorecorder.recording.AudioRecorder
 import org.odk.collect.location.LocationClient
 import org.odk.collect.permissions.PermissionsChecker
@@ -30,7 +33,7 @@ import org.odk.collect.settings.SettingsProvider
 import org.odk.collect.strings.localization.LocalizedActivity
 import javax.inject.Inject
 
-class FormEntryFragmentHostActivity : LocalizedActivity() {
+class FormEntryFragmentHostActivity : LocalizedActivity(), AdvanceToNextListener {
 
     @Inject
     lateinit var scheduler: Scheduler
@@ -86,6 +89,12 @@ class FormEntryFragmentHostActivity : LocalizedActivity() {
     @Inject
     lateinit var formEntryControllerFactory: FormLoaderTask.FormEntryControllerFactory
 
+    @Inject
+    lateinit var audioPlayerFactory: AudioPlayerFactory
+
+    @Inject
+    lateinit var intentLauncher: IntentLauncher
+
     private lateinit var sessionId: String
     private val viewModelFactory by lazy {
         FormEntryViewModelFactory(
@@ -129,7 +138,12 @@ class FormEntryFragmentHostActivity : LocalizedActivity() {
                     formEntryControllerFactory,
                     scheduler,
                     savepointsRepositoryProvider.create(),
-                    intent.data!!
+                    intent.data!!,
+                    audioPlayerFactory,
+                    audioRecorder,
+                    permissionsProvider,
+                    intentLauncher,
+                    formSessionRepository
                 )
             }
             .build()
@@ -143,6 +157,10 @@ class FormEntryFragmentHostActivity : LocalizedActivity() {
 
         navController.setGraph(R.navigation.form_entry)
         setSupportActionBar(findViewById(org.odk.collect.androidshared.R.id.toolbar))
+    }
+
+    override fun advance() {
+        TODO("Not yet implemented")
     }
 
     companion object {
