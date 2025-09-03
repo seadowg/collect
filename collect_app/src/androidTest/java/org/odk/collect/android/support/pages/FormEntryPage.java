@@ -33,6 +33,7 @@ import androidx.test.core.app.ApplicationProvider;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.odk.collect.android.R;
+import org.odk.collect.android.application.FeatureFlags;
 import org.odk.collect.androidtest.DrawableMatcher;
 import org.odk.collect.testshared.Interactions;
 import org.odk.collect.testshared.ViewActions;
@@ -381,9 +382,13 @@ public class FormEntryPage extends Page<FormEntryPage> {
     }
 
     private void flingLeft() {
-        tryFlakyAction(() -> {
-            onView(withId(R.id.questionholder)).perform(swipeLeft());
-        });
+        if (FeatureFlags.NEW_FORM_ENTRY) {
+            clickForwardButton();
+        } else {
+            tryFlakyAction(() -> {
+                onView(withId(R.id.questionholder)).perform(swipeLeft());
+            });
+        }
     }
 
     private void flingRight() {

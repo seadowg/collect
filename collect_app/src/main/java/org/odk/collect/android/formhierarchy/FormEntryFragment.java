@@ -17,11 +17,14 @@ import androidx.lifecycle.ViewModelProvider;
 import org.javarosa.core.model.FormDef;
 import org.javarosa.core.model.FormIndex;
 import org.javarosa.form.api.FormEntryCaption;
+import org.javarosa.form.api.FormEntryController;
 import org.javarosa.form.api.FormEntryPrompt;
 import org.jetbrains.annotations.NotNull;
 import org.odk.collect.android.R;
 import org.odk.collect.android.analytics.AnalyticsUtils;
 import org.odk.collect.android.audio.AudioRecordingControllerFragment;
+import org.odk.collect.android.formentry.FormEndView;
+import org.odk.collect.android.formentry.FormEndViewModel;
 import org.odk.collect.android.formentry.FormEntryViewModel;
 import org.odk.collect.android.formentry.FormIndexAnimationHandler;
 import org.odk.collect.android.formentry.FormSessionRepository;
@@ -48,6 +51,8 @@ import org.odk.collect.forms.instances.Instance;
 import org.odk.collect.forms.savepoints.SavepointsRepository;
 import org.odk.collect.permissions.PermissionsProvider;
 
+import java.util.HashMap;
+
 public class FormEntryFragment extends Fragment implements FormLoaderListener, FormIndexAnimationHandler.Listener {
 
     private final ViewModelProvider.Factory viewModelFactory;
@@ -70,6 +75,7 @@ public class FormEntryFragment extends Fragment implements FormLoaderListener, F
     private InternalRecordingRequester internalRecordingRequester;
     private ExternalAppRecordingRequester externalAppRecordingRequester;
     private ODKView odkView;
+    private FormEndViewModel formEndViewModel;
 
     public FormEntryFragment(ViewModelProvider.Factory viewModelFactory, FormLoaderTask.FormEntryControllerFactory formEntryControllerFactory, Scheduler scheduler, SavepointsRepository savepointsRepository, Uri formUri, AudioPlayerFactory audioPlayerFactory, AudioRecorder audioRecorder, @NotNull PermissionsProvider permissionsProvider, @NotNull IntentLauncher intentLauncher, FormSessionRepository formSessionRepository) {
         super(R.layout.form_entry);
@@ -103,6 +109,7 @@ public class FormEntryFragment extends Fragment implements FormLoaderListener, F
 
         formEntryViewModel = viewModelProvider.get(FormEntryViewModel.class);
         formSaveViewModel = viewModelProvider.get(FormSaveViewModel.class);
+        formEndViewModel = viewModelProvider.get(FormEndViewModel.class);
         printerWidgetViewModel = viewModelProvider.get(PrinterWidgetViewModel.class);
 
         waitingForDataRegistry = new FormControllerWaitingForDataRegistry(() -> {
@@ -112,11 +119,24 @@ public class FormEntryFragment extends Fragment implements FormLoaderListener, F
         internalRecordingRequester = new InternalRecordingRequester(requireActivity(), audioRecorder, permissionsProvider);
         externalAppRecordingRequester = new ExternalAppRecordingRequester(requireActivity(), intentLauncher, waitingForDataRegistry, permissionsProvider);
 
+        formSaveViewModel.getSaveResult().observe(this, saveResult -> {
+            if (saveResult != null) {
+                requireActivity().finish();
+            }
+        });
+
         loadForm(formUri);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        view.findViewById(R.id.form_forward_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                formEntryViewModel.moveForward(new HashMap<>());
+            }
+        });
+
         formEntryViewModel.getCurrentIndex().observe(getViewLifecycleOwner(), indexAndValidationResult -> {
             if (indexAndValidationResult != null) {
                 FormIndex formIndex = indexAndValidationResult.component1();
@@ -169,18 +189,6 @@ public class FormEntryFragment extends Fragment implements FormLoaderListener, F
         AnalyticsUtils.setForm(formController);
     }
 
-    @NotNull
-    private ODKView createODKView(boolean advancingPage, FormEntryPrompt[] prompts, FormEntryCaption[] groups) {
-        odkViewLifecycle = new ControllableLifecyleOwner();
-        odkViewLifecycle.start();
-        AudioPlayer audioPlayer = audioPlayerFactory.create(requireActivity(), odkViewLifecycle);
-        audioPlayer.isLoading().observe(odkViewLifecycle, (isLoading) -> {
-            requireView().findViewById(R.id.loading_screen).setVisibility(isLoading ? View.VISIBLE : View.GONE);
-        });
-
-        return new ODKView(requireActivity(), prompts, groups, advancingPage, formSaveViewModel, waitingForDataRegistry, audioPlayer, audioRecorder, formEntryViewModel, printerWidgetViewModel, internalRecordingRequester, externalAppRecordingRequester, odkViewLifecycle);
-    }
-
     /**
      * Creates and returns a new view based on the event type passed in. The view returned is
      * of type {@link View} if the event passed in represents the end of the form or of type
@@ -197,16 +205,40 @@ public class FormEntryFragment extends Fragment implements FormLoaderListener, F
         String formTitle = formController.getFormTitle();
         requireActivity().setTitle(formTitle);
 
-        FormEntryCaption[] groups = getGroupsForCurrentIndex(formController);
-        FormEntryPrompt[] prompts;
-        try {
-            prompts = getQuestionPrompts(formController);
-        } catch (RepeatsInFieldListException e) {
-            throw new RuntimeException(e);
+        if (event == FormEntryController.EVENT_END_OF_FORM) {
+            String saveName = formSaveViewModel.getFormName();
+            return new FormEndView(requireContext(), saveName, false, formEndViewModel, new FormEndView.Listener() {
+                @Override
+                public void onSaveClicked(boolean markAsFinalized) {
+                    formSaveViewModel.saveForm(formUri, true, saveName, true);
+                }
+            });
+        } else {
+            FormEntryCaption[] groups = getGroupsForCurrentIndex(formController);
+            FormEntryPrompt[] prompts;
+            try {
+                prompts = getQuestionPrompts(formController);
+            } catch (RepeatsInFieldListException e) {
+                throw new RuntimeException(e);
+            }
+
+            odkView = createODKView(advancingPage, prompts, groups);
+            return odkView;
         }
 
-        odkView = createODKView(advancingPage, prompts, groups);
-        return odkView;
+
+    }
+
+    @NotNull
+    private ODKView createODKView(boolean advancingPage, FormEntryPrompt[] prompts, FormEntryCaption[] groups) {
+        odkViewLifecycle = new ControllableLifecyleOwner();
+        odkViewLifecycle.start();
+        AudioPlayer audioPlayer = audioPlayerFactory.create(requireActivity(), odkViewLifecycle);
+        audioPlayer.isLoading().observe(odkViewLifecycle, (isLoading) -> {
+            requireView().findViewById(R.id.loading_screen).setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        });
+
+        return new ODKView(requireActivity(), prompts, groups, advancingPage, formSaveViewModel, waitingForDataRegistry, audioPlayer, audioRecorder, formEntryViewModel, printerWidgetViewModel, internalRecordingRequester, externalAppRecordingRequester, odkViewLifecycle);
     }
 
     private void releaseOdkView() {
