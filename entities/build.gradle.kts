@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlinKapt)
     alias(libs.plugins.safeargsKotlin)
+    alias(libs.plugins.composeCompiler)
 }
 
 apply(from = "../config/quality.gradle")
@@ -65,6 +66,7 @@ dependencies {
     implementation(libs.androidxNavigationUi)
     implementation(libs.dagger)
     kapt(libs.daggerCompiler)
+    implementation(libs.androidXComposeMaterial)
 
     testImplementation(project(":forms-test"))
     testImplementation(libs.junit)

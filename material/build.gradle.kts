@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.composeCompiler)
 }
 
 apply(from = "../config/quality.gradle")
@@ -50,6 +51,9 @@ dependencies {
     api(libs.androidMaterial)
     implementation(libs.androidxFragmentKtx)
     implementation(libs.kotlinStdlib)
+    implementation(libs.androidXComposeMaterial)
+    implementation(libs.androidXComposePreview)
+    debugImplementation(libs.androidXComposeTooling)
 
     debugImplementation(project(":fragments-test"))
 
