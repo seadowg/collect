@@ -10,12 +10,12 @@ import androidx.compose.runtime.setValue
 
 @Composable
 fun RangeSliderFactory(
-    initialState: RangeSliderState,
+    sliderState: RangeSliderState,
     onValueChanging: (Boolean) -> Unit,
     onValueChangeFinished: (RangeSliderState) -> Unit,
     onRangeInvalid: () -> Unit
 ) {
-    var sliderState by remember(initialState.sliderValue) { mutableStateOf(initialState) }
+    var value by remember(sliderState.sliderValue) { mutableStateOf(sliderState.sliderValue) }
 
     LaunchedEffect(Unit) {
         if (!sliderState.isValid) {
@@ -26,24 +26,36 @@ fun RangeSliderFactory(
     Surface {
         if (sliderState.isHorizontal) {
             HorizontalRangeSlider(
-                sliderState = sliderState,
+                value = value,
+                valueLabel = sliderState.valueLabel,
+                steps = sliderState.numOfSteps,
+                ticks = sliderState.numOfTicks,
+                enabled = sliderState.isEnabled,
+                startLabel = sliderState.startLabel,
+                endLabel = sliderState.endLabel,
                 onValueChanging = onValueChanging,
-                onValueChange = { newValue ->
-                    sliderState = sliderState.copy(sliderValue = newValue)
+                onValueChange = {
+                    value = it
                 },
                 onValueChangeFinished = {
-                    onValueChangeFinished(sliderState)
+                    onValueChangeFinished(sliderState.copy(sliderValue = value))
                 }
             )
         } else {
             VerticalRangeSlider(
-                sliderState = sliderState,
+                value = value,
+                steps = sliderState.numOfSteps,
+                enabled = sliderState.isEnabled,
+                valueLabel = sliderState.valueLabel,
+                startLabel = sliderState.startLabel,
+                endLabel = sliderState.endLabel,
+                ticks = sliderState.numOfTicks,
                 onValueChanging = onValueChanging,
-                onValueChange = { newValue ->
-                    sliderState = sliderState.copy(sliderValue = newValue)
-                },
                 onValueChangeFinished = {
-                    onValueChangeFinished(sliderState)
+                    onValueChangeFinished(sliderState.copy(sliderValue = value))
+                },
+                onValueChange = {
+                    value = it
                 }
             )
         }
