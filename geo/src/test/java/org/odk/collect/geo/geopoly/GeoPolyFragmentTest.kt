@@ -2,7 +2,6 @@ package org.odk.collect.geo.geopoly
 
 import android.app.Application
 import androidx.activity.OnBackPressedDispatcher
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -41,6 +40,8 @@ import org.odk.collect.geo.geopoly.GeoPolyFragment.OutputMode
 import org.odk.collect.geo.support.AccuracyStatusViewMatcher.Companion.hasAccuracy
 import org.odk.collect.geo.support.FakeLocationTracker
 import org.odk.collect.geo.support.FakeMapFragment
+import org.odk.collect.geo.support.MapFragmentAssertions.hasZoomedToCurrentLocation
+import org.odk.collect.geo.support.MapFragmentAssertions.showsCurrentLocation
 import org.odk.collect.geo.support.RobolectricApplication
 import org.odk.collect.location.Location
 import org.odk.collect.location.tracker.LocationTracker
@@ -96,8 +97,7 @@ class GeoPolyFragmentTest {
         }
 
         locationTracker.currentLocation = Location(2.0, 2.0)
-        assertThat(mapFragment.getCenter(), equalTo(MapPoint(2.0, 2.0)))
-        assertThat(mapFragment.getZoom(), not(equalTo(0.0)))
+        assertThat(mapFragment, hasZoomedToCurrentLocation(MapPoint(2.0, 2.0)))
     }
 
     @Test
@@ -106,27 +106,14 @@ class GeoPolyFragmentTest {
             GeoPolyFragment({ OnBackPressedDispatcher() })
         }
 
-        locationTracker.currentLocation = Location(2.0, 2.0, accuracy = 5.2f)
-        assertThat(
-            mapFragment.getMarkers(),
-            equalTo(listOf(locationTracker.currentLocation!!.toMapPoint()))
-        )
-        mapFragment.getCircles().let {
-            assertThat(it.size, equalTo(1))
-            assertThat(it[0].center, equalTo(locationTracker.currentLocation!!.toMapPoint()))
-            assertThat(it[0].radius, equalTo(5.2f))
-        }
+        val firstLocation = Location(2.0, 2.0, accuracy = 5.2f)
+        locationTracker.currentLocation = firstLocation
+        assertThat(mapFragment, showsCurrentLocation(firstLocation.toMapPoint()))
 
-        locationTracker.currentLocation = Location(3.0, 2.0, accuracy = 2.1f)
-        assertThat(
-            mapFragment.getMarkers(),
-            equalTo(listOf(locationTracker.currentLocation!!.toMapPoint()))
-        )
-        mapFragment.getCircles().let {
-            assertThat(it.size, equalTo(1))
-            assertThat(it[0].center, equalTo(locationTracker.currentLocation!!.toMapPoint()))
-            assertThat(it[0].radius, equalTo(2.1f))
-        }
+        val secondLocation = Location(3.0, 2.0, accuracy = 2.1f)
+        locationTracker.currentLocation = secondLocation
+        assertThat(mapFragment, showsCurrentLocation(secondLocation.toMapPoint()))
+        assertThat(mapFragment, not(showsCurrentLocation(firstLocation.toMapPoint())))
     }
 
     @Test
@@ -978,8 +965,10 @@ class GeoPolyFragmentTest {
         }
 
         locationTracker.currentLocation = Location(5.0, 5.0)
+        locationTracker.currentLocation = Location(6.0, 6.0)
+
         Interactions.clickOn(withContentDescription(string.show_my_location))
-        assertThat(mapFragment.getCenter(), equalTo(MapPoint(5.0, 5.0)))
+        assertThat(mapFragment, hasZoomedToCurrentLocation(MapPoint(6.0, 6.0)))
     }
 
     @Test
