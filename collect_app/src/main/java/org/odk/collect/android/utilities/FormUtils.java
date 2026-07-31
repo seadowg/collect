@@ -47,8 +47,8 @@ public final class FormUtils {
         // Always build URIs against the project root, regardless of the absolute path of formMediaDir
         referenceManager.addReferenceFactory(new FileReferenceFactory(projectRootDir.getAbsolutePath()));
 
-        addSessionRootTranslators(referenceManager,
-                buildSessionRootTranslators(formMediaDir.getName(), enumerateHostStrings()));
+        List<RootTranslator> rootTranslators = buildSessionRootTranslators(formMediaDir.getName(), enumerateHostStrings());
+        addSessionRootTranslators(referenceManager, rootTranslators);
     }
 
     public static String[] enumerateHostStrings() {
@@ -62,6 +62,11 @@ public final class FormUtils {
         for (String t : hostStrings) {
             rootTranslators.add(new RootTranslator(String.format("jr://%s/", t), translatedPrefix));
         }
+
+        // Allow URIs like "blah.jpg" to be equivalent to "jr://whatever/blah.jpg"
+        RootTranslator fallbackTranslator = new RootTranslator("", translatedPrefix);
+        rootTranslators.add(fallbackTranslator);
+
         return rootTranslators;
     }
 
