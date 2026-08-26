@@ -1,5 +1,6 @@
 ---
 name: Hotfix release
+about: Checklist for publishing a new hotfix release
 title: '🔥 vXXXX.X.X'
 labels: ''
 assignees: ''
