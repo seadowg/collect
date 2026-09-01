@@ -75,4 +75,31 @@ class ExternalSelectsTest {
             .swipeToNextQuestion("Choose a number")
             .assertText("File: $formsDirPath/dynamic_and_static_choices-media/numbers.csv is missing.")
     }
+
+    @Test // https://github.com/getodk/collect/issues/6801
+    fun searchFunctionWorksWellWithLastSaved() {
+        rule.startAtMainMenu()
+            // Fill out and finalize the first form
+            .copyForm("search-with-last-saved.xml", listOf("fruits.csv"))
+            .startBlankForm("Search with last-saved")
+            .clickOnText("Mango")
+            .swipeToNextQuestion("Select fruit 2")
+            .clickOnText("Oranges")
+            .swipeToEndScreen()
+            .clickFinalize()
+
+            // Start a new form to verify that answers from the previous form are retained
+            .startBlankForm("Search with last-saved")
+            .swipeToNextQuestion("Select fruit 2")
+            .clickGoToArrow()
+            .assertHierarchyItem(0, "Select fruit 1", "Mango")
+            .assertHierarchyItem(1, "Select fruit 2", "Oranges")
+
+            // Change an answer in a field-list and verify no errors occur
+            .clickOnQuestion("Select fruit 2")
+            .clickOnText("Strawberries")
+            .clickGoToArrow()
+            .assertHierarchyItem(0, "Select fruit 1", "Mango")
+            .assertHierarchyItem(1, "Select fruit 2", "Strawberries")
+    }
 }
