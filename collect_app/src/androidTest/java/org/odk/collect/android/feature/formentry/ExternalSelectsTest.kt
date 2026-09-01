@@ -92,14 +92,18 @@ class ExternalSelectsTest {
             .startBlankForm("Search with last-saved")
             .swipeToNextQuestion("Select fruit 2")
             .clickGoToArrow()
-            .assertHierarchyItem(0, "Select fruit 1", "Mango")
-            .assertHierarchyItem(1, "Select fruit 2", "Oranges")
+            .assertText("Select fruit 1")
+            .assertAnswer("Mango")
+            .assertText("Select fruit 2")
+            .assertAnswer("Oranges")
 
             // Change an answer in a field-list and verify no errors occur
             .clickOnQuestion("Select fruit 2")
             .clickOnText("Strawberries")
             .clickGoToArrow()
-            .assertHierarchyItem(0, "Select fruit 1", "Mango")
-            .assertHierarchyItem(1, "Select fruit 2", "Strawberries")
+            .assertText("Select fruit 1")
+            .assertAnswer("Mango")
+            .assertText("Select fruit 2")
+            .assertAnswer("Strawberries")
     }
 }
