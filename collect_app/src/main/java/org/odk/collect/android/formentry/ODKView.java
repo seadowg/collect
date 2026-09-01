@@ -161,6 +161,7 @@ public class ODKView extends SwipeHandler.View implements OnLongClickListener, W
             LifecycleOwner viewLifecycle
     ) {
         super(context);
+        updateQuestions(questionPrompts);
 
         this.viewLifecycle = viewLifecycle;
         this.audioPlayer = audioPlayer;
@@ -208,7 +209,6 @@ public class ODKView extends SwipeHandler.View implements OnLongClickListener, W
 
         setupAudioErrors();
         autoplayIfNeeded(advancingPage);
-        updateQuestions(questionPrompts);
     }
 
     private void setupAudioErrors() {
