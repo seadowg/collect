@@ -1,10 +1,13 @@
 ---
 name: Release
 about: Checklist for publishing a new release
-title: '🚢 vXXXX.X.0'
+title: '🚢 `vXXXX.X.0`'
 labels: ''
 assignees: ''
 ---
+
+Branch: `<branch name>`
+Commit: <commit>
 
 ## Prerequisites
 
